@@ -31,7 +31,7 @@
     .rv{opacity:1!important;transform:none!important}
   }
   body{font-family:var(--sans);color:var(--ink);background:var(--paper);font-size:17px;line-height:1.7;word-break:keep-all;overflow-wrap:break-word}
-  .wrap{max-width:1020px;margin:0 auto;padding:0 28px}
+  .wrap{max-width:1020px;margin:0 auto;padding:0 28px 110px}
   button:focus-visible,a:focus-visible,summary:focus-visible{outline:2.5px solid var(--ac);outline-offset:2px}
 
   /* ── page routing ── */
@@ -99,7 +99,7 @@
   .lsub{font-size:13.5px;color:var(--muted);margin-top:3px}
 
   /* ── sections ── */
-  section{padding:68px 0;position:relative}
+  section{padding:72px 0 84px;position:relative}
   section + section{border-top:1px solid var(--hair)}
   section.band{background:var(--panel);box-shadow:0 0 0 100vmax var(--panel);clip-path:inset(0 -100vmax);border-top:0}
   .sechead{display:flex;align-items:baseline;gap:14px;margin-bottom:34px;flex-wrap:wrap}
@@ -210,12 +210,26 @@
   .pjd .dt{font-size:12.5px;font-weight:700;color:var(--ac-deep);display:block;margin-bottom:4px}
   .pjd b{color:var(--ink)}
 
-  footer{padding:60px 0 80px;border-top:1.5px solid var(--ink)}
+  footer{padding:64px 0 40px;border-top:1.5px solid var(--ink)}
   footer .big{font-size:26px;font-weight:800;letter-spacing:-.02em;line-height:1.4;max-width:34ch}
   footer .big .hl{color:var(--ac-deep)}
   footer .ct{font-size:15px;color:var(--muted);margin-top:20px;line-height:2}
   footer .ct b{color:var(--ink)}
   footer .thanks{font-family:var(--mono);font-size:12px;letter-spacing:.2em;color:var(--faint);margin-top:34px}
+
+  /* ── page prev/next (하단 도달 시 표시) ── */
+  .pgnav{
+    position:fixed;bottom:26px;left:50%;z-index:15;display:flex;gap:10px;
+    transform:translateX(-50%) translateY(90px);opacity:0;pointer-events:none;
+    transition:transform .25s ease,opacity .25s ease;
+  }
+  .pgnav.show{transform:translateX(-50%);opacity:1;pointer-events:auto}
+  .pgnav button{
+    font-family:var(--sans);font-size:14.5px;font-weight:700;color:var(--ink);
+    padding:11px 20px;border:1.5px solid var(--ink);background:#fff;cursor:pointer;
+    box-shadow:3px 3px 0 var(--ac-soft),3px 3px 0 1.5px var(--line);transition:.15s;
+  }
+  .pgnav button:hover{background:var(--ac);color:var(--ac-text)}
 
   /* ── mobile ── */
   @media (max-width:780px){
@@ -243,7 +257,7 @@
   @media print{
     [data-pg]{display:block!important;animation:none!important}
     body{font-size:10.5pt;background:#fff}
-    header,.ham,.hint{display:none}
+    header,.ham,.hint,.pgnav{display:none}
     .rv{opacity:1;transform:none}
     .hero{padding:10mm 0 8mm;background-image:none}
     section{padding:8mm 0}
@@ -365,7 +379,7 @@
   </section>
 
   <!-- ══ CAREER ══ -->
-  <section id="career" data-pg="career">
+  <section id="career" class="band" data-pg="career">
     <div class="sechead"><span class="secno">SS.08</span><h2>경력 타임라인 · 3년 7개월</h2><span class="secsub">Career · 2022 ~ Now</span></div>
     <div class="tl">
       <div class="tstop rv"><div class="tyr">2022.04 ~ 10</div><h3>JAVA &amp; Spring 백엔드 과정</h3><p>그린컴퓨터아트학원 · NCS 국비 900시간 · 무결석 수료 (출석률 우수 표창)</p></div>
@@ -480,7 +494,7 @@
   </section>
 
   <!-- ══ INFRA & CREDENTIALS ══ -->
-  <section id="infra" class="band" data-pg="skills">
+  <section id="infra" data-pg="skills">
     <div class="sechead"><span class="secno">SS.06</span><h2>인프라 &amp; 운영</h2><span class="secsub">Build · Deploy · Operate</span></div>
     <div class="rows rv">
       <div class="row"><span class="k">Server</span><p><b>Linux 서버 설정</b> · JDK 1.8~17 환경 구성 · Apache/Tomcat 운영</p></div>
@@ -491,7 +505,7 @@
 
   </section>
 
-  <section id="credentials" class="band" data-pg="career">
+  <section id="credentials" data-pg="career">
     <div class="sechead"><span class="secno">SS.07</span><h2>학력 · 교육 · 자격</h2><span class="secsub">Credentials</span></div>
     <div class="rows rv">
       <div class="row"><span class="k">학위 (취득예정)</span><p><b>컴퓨터공학 학사</b> · 학점은행제 · 국가평생교육진흥원 · 2026.08 취득예정 · 실무 병행</p></div>
@@ -613,6 +627,11 @@
 
 </div>
 
+<div class="pgnav" aria-label="페이지 이동">
+  <button class="prev" type="button"></button>
+  <button class="next" type="button"></button>
+</div>
+
 <script>
 (function(){
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -635,9 +654,12 @@
 
   // page router (비동기 페이지 전환)
   var links = Array.prototype.slice.call(nav.querySelectorAll('a'));
-  var pages = ['home','skills','career','cases','projects','contact'];
+  var pages = ['home','skills','projects','cases','career','contact'];
+  var pageNames = {home:'About', skills:'Skills', projects:'Projects', cases:'Cases', career:'Career', contact:'Contact'};
+  var current = 'home';
   function show(pg){
     if(pages.indexOf(pg) < 0) pg = 'home';
+    current = pg;
     document.querySelectorAll('[data-pg]').forEach(function(el){
       el.classList.toggle('act', el.dataset.pg === pg);
     });
@@ -646,7 +668,34 @@
     // 표시된 페이지의 reveal 요소 활성화
     document.querySelectorAll('[data-pg].act .rv, .hero.act .rv').forEach(function(el){ el.classList.add('in'); });
     document.querySelectorAll('[data-pg].act.rv').forEach(function(el){ el.classList.add('in'); });
+    updatePgnav();
   }
+
+  // 하단 도달 시 이전/다음 페이지 버튼
+  var pgnav = document.querySelector('.pgnav');
+  var btnPrev = pgnav.querySelector('.prev'), btnNext = pgnav.querySelector('.next');
+  function updatePgnav(){
+    var i = pages.indexOf(current);
+    btnPrev.style.display = i > 0 ? '' : 'none';
+    btnNext.style.display = i < pages.length - 1 ? '' : 'none';
+    if(i > 0) btnPrev.textContent = '← ' + pageNames[pages[i-1]];
+    if(i < pages.length - 1) btnNext.textContent = pageNames[pages[i+1]] + ' →';
+    checkBottom();
+  }
+  function checkBottom(){
+    var atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 60;
+    pgnav.classList.toggle('show', atBottom);
+  }
+  window.addEventListener('scroll', checkBottom, {passive:true});
+  window.addEventListener('resize', checkBottom);
+  function go(step){
+    var i = pages.indexOf(current) + step;
+    if(i < 0 || i >= pages.length) return;
+    history.pushState(null, '', '#' + pages[i]);
+    show(pages[i]);
+  }
+  btnPrev.addEventListener('click', function(){ go(-1); });
+  btnNext.addEventListener('click', function(){ go(1); });
   links.forEach(function(a){
     a.addEventListener('click', function(e){
       e.preventDefault();
