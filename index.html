@@ -24,7 +24,7 @@
     --sans:"SUIT Variable","Pretendard Variable",Pretendard,"Malgun Gothic","Apple SD Gothic Neo",sans-serif;
   }
   *{margin:0;padding:0;box-sizing:border-box}
-  html{scroll-behavior:smooth;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  html{scroll-behavior:smooth;scrollbar-gutter:stable;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   @media (prefers-reduced-motion:reduce){
     html{scroll-behavior:auto}
     *{animation:none!important;transition:none!important}
@@ -47,7 +47,7 @@
   /* ── nav ── */
   header{position:sticky;top:0;z-index:10;background:rgba(251,251,249,.95);backdrop-filter:blur(8px);border-bottom:1.5px solid var(--ink)}
   .navrow{display:flex;justify-content:space-between;align-items:center;max-width:1020px;margin:0 auto;padding:13px 28px}
-  .logo{font-family:var(--mono);font-size:14px;letter-spacing:.14em;font-weight:700}
+  .logo{font-family:var(--mono);font-size:14px;letter-spacing:.14em;font-weight:700;color:var(--ink);text-decoration:none;cursor:pointer}
   .logo .st{color:var(--ok)}
   nav{display:flex;gap:8px}
   nav a{font-size:14.5px;font-weight:600;color:var(--ink2);text-decoration:none;padding:8px 15px;border:1.5px solid transparent;transition:.15s}
@@ -115,6 +115,10 @@
   .story .pull{
     border-left:3px solid var(--ac);padding:4px 0 4px 18px;font-size:18.5px;font-weight:700;
     letter-spacing:-.01em;color:var(--ink);align-self:start;
+  }
+  .pull-em{
+    font-size:21px;font-weight:800;color:var(--ac-deep);display:inline-block;margin-top:8px;
+    box-shadow:inset 0 -.32em 0 color-mix(in srgb, var(--ac) 22%, white);padding:0 2px;
   }
   .facts{margin-top:30px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
   .fact{border:1px solid var(--line);background:#fff;padding:16px 18px}
@@ -280,7 +284,7 @@
 
 <header>
   <div class="navrow">
-    <div class="logo">SHIN.EUI <span class="st">● RUNNING</span></div>
+    <a class="logo" href="#home" aria-label="처음으로">SHIN.EUI <span class="st">● RUNNING</span></a>
     <button class="ham" aria-label="메뉴 열기" aria-expanded="false">MENU</button>
     <nav id="nav">
       <a href="#home" data-page="home">About</a>
@@ -336,7 +340,7 @@
         <p class="rv">저는 <b>프로젝트의 마무리</b>를 일의 기준으로 삼습니다.<br class="d">시작은 누구나 할 수 있지만, 끝을 매듭짓는 것이 시스템의 가치를 결정한다고 믿습니다.<br class="d">요구사항 분석부터 <span class="nb">설계·구현·배포·운영</span>까지 스스로 완결해 왔고,<br class="d">전임자와 문서가 없는 시스템도 소스 분석부터 시작해 안정화했습니다.<br class="d"><span class="nb">예약·정산·권한·교부금</span>처럼 <b>돈과 직결된 기능</b>일수록 검증 쿼리와 관리자 점검으로 데이터 정합성을 지켰습니다.</p>
         <p class="rv" style="margin-top:16px">이 기준은 시간을 들여 쌓았습니다.<br class="d"><b>900시간 양성과정을 무결석으로 수료해 출석률 우수 표창</b>을 받았고,<br class="d">실무와 병행해 학점은행제로 컴퓨터공학 학사 과정을 끝맺고 있습니다.<br class="d"><span class="nb">최근 1년은</span> <b>AI 도구를 개발 프로세스에 접목</b>하는 데 시간을 쏟았습니다. 도구는 계속 바뀌지만, 요구를 분석해 안정적인 시스템으로 만드는 힘은<br class="d">매일의 실무로만 쌓인다고 믿습니다.</p>
       </div>
-      <div class="pull rv">"아무리 좋은 프로젝트라도, 예산이 크고 일정이 길어도, 결국 <b style="color:var(--ac-deep)">마무리</b>가 프로젝트의 가치를 결정합니다. 저는 끝을 책임지는 개발자입니다."</div>
+      <div class="pull rv">"아무리 좋은 프로젝트라도, 예산이 크고 일정이 길어도,<br class="d">결국 <b style="color:var(--ac-deep)">마무리</b>가 프로젝트의 가치를 결정합니다.<br class="d"><span class="pull-em">저는 끝을 책임지는 개발자입니다."</span></div>
     </div>
     <div class="facts">
       <div class="fact rv"><span class="k">전 단계 완결</span><p>기획자가 없는 제조 현장에서 업무 흐름 분석부터 화면 설계까지, 요구사항 수집→운영을 스스로 끝내 본 경험.</p></div>
@@ -694,6 +698,7 @@
     history.pushState(null, '', '#' + pages[i]);
     show(pages[i]);
   }
+  document.querySelector('.logo').addEventListener('click', function(e){ e.preventDefault(); history.pushState(null,'','#home'); show('home'); });
   btnPrev.addEventListener('click', function(){ go(-1); });
   btnNext.addEventListener('click', function(){ go(1); });
   links.forEach(function(a){
