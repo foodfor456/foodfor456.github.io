@@ -219,14 +219,14 @@
 
   /* ── page prev/next (하단 도달 시 표시) ── */
   .pgnav{
-    position:fixed;bottom:26px;left:50%;z-index:15;display:flex;gap:10px;
+    position:fixed;bottom:56px;left:50%;z-index:15;display:flex;gap:12px;
     transform:translateX(-50%) translateY(90px);opacity:0;pointer-events:none;
     transition:transform .25s ease,opacity .25s ease;
   }
   .pgnav.show{transform:translateX(-50%);opacity:1;pointer-events:auto}
   .pgnav button{
-    font-family:var(--sans);font-size:14.5px;font-weight:700;color:var(--ink);
-    padding:11px 20px;border:1.5px solid var(--ink);background:#fff;cursor:pointer;
+    font-family:var(--sans);font-size:16.5px;font-weight:700;color:var(--ink);
+    padding:14px 28px;border:1.5px solid var(--ink);background:#fff;cursor:pointer;
     box-shadow:3px 3px 0 var(--ac-soft),3px 3px 0 1.5px var(--line);transition:.15s;
   }
   .pgnav button:hover{background:var(--ac);color:var(--ac-text)}
@@ -334,7 +334,7 @@
     <div class="story">
       <div>
         <p class="rv">저는 <b>프로젝트의 마무리</b>를 일의 기준으로 삼습니다.<br class="d">시작은 누구나 할 수 있지만, 끝을 매듭짓는 것이 시스템의 가치를 결정한다고 믿습니다.<br class="d">요구사항 분석부터 <span class="nb">설계·구현·배포·운영</span>까지 스스로 완결해 왔고,<br class="d">전임자와 문서가 없는 시스템도 소스 분석부터 시작해 안정화했습니다.<br class="d"><span class="nb">예약·정산·권한·교부금</span>처럼 <b>돈과 직결된 기능</b>일수록 검증 쿼리와 관리자 점검으로 데이터 정합성을 지켰습니다.</p>
-        <p class="rv" style="margin-top:16px">이 기준은 시간을 들여 쌓았습니다.<br class="d"><b>900시간 양성과정을 무결석으로 수료해 출석률 우수 표창</b>을 받았고,<br class="d">실무와 병행해 학점은행제로 컴퓨터공학 학사 과정을 끝맺고 있습니다.<br class="d"><span class="nb">최근 1년은</span> <b>AI 도구를 개발 프로세스에 접목</b>하는 데 시간을 쏟았습니다. 도구는 계속 바뀌지만,<br class="d">요구를 분석해 안정적인 시스템으로 만드는 힘은 매일의 실무로만 쌓인다고 믿습니다.</p>
+        <p class="rv" style="margin-top:16px">이 기준은 시간을 들여 쌓았습니다.<br class="d"><b>900시간 양성과정을 무결석으로 수료해 출석률 우수 표창</b>을 받았고,<br class="d">실무와 병행해 학점은행제로 컴퓨터공학 학사 과정을 끝맺고 있습니다.<br class="d"><span class="nb">최근 1년은</span> <b>AI 도구를 개발 프로세스에 접목</b>하는 데 시간을 쏟았습니다. 도구는 계속 바뀌지만, 요구를 분석해 안정적인 시스템으로 만드는 힘은<br class="d">매일의 실무로만 쌓인다고 믿습니다.</p>
       </div>
       <div class="pull rv">"아무리 좋은 프로젝트라도, 예산이 크고 일정이 길어도, 결국 <b style="color:var(--ac-deep)">마무리</b>가 프로젝트의 가치를 결정합니다. 저는 끝을 책임지는 개발자입니다."</div>
     </div>
@@ -664,7 +664,7 @@
       el.classList.toggle('act', el.dataset.pg === pg);
     });
     links.forEach(function(a){ a.classList.toggle('on', a.dataset.page === pg); });
-    window.scrollTo(0, 0);
+    window.scrollTo({top:0, left:0, behavior:'instant'});
     // 표시된 페이지의 reveal 요소 활성화
     document.querySelectorAll('[data-pg].act .rv, .hero.act .rv').forEach(function(el){ el.classList.add('in'); });
     document.querySelectorAll('[data-pg].act.rv').forEach(function(el){ el.classList.add('in'); });
