@@ -307,7 +307,7 @@
         <h1>데이터가 <span class="hl">어긋나지 않게</span>,<br>운영이 <span class="hl">멈추지 않게</span><br>만드는 백엔드.</h1>
         <p class="lead">공공·교육·문화·스마트공장 도메인에서 웹 시스템을<br class="d">직접 기획·구축·운영하는 백엔드 개발자입니다.<br class="d"><b class="nb">Legacy(PHP/Drupal → Java/Spring) 전환</b>,<br class="d">교통비·교부금 정산처럼 비용과 직결되는 기능의 <b>데이터 정합성</b>,<br class="d">그리고 <b>반복업무 자동화</b>를 직접 수행해 왔습니다.</p>
         <div class="hcontact">
-          <b>foodfor456@naver.com</b> · 010-6392-2582<br>
+          <b>foodfor456@naver.com</b><br>
           충북 청주시 · 육군 병장 만기전역 · ㈜디엑시트 개발팀 대리
         </div>
       </div>
@@ -449,7 +449,7 @@
     <div class="big">사용자가 불편 없이 쓰고, 관리자가 쉽게 운영하고,<br>팀이 <span class="hl">믿고 이어가는 시스템</span>을 만듭니다.</div>
     <div class="ct">
       <b>신의 · Backend Developer</b><br>
-      <b>foodfor456@naver.com</b> · 010-6392-2582 · 충북 청주시
+      <b>foodfor456@naver.com</b> · 충북 청주시
     </div>
 
     <div class="console sec rv" style="max-width:560px" aria-label="연락처 콘솔">
@@ -458,7 +458,6 @@
         <span class="ln"><span class="p">$</span> whoami</span>
         <span class="ln"><span class="g">신의</span> <span class="p">— Backend Developer · ㈜디엑시트 개발팀 대리</span></span>
         <span class="ln"><span class="p">$</span> mail -s <span class="y">"채용 문의"</span> foodfor456@naver.com</span>
-        <span class="ln"><span class="p">$</span> call 010-6392-2582</span>
         <span class="ln"><span class="g">✓ 응답 대기 중</span> <span class="caret"></span></span>
       </div>
     </div>
@@ -468,6 +467,7 @@
 </div>
 
 <div class="pgnav" aria-label="페이지 이동">
+  <button class="top" type="button">TOP ↑</button>
   <button class="prev" type="button"></button>
   <button class="next" type="button"></button>
 </div>
@@ -549,13 +549,14 @@
 
   // 하단 도달 시 이전/다음 페이지 버튼
   var pgnav = document.querySelector('.pgnav');
-  var btnPrev = pgnav.querySelector('.prev'), btnNext = pgnav.querySelector('.next');
+  var btnPrev = pgnav.querySelector('.prev'), btnNext = pgnav.querySelector('.next'), btnTop = pgnav.querySelector('.top');
   function updatePgnav(){
     var i = pages.indexOf(current);
     btnPrev.style.display = i > 0 ? '' : 'none';
     btnNext.style.display = i < pages.length - 1 ? '' : 'none';
     if(i > 0) btnPrev.textContent = '← ' + pageNames[pages[i-1]];
     if(i < pages.length - 1) btnNext.textContent = pageNames[pages[i+1]] + ' →';
+    btnTop.style.display = document.documentElement.scrollHeight > window.innerHeight + 40 ? '' : 'none';
     checkBottom();
   }
   function checkBottom(){
@@ -572,6 +573,7 @@
     show(pages[i]);
   }
   document.querySelector('.logo').addEventListener('click', function(e){ e.preventDefault(); history.pushState(null,'','#home'); show('home'); });
+  btnTop.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
   btnPrev.addEventListener('click', function(){ go(-1); });
   btnNext.addEventListener('click', function(){ go(1); });
   links.forEach(function(a){
