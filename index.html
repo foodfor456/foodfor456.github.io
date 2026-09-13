@@ -681,7 +681,7 @@ IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 �
     }
     setTimeout(function(){ step(0); }, 150);
   }
-  document.querySelectorAll('[data-con-src]').forEach(function(h){ h.addEventListener('click', function(){ var id=h.getAttribute('data-con-src'); document.querySelectorAll('#console [data-con]').forEach(function(c){ c.classList.toggle('act', c.getAttribute('data-con')===id); }); typeConsole(id); }); });
+  document.querySelectorAll('[data-con-src]').forEach(function(h){ h.addEventListener('click', function(){ var id=h.getAttribute('data-con-src'); document.querySelectorAll('#console [data-con]').forEach(function(c){ c.classList.toggle('act', c.getAttribute('data-con')===id); }); typeConsole(id); var side=document.querySelector('.side'); if(getComputedStyle(side).position!=='fixed'){ var y=side.getBoundingClientRect().top+window.scrollY-12; window.scrollTo({top:y,behavior:'smooth'}); } }); });
   (function(){
     var now=new Date();
     var m=12+(now.getFullYear()-2024)*12+(now.getMonth()+1-2);
