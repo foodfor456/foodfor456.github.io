@@ -1,660 +1,700 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="robots" content="noindex, nofollow">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>신의 — Backend Developer · 포트폴리오</title>
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex, nocache">
+<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="referrer" content="no-referrer">
+<title>신의 포트폴리오</title>
 <style>
-  @font-face{
-    font-family:"SUIT Variable";
-    font-weight:100 900;font-style:normal;font-display:swap;
-    src:url("fonts/SUIT-Variable.woff2") format("woff2");
-  }
-  @font-face{
-    font-family:"Pretendard Variable";
-    font-weight:45 920;font-style:normal;font-display:swap;
-    src:url("fonts/PretendardVariable.woff2") format("woff2");
-  }
-  :root{
-    --paper:#FBFBF9; --panel:#F2F3EF; --ink:#0E1116; --ink2:#262B33;
-    --muted:#4B5158; --faint:#82878D; --line:#D5D8D2; --hair:#E3E5E0;
-    --ac:#1D4ED8; --ac-deep:#173CA6; --ac-soft:#E8EDFB; --ac-text:#FFFFFF;
-    --ok:#0B8A5C;
-    --mono:"Cascadia Mono","SFMono-Regular",ui-monospace,Consolas,monospace;
-    --sans:"SUIT Variable","Pretendard Variable",Pretendard,"Malgun Gothic","Apple SD Gothic Neo",sans-serif;
-  }
-  *{margin:0;padding:0;box-sizing:border-box}
-  html{scroll-behavior:smooth;scrollbar-gutter:stable;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  @media (prefers-reduced-motion:reduce){
-    html{scroll-behavior:auto}
-    *{animation:none!important;transition:none!important}
-    .rv{opacity:1!important;transform:none!important}
-  }
-  body{font-family:var(--sans);color:var(--ink);background:var(--paper);font-size:17px;line-height:1.7;word-break:keep-all;overflow-wrap:break-word}
-  .wrap{max-width:1020px;margin:0 auto;padding:0 28px 110px}
-  button:focus-visible,a:focus-visible,summary:focus-visible{outline:2.5px solid var(--ac);outline-offset:2px}
-
-  /* ── page routing ── */
-  [data-pg]{display:none}
-  [data-pg].act{display:block;animation:pgin .35s ease}
-  @keyframes pgin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-
-  /* reveal on scroll */
-  .nb{white-space:nowrap}
-  .rv{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}
-  .rv.in{opacity:1;transform:none}
-
-  /* ── nav ── */
-  header{position:sticky;top:0;z-index:10;background:rgba(251,251,249,.95);backdrop-filter:blur(8px);border-bottom:1.5px solid var(--ink)}
-  .navrow{display:flex;justify-content:space-between;align-items:center;max-width:1020px;margin:0 auto;padding:13px 28px}
-  .logo{font-family:var(--mono);font-size:14px;letter-spacing:.14em;font-weight:700;color:var(--ink);text-decoration:none;cursor:pointer}
-  .logo .st{color:var(--ok)}
-  nav{display:flex;gap:8px}
-  nav a{font-size:14.5px;font-weight:600;color:var(--ink2);text-decoration:none;padding:8px 15px;border:1.5px solid transparent;transition:.15s}
-  nav a.on{background:var(--ac);color:var(--ac-text);font-weight:700}
-  nav a:hover{border-color:var(--ink)}
-  .ham{display:none;font-family:var(--mono);font-size:13px;background:none;border:1.5px solid var(--ink);padding:7px 12px;cursor:pointer}
-
-  /* ── hero ── */
-  .hero{
-    position:relative;padding:80px 0 60px;
-    background-image:linear-gradient(var(--hair) 1px,transparent 1px),linear-gradient(90deg,var(--hair) 1px,transparent 1px);
-    background-size:52px 52px;
-  }
-  .hero::after{content:"";position:absolute;inset:auto 0 0 0;height:1px;background:var(--ink)}
-  .hgrid{display:grid;grid-template-columns:1.5fr 1fr;gap:44px;align-items:start}
-  .en{font-family:var(--mono);font-size:12.5px;letter-spacing:.18em;color:var(--ac-deep);text-transform:uppercase;display:block;margin-bottom:20px}
-  .en::before{content:"+ ";color:var(--faint)}
-  h1{font-size:clamp(33px,4.8vw,50px);font-weight:800;letter-spacing:-.035em;line-height:1.22;text-wrap:balance}
-  h1 .hl{color:var(--ac-deep);box-shadow:inset 0 -2px 0 var(--ac)}
-  .lead{margin-top:24px;font-size:17.5px;color:var(--muted)}
-  .lead b{color:var(--ink)}
-  .hcontact{margin-top:18px;font-size:14px;color:var(--muted);line-height:2}
-  .hcontact b{color:var(--ink)}
-
-  .console{
-    border:1.5px solid var(--ink);background:#101319;color:#D7DBE0;
-    font-family:var(--mono);font-size:12.5px;line-height:1.9;
-    box-shadow:6px 6px 0 var(--ac-soft),6px 6px 0 1.5px var(--line);
-  }
-  .cbar{display:flex;align-items:center;gap:8px;padding:8px 14px;border-bottom:1px solid #2A2F38;color:#82878D;font-size:11px;letter-spacing:.1em}
-  .cbar .led{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 6px var(--ok)}
-  .cbody{padding:14px 16px 18px;min-height:170px}
-  .cbody .ln{display:block}
-  .cbody .p{color:#5E6570}.cbody .g{color:#3DD68C}.cbody .b{color:#7EA5F8}.cbody .y{color:#E8C468}
-  .caret{display:inline-block;width:7px;height:14px;background:#3DD68C;vertical-align:-2px;animation:blink 1s steps(1) infinite}
-  @keyframes blink{50%{opacity:0}}
-  .console.sec{margin-top:36px}
-  .console.sec .cbody{min-height:0}
-  .tag.run{background:var(--ok);border-color:var(--ok);color:#fff;font-weight:700}
-  .tag.plan{background:var(--ac-soft);border-color:var(--ac);color:var(--ac-deep);font-weight:700}
-
-  .ledger{display:grid;grid-template-columns:repeat(4,1fr);border:1.5px solid var(--ink);background:#fff;margin-top:48px}
-  .lcell{padding:20px 18px;border-left:1px solid var(--hair)}
-  .lcell:first-child{border-left:0}
-  .lnum{font-size:34px;font-weight:800;letter-spacing:-.02em;line-height:1;font-variant-numeric:tabular-nums}
-  .lnum .u{font-size:15px;color:var(--muted);font-weight:700}
-  .lnum.ac{color:var(--ac-deep)}
-  .llab{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ac-deep);margin-top:10px}
-  .lsub{font-size:13.5px;color:var(--muted);margin-top:3px}
-
-  /* ── sections ── */
-  section{padding:72px 0 84px;position:relative}
-  section + section{border-top:1px solid var(--hair)}
-  section.band{background:var(--panel);box-shadow:0 0 0 100vmax var(--panel);clip-path:inset(0 -100vmax);border-top:0}
-  .sechead{display:flex;align-items:baseline;gap:14px;margin-bottom:34px;flex-wrap:wrap}
-  .secno{font-family:var(--mono);font-size:12.5px;color:var(--ac-deep);letter-spacing:.1em}
-  .secno::before{content:"+ ";color:var(--faint)}
-  h2{font-size:25px;font-weight:800;letter-spacing:-.02em}
-  .secsub{font-family:var(--mono);font-size:11.5px;color:var(--faint);letter-spacing:.08em;text-transform:uppercase;margin-left:auto}
-
-  /* ── about story ── */
-  .story{display:grid;grid-template-columns:1fr 1fr;gap:28px}
-  .story p{font-size:16px;color:var(--ink2)}
-  .story p b{color:var(--ink)}
-  .story .pull{
-    border-left:3px solid var(--ac);padding:4px 0 4px 18px;font-size:18.5px;font-weight:700;
-    letter-spacing:-.01em;color:var(--ink);align-self:start;
-  }
-  .pull-em{
-    font-size:21px;font-weight:800;color:var(--ac-deep);display:inline-block;margin-top:8px;
-    box-shadow:inset 0 -.32em 0 color-mix(in srgb, var(--ac) 22%, white);padding:0 2px;
-  }
-  .facts{margin-top:30px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-  .fact{border:1px solid var(--line);background:#fff;padding:16px 18px}
-  .fact .k{font-size:16.5px;font-weight:800;letter-spacing:-.01em;color:var(--ac-deep);display:block;margin-bottom:8px}
-  .fact p{font-size:14.5px;color:var(--ink2)}
-
-  /* ── skills ── */
-  .skills{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-  .skl{border:1px solid var(--line);background:#fff;padding:20px}
-  .skl .kno{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--ac-deep);display:block;margin-bottom:8px;text-transform:uppercase}
-  .skl h3{font-size:15px;font-weight:800;margin-bottom:12px}
-  .badges{display:flex;flex-wrap:wrap;gap:6px}
-  .b{font-size:13.5px;padding:4px 10px;border:1px solid var(--line);background:var(--panel)}
-  .b.pri{background:var(--ac);border-color:var(--ac-deep);font-weight:700;color:var(--ac-text)}
-  .lgbar{display:flex;gap:10px;margin-bottom:22px}
-  .lg-item{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:600;color:var(--ink2);padding:7px 14px;border:1.5px solid var(--line);background:#fff;transition:.15s}
-  .lg-item .sq{width:12px;height:12px}
-  .lg-item.pri .sq{background:var(--ac)}
-  .lg-item.util .sq{background:var(--panel);border:1px solid var(--line)}
-  .lg-item.hot{border-color:var(--ac);background:var(--ac-soft);color:var(--ac-deep);font-weight:800}
-  .skills.f-pri .b:not(.pri),.skills.f-util .b.pri{opacity:.22}
-  .skills .b{transition:opacity .15s}
-
-  /* ── timeline ── */
-  .tl{display:flex;margin-top:10px}
-  .tstop{flex:1;position:relative;padding:24px 14px 0 0}
-  .tstop::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:var(--line)}
-  .tstop::after{content:"";position:absolute;top:-5px;left:0;width:12px;height:12px;background:#fff;border:2.5px solid var(--ac);border-radius:50%}
-  .tstop.now::before{background:var(--ac)}
-  .tstop.now::after{background:var(--ac)}
-  .tyr{font-size:13px;font-weight:700;color:var(--ac-deep)}
-  .tstop h3{font-size:15.5px;font-weight:800;margin:4px 0 2px}
-  .tstop p{font-size:13.5px;color:var(--muted)}
-
-  /* ── method ── */
-  .mdesc{font-size:16px;color:var(--muted);max-width:70ch;margin-bottom:26px}
-  .mdesc b{color:var(--ink)}
-  .loop{display:flex;align-items:stretch;border:1.5px solid var(--ink);background:#fff}
-  .step{flex:1;padding:22px 18px;border-left:1px solid var(--hair)}
-  .step:first-child{border-left:0}
-  .step .lg{font-family:var(--mono);font-size:24px;font-weight:700;color:var(--ac-deep)}
-  .step p{font-size:14.5px;margin-top:6px;color:var(--ink2)}
-  .arrow{align-self:center;padding:0 6px;color:var(--faint);font-family:var(--mono)}
-
-  /* ── cases ── */
-  .cards{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-  .card{border:1.5px solid var(--ink);background:#fff;padding:24px;transition:transform .18s,box-shadow .18s;cursor:pointer}
-  .card:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--ac)}
-  .card.open{grid-column:1/-1;cursor:default;transform:none;box-shadow:5px 5px 0 var(--ac-soft)}
-  .cno{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--ac-deep);text-transform:uppercase}
-  .card h3{font-size:18.5px;font-weight:800;margin:8px 0 4px;letter-spacing:-.01em}
-  .cmeta{font-size:14px;color:var(--muted)}
-  .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
-  .tag{font-size:12.5px;padding:3px 9px;border:1px solid var(--line);color:var(--ink2);background:var(--panel)}
-  .pasr{display:none;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px;padding-top:18px;border-top:1px solid var(--hair)}
-  .card.open .pasr{display:grid}
-  .pasr .k{font-size:13.5px;font-weight:800;color:var(--ac-deep);display:block;margin-bottom:6px}
-  .pasr p{font-size:15px;color:var(--ink2)}
-  .pasr p b{color:var(--ink)}
-  .hint{font-family:var(--mono);font-size:10.5px;color:var(--faint);margin-top:16px;letter-spacing:.08em}
-  .card.open .hint{display:none}
-
-  /* ── infra / credentials ── */
-  .rows{border:1.5px solid var(--ink);background:#fff}
-  .row{display:grid;grid-template-columns:170px 1fr;gap:18px;padding:16px 20px;border-top:1px solid var(--hair)}
-  .row:first-child{border-top:0}
-  .row .k{font-size:13.5px;font-weight:700;color:var(--ac-deep);padding-top:2px}
-  .row p{font-size:15.5px;color:var(--ink2)}
-  .row p b{color:var(--ink)}
-
-  /* ── project ledger ── */
-  .grp{margin-top:26px}
-  .grp:first-of-type{margin-top:0}
-  details.grp summary{
-    list-style:none;cursor:pointer;display:flex;align-items:baseline;gap:12px;
-    border:1.5px solid var(--ink);background:#fff;padding:14px 20px;font-weight:800;font-size:16.5px;
-  }
-  details.grp summary::-webkit-details-marker{display:none}
-  details.grp summary .cnt{font-family:var(--mono);font-size:12px;color:var(--ac-deep);letter-spacing:.08em;margin-left:auto}
-  details.grp summary::after{content:"[+]";font-family:var(--mono);color:var(--faint);font-size:13px}
-  details.grp[open] summary::after{content:"[-]"}
-  .plist{border:1.5px solid var(--ink);border-top:0;background:#fff}
-  .pj{display:grid;grid-template-columns:230px 1fr;gap:18px;padding:13px 20px;border-top:1px solid var(--hair)}
-  .pj:first-child{border-top:0}
-  .pj .nm{font-weight:700;font-size:14.5px}
-  .pj p{font-size:14.5px;color:var(--muted)}
-  .pj.has{cursor:pointer}
-  .pj.has:hover{background:var(--ac-soft)}
-  .pj.has .nm::after{content:" [+]";font-family:var(--mono);color:var(--faint);font-size:11px;font-weight:400}
-  .pj.has.open .nm::after{content:" [-]";color:var(--ac-deep)}
-  .pjd{display:none;grid-column:1/-1;margin-top:2px;padding:14px 16px;background:var(--panel);border-left:3px solid var(--ac);font-size:14px;color:var(--ink2);line-height:1.8}
-  .pj.open .pjd{display:block}
-  .pjd .dt{font-size:12.5px;font-weight:700;color:var(--ac-deep);display:block;margin-bottom:4px}
-  .pjd b{color:var(--ink)}
-
-  footer{padding:64px 0 40px;border-top:1.5px solid var(--ink)}
-  footer .big{font-size:26px;font-weight:800;letter-spacing:-.02em;line-height:1.4;max-width:34ch}
-  footer .big .hl{color:var(--ac-deep)}
-  footer .ct{font-size:15px;color:var(--muted);margin-top:20px;line-height:2}
-  footer .ct b{color:var(--ink)}
-  footer .thanks{font-family:var(--mono);font-size:12px;letter-spacing:.2em;color:var(--faint);margin-top:34px}
-
-  /* ── page prev/next (하단 도달 시 표시) ── */
-  .pgnav{
-    position:fixed;bottom:56px;left:50%;z-index:15;display:flex;gap:12px;
-    transform:translateX(-50%) translateY(90px);opacity:0;pointer-events:none;
-    transition:transform .25s ease,opacity .25s ease;
-  }
-  .pgnav.show{transform:translateX(-50%);opacity:1;pointer-events:auto}
-  .pgnav button{
-    font-family:var(--sans);font-size:16.5px;font-weight:700;color:var(--ink);
-    padding:14px 28px;border:1.5px solid var(--ink);background:#fff;cursor:pointer;
-    box-shadow:3px 3px 0 var(--ac-soft),3px 3px 0 1.5px var(--line);transition:.15s;
-  }
-  .pgnav button:hover{background:var(--ac);color:var(--ac-text)}
-
-  /* ── mobile ── */
-  @media (max-width:780px){
-    br.d{display:none}
-    nav{display:none;position:absolute;top:100%;right:0;left:0;background:var(--paper);border-bottom:1.5px solid var(--ink);flex-direction:column;padding:10px 20px;gap:2px}
-    nav.openm{display:flex}
-    .ham{display:block}
-    .hgrid{grid-template-columns:1fr}
-    .ledger{grid-template-columns:1fr 1fr}
-    .lcell:nth-child(n+3){border-top:1px solid var(--hair)}
-    .lcell:nth-child(3){border-left:0}
-    .cards,.skills,.pasr,.story,.facts{grid-template-columns:1fr}
-    .loop{flex-direction:column}
-    .step{border-left:0;border-top:1px solid var(--hair)}
-    .step:first-child{border-top:0}
-    .arrow{display:none}
-    .tl{flex-direction:column}
-    .tstop{padding:6px 0 20px 22px}
-    .tstop::before{top:0;bottom:0;left:5px;right:auto;width:2px;height:auto}
-    .tstop::after{top:4px;left:0}
-    .row,.pj{grid-template-columns:1fr;gap:4px}
-  }
-
-  /* ── print ── */
-  @media print{
-    [data-pg]{display:block!important;animation:none!important}
-    body{font-size:10.5pt;background:#fff}
-    header,.ham,.hint,.pgnav{display:none}
-    .rv{opacity:1;transform:none}
-    .hero{padding:10mm 0 8mm;background-image:none}
-    section{padding:8mm 0}
-    section.band{box-shadow:none;clip-path:none;background:var(--panel)}
-    .caret{animation:none;background:none}
-    .console{box-shadow:none}
-    .card .pasr{display:grid}
-    .pjd{display:block}
-    .pj.has .nm::after{display:none;content:""}
-    .card{break-inside:avoid;box-shadow:none!important;transform:none!important}
-    .skl,.fact,.tstop,.row,.pj{break-inside:avoid}
-    details.grp{display:block}
-    details.grp summary::after{display:none}
-    .plist{display:block!important}
-    a{color:inherit;text-decoration:none}
-  }
+@font-face{font-family:'Pretendard';src:url('fonts/PretendardVariable.woff2') format('woff2-variations');font-weight:100 900;font-display:swap}
+:root{--bg:#faf8f3;--ink:#22221f;--mute:#5d5b55;--line:#ddd7cb;--head:#f1ede3;--ac:#2b4c7e;--ac-soft:#dde6f2;--ac-line:#8fa8cc}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Pretendard',-apple-system,'Malgun Gothic','Apple SD Gothic Neo',sans-serif;font-size:15px;line-height:1.75;word-break:keep-all}
+a{color:var(--ink)}
+b,strong{font-weight:700}
+.wrap{max-width:920px;margin:0 auto;padding:0 24px 80px}
+.layout{display:block}
+.side{position:fixed;top:118px;left:20px;width:calc(50% - 488px);min-width:280px;z-index:5}
+header.top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;padding:30px 0 16px;border-bottom:2px solid var(--ink)}
+header.top .name{font-size:30px;font-weight:800;margin:0 0 4px;letter-spacing:-.02em;line-height:1.2}
+header.top .role{font-size:14px;color:var(--mute);margin:0}
+header.top .links{display:flex;flex-direction:column;align-items:flex-end;gap:2px;font-size:13.5px;line-height:1.6}
+header.top .links a{color:var(--mute);text-decoration:none;border-bottom:1px solid transparent}
+header.top .links a:hover{color:var(--ink);border-bottom-color:var(--ink)}
+.copied{position:fixed;left:50%;bottom:36px;transform:translateX(-50%);background:var(--ink);color:#fff;font-size:13px;padding:8px 14px;border-radius:4px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:9}
+.copied.show{opacity:.95}
+nav.tabs{display:flex;flex-wrap:wrap;gap:0 24px;border-bottom:1px solid var(--line);margin:0 0 26px}
+nav.tabs a{display:block;padding:12px 0;text-decoration:none;color:var(--mute);border-bottom:3px solid transparent;margin-bottom:-1px}
+nav.tabs a:hover{color:var(--ink)}
+nav.tabs a.on{color:var(--ink);font-weight:700;border-bottom-color:var(--ac)}
+section[data-pg]{display:none}
+section[data-pg].act{display:block}
+.hero{margin:0 0 8px}
+.hero h1{font-size:28px;line-height:1.4;font-weight:800;letter-spacing:-.02em;margin:6px 0 16px}
+.hero h1 em{font-style:normal;box-shadow:inset 0 -.42em 0 var(--ac-soft)}
+.hero .lead{font-size:15.5px;margin:0 0 18px}
+.glance{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);background:#fff;margin:6px 0 30px}
+.glance div{padding:12px 14px;border-left:1px solid var(--line)}
+.glance div:first-child{border-left:0}
+.glance b{display:block;font-size:19px;font-weight:800;line-height:1.3}
+.glance span{font-size:12.5px;color:var(--mute)}
+h2{font-size:19px;margin:44px 0 14px;padding:0 0 8px 12px;border-bottom:1px solid var(--line);position:relative}
+h2::before{content:'';position:absolute;left:0;top:5px;width:4px;height:20px;background:var(--ac)}
+h2:first-child{margin-top:0}
+[data-con-src]{cursor:pointer}
+[data-con-src]::after{content:"\00a0>_";font-family:'D2Coding','Consolas','Menlo',monospace;font-size:.78em;font-weight:700;color:#fff;background:var(--ac);border-radius:3px;padding:1px 7px 2px;margin-left:8px;vertical-align:2px;letter-spacing:.02em;animation:conpulse 2.6s ease-in-out infinite;transition:background .2s,transform .2s,box-shadow .2s}
+[data-con-src]:hover::after{animation:none;background:#1d3a66;transform:translateY(-1px);box-shadow:0 3px 10px rgba(43,76,126,.35)}
+@keyframes conpulse{0%,100%{background:var(--ac);box-shadow:0 0 0 0 rgba(43,76,126,0)}50%{background:#b5473a;box-shadow:0 0 0 4px rgba(181,71,58,.2)}}
+@media (prefers-reduced-motion:reduce){[data-con-src]::after{animation:none}}
+[data-con-src]:hover{color:var(--ac)}
+h3{font-size:16.5px;margin:28px 0 8px}
+p{margin:0 0 12px}
+p,td,dd,li{text-wrap:pretty}
+ul{margin:0 0 12px;padding-left:20px}
+li{margin:0 0 4px}
+.tw{overflow-x:auto;margin:0 0 18px}
+table{width:100%;border-collapse:collapse;margin:0;font-size:14.5px;background:#fff}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:var(--head);font-weight:600;white-space:nowrap}
+td.k{white-space:nowrap;color:#333;width:1%;background:var(--head)}
+td.dt{white-space:nowrap;color:var(--mute);width:1%}
+.small{font-size:13.5px;color:var(--mute)}
+.motto{font-size:20px;font-weight:600;line-height:1.6;letter-spacing:-.01em;margin:8px 0 12px;padding:0 0 0 16px;border-left:3px solid var(--ac)}
+.case{margin:0 0 30px;padding:18px 20px 12px;background:#fff;border:1px solid var(--line);border-top:3px solid var(--ac-line)}
+.case h3{margin-top:0}
+.case h3 .no{color:var(--ac);margin-right:8px}
+.case h3 .no::before{content:'사례 '}
+.case h3 .no::after{content:'.'}
+.case .meta{color:var(--mute);font-size:13.5px;margin:0 0 4px}
+.tags{margin:0 0 10px;font-size:13px;color:var(--ac);word-spacing:.35em}
+.case dl{margin:0}
+.case dt{font-weight:700;margin:10px 0 2px;color:var(--ac)}
+.case dd{margin:0}
+.console{background:#1e2126;color:#d6dbe3;border-radius:6px;padding:14px 16px;font-family:'D2Coding','Consolas','Menlo',monospace,'Pretendard';font-size:12px;line-height:1.75;margin:0;overflow-x:auto;overflow-y:auto;height:min(380px, calc(100vh - 160px));scrollbar-width:thin;scrollbar-color:#3a3f47 transparent;word-break:break-all;box-shadow:0 8px 24px rgba(40,35,20,.12)}
+.console [data-con]{display:none}
+.console [data-con].act{display:block}
+.console .bar{display:block;color:#8a93a3;border-bottom:1px solid #2f343b;padding-bottom:6px;margin-bottom:8px;font-size:11.5px;letter-spacing:.04em}
+.console .p{color:#8a93a3}
+.console .g{color:#8fd9a5}
+.console .y{color:#e6c46a}
+.console .b{color:#8fbcff}
+.console .cur{display:inline-block;width:7px;height:14px;background:#d6dbe3;vertical-align:-2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.pgnav{display:flex;justify-content:space-between;margin-top:48px;padding-top:14px;border-top:1px solid var(--line);font-size:14px}
+.pgnav a{text-decoration:none;color:var(--ink);border:1px solid #b9b3a5;border-radius:3px;padding:8px 16px;background:#fff}
+.pgnav a:hover{background:var(--ac-soft);border-color:var(--ac)}
+.pgnav a.prev::before{content:'\2190\00a0'}
+.pgnav a.next::after{content:'\00a0\2192'}
+.totop{position:fixed;left:calc(50% + 472px);bottom:28px;display:none;padding:9px 14px;font-size:13px;color:var(--ink);background:#fff;border:1px solid #b9b3a5;border-radius:3px;cursor:pointer;font-family:inherit;box-shadow:0 2px 8px rgba(40,35,20,.12)}
+.totop.show{display:block}
+.totop:hover{background:var(--ac-soft);border-color:var(--ac)}
+@media print{
+  body{background:#fff}
+  nav.tabs,.pgnav,.side,.totop{display:none}
+  section[data-pg]{display:block!important}
+  h2{page-break-after:avoid}
+}
+@media (max-width:1100px){
+  .totop{left:auto;right:16px}
+}
+@media (max-width:1559px){
+  .side{position:static;width:auto;margin:0 0 30px}
+  .console{font-size:12.5px;min-height:0;height:220px}
+}
+@media (max-width:760px){
+  .glance{grid-template-columns:1fr}
+  .glance div{border-left:0}
+  .glance div:nth-child(n+2){border-top:1px solid var(--line)}
+  header.top{flex-direction:column;align-items:flex-start;gap:8px}
+  header.top .links{align-items:flex-start}
+}
+@media (max-width:640px){
+  body{font-size:14.5px}
+  .hero h1{font-size:24px}
+  nav.tabs{gap:0 14px}
+  table{font-size:13.5px;min-width:560px}
+  th,td{padding:6px 7px}
+}
 </style>
 </head>
 <body>
+<div class="wrap">
 
-<header>
-  <div class="navrow">
-    <a class="logo" href="#home" aria-label="처음으로">SHIN.EUI <span class="st">● RUNNING</span></a>
-    <button class="ham" aria-label="메뉴 열기" aria-expanded="false">MENU</button>
-    <nav id="nav">
-      <a href="#home" data-page="home">About</a>
-      <a href="#skills" data-page="skills">Skills</a>
-      <a href="#projects" data-page="projects">Projects</a>
-      <a href="#cases" data-page="cases">Cases</a>
-      <a href="#career" data-page="career">Career</a>
-      <a href="#contact" data-page="contact">Contact</a>
-    </nav>
+<header class="top">
+  <div>
+    <p class="name">신의</p>
+    <p class="role">백엔드 개발자. 공공, 교육, 문화, 제조 도메인의 웹 시스템 구축과 운영</p>
+  </div>
+  <div class="links">
+    <a class="mail" href="mailto:foodfor456@naver.com?subject=%EC%B1%84%EC%9A%A9%20%EB%AC%B8%EC%9D%98" data-copy="foodfor456@naver.com">foodfor456@naver.com</a>
   </div>
 </header>
 
-<div class="wrap">
+<nav class="tabs" aria-label="페이지">
+  <a href="#about" data-page="about">소개</a>
+  <a href="#skills" data-page="skills">기술</a>
+  <a href="#cases" data-page="cases">주요 사례</a>
+  <a href="#projects" data-page="projects">프로젝트</a>
+  <a href="#career" data-page="career">이력</a>
+  <a href="#contact" data-page="contact">마치며</a>
+</nav>
 
-  <!-- ══ HERO ══ -->
-  <div class="hero" id="about" data-pg="home">
-    <div class="hgrid">
-      <div>
-        <span class="en">Shin Eui · Backend Developer · 2026</span>
-        <h1>데이터가 <span class="hl">어긋나지 않게</span>,<br>운영이 <span class="hl">멈추지 않게</span><br>만드는 백엔드.</h1>
-        <p class="lead">공공·교육·문화·스마트공장 도메인에서 웹 시스템을<br class="d">직접 기획·구축·운영하는 백엔드 개발자입니다.<br class="d"><b class="nb">Legacy(PHP/Drupal → Java/Spring) 전환</b>,<br class="d">교통비·교부금 정산처럼 비용과 직결되는 기능의 <b>데이터 정합성</b>,<br class="d">그리고 <b>반복업무 자동화</b>를 직접 수행해 왔습니다.</p>
-        <div class="hcontact">
-          <b>foodfor456@naver.com</b><br>
-          충북 청주시 · 육군 병장 만기전역 · ㈜디엑시트 개발팀 대리
-        </div>
-      </div>
-      <div class="console" aria-label="운영 콘솔 데모">
-        <div class="cbar"><span class="led"></span>OPS-CONSOLE — shin@dexit</div>
-        <div class="cbody" id="cbody">
-          <span class="ln"><span class="p">$</span> <span class="b">SELECT</span> integrity <span class="b">FROM</span> settlement;</span>
-          <span class="ln"><span class="g">✓ 0 rows mismatched</span></span>
-          <span class="ln"><span class="p">$</span> systemctl status legacy-migration</span>
-          <span class="ln"><span class="g">● active</span> <span class="p">— PHP/Drupal → Java/Spring</span></span>
-          <span class="ln"><span class="p">$</span> tail -f career.log</span>
-          <span class="ln"><span class="y">[3.5y]</span> 구축 → 운영 인수 → 자동화</span>
-          <span class="ln"><span class="g">[now]</span> 늘봄허브 마무리 · 세종미식 / 세종한글 <span class="caret"></span></span>
-        </div>
-      </div>
-    </div>
-    <div class="ledger">
-      <div class="lcell"><div class="lnum"><span data-cnt="3.5">3.5</span><span class="u">년</span></div><div class="llab">Career · Backend</div><div class="lsub">백엔드 경력 3년 7개월</div></div>
-      <div class="lcell"><div class="lnum"><span data-cnt="20">20</span><span class="u">+</span></div><div class="llab">Projects</div><div class="lsub">참여 프로젝트</div></div>
-      <div class="lcell"><div class="lnum"><span data-cnt="4">4</span></div><div class="llab">Domains</div><div class="lsub">공공 · 교육 · 문화 · 제조</div></div>
-      <div class="lcell"><div class="lnum ac">AI</div><div class="llab">Assisted Dev</div><div class="lsub">Claude Code 기반 개발</div></div>
+<div class="layout">
+<aside class="side">
+<div class="console" id="console" aria-label="콘솔">
+  <div data-con="about">
+<span class="bar">shin@dexit: projects.log</span>
+<span class="p">$</span> tail -f projects.log<br>
+<span class="g">[RUN ]</span> 기획예산처 사이트 고도화 <span class="p">(2026.07~, 단독 개발, 전자정부프레임워크 5.0, JDK 21, JBoss, CUBRID)</span><br>
+<span class="g">[RUN ]</span> 충북테크노파크 재구축 <span class="p">(2026.08~, PHP 사이트를 자사 Java CMS로, JDK 21, JBoss, MariaDB)</span><br>
+<span class="g">[RUN ]</span> 세종 관광문화재단 세종미식, 세종한글 <span class="p">(Java, Spring 백엔드 전담)</span><br>
+<span class="g">[RUN ]</span> 교통비 정산 시스템 안성, 제주 <span class="p">(2025.10~ 유지보수 재투입, Spring Boot, Docker, Naver Cloud)</span><br>
+<span class="y">[DONE]</span> 늘봄허브 <span class="p">(2026.04~2026.08 개발 완료, 하자 대응 중)</span><br>
+<span class="p">$</span> wc -l projects.log ops.log<br>
+<span class="g">15</span> 구축 <span class="p">|</span> <span class="g">11</span> 유지보수 <span class="p">|</span> <span class="g">7</span> 제조사 MES<br>
+<span class="p">$</span> <span class="b">SELECT</span> integrity <span class="b">FROM</span> settlement;<br>
+<span class="g">0 rows mismatched</span><br>
+<span class="p">$</span> uptime<br>
+<span class="g">백엔드 <span class="career-len">3년 7개월</span></span> <span class="p">㈜디엑시트 개발팀 대리 재직중</span> <span class="cur"></span>
+  </div>
+  <div data-con="skills">
+<span class="bar">shin@dexit: stack</span>
+<span class="p">$</span> cat stack.txt<br>
+<span class="g">[BACK]</span> Java, Spring Framework, Spring Boot, 전자정부프레임워크 3.8 ~ 5.0, MyBatis<br>
+<span class="g">[BACK]</span> PHP, Laravel, CodeIgniter3<br>
+<span class="g">[DB  ]</span> MySQL, MariaDB, SQL 튜닝, 데이터 마이그레이션<br>
+<span class="g">[DB  ]</span> CUBRID, PostgreSQL, OracleDB<br>
+<span class="g">[WAS ]</span> Tomcat, JBoss, Apache<br>
+<span class="g">[OPS ]</span> Linux, Jenkins, GitLab CI/CD, GitLab Runner, Docker, Naver Cloud, NAS<br>
+<span class="g">[VIEW]</span> JSP, JSTL, Thymeleaf, JavaScript, jQuery, Ajax, Bootstrap<br>
+<span class="y">[AI  ]</span> Claude Code, 자체 제작 스킬, 작업 2 + 검증 1 + PM 1 세션<br>
+<span class="p">$</span> java -version<br>
+<span class="g">JDK 1.8 ~ 21</span> <span class="p">프로젝트별 환경 구성과 운영</span><br>
+<span class="p">$</span> systemctl status apache tomcat jboss jenkins<br>
+<span class="g">active (4)</span> <span class="p">서버 설정부터 배포 구성까지</span><br>
+<span class="p">$</span> git log --oneline -n 1 .gitlab-ci.yml<br>
+<span class="g">deploy</span> <span class="p">master push 시 Docker 자동 배포, 회사 표준으로 채택</span><br>
+<span class="p">$</span> cloud status<br>
+<span class="g">Naver Cloud</span> <span class="p">SaaS 프로젝트 CI/CD 운영 중</span> <span class="cur"></span>
+  </div>
+  <div data-con="cases">
+<span class="bar">shin@dexit: cases</span>
+<span class="p">$</span> tail -f cases.log<br>
+<span class="p">2023.01</span> <span class="b">05</span> 스마트공장 MES, 7개 제조사 <span class="p">설비 IO 수집, 현장 화면, 바코드</span> <span class="y">[DONE]</span><br>
+<span class="p">2024.06</span> <span class="b">04</span> 교통비 정산 시스템, 안성과 제주 <span class="p">유지보수 인수, 코레일 IP 허용, 운영 재현 환경</span> <span class="g">[RUN ]</span><br>
+<span class="p">2024.11</span> <span class="b">01</span> 서울연구원 <span class="p">PHP 드루팔에서 Java, Spring 전환</span> <span class="y">[DONE]</span><br>
+<span class="p">2026.03</span> <span class="b">03</span> 사내 CMS <span class="p">반복 구축 표준화, 캐시 자동 최신화</span> <span class="y">[DONE]</span><br>
+<span class="p">2026.04</span> <span class="b">02</span> 늘봄허브 <span class="p">다중 권한, 만족도 통계 허브</span> <span class="y">[DONE]</span><br>
+<span class="p">2026.04</span> <span class="b">06</span> 늘봄허브 멱등 DDL <span class="p">3개 서버, 6개 반영 지점 무결성</span> <span class="y">[DONE]</span><br>
+<span class="p">$</span> grep -l "정합성" cases/*<br>
+<span class="g">cases/01 cases/02 cases/04</span> <span class="p">돈이 걸린 기능마다 같은 검증 절차</span><br>
+<span class="p">$</span> grep -l "인수" cases/*<br>
+<span class="g">cases/01 cases/04</span> <span class="p">문서 없이 넘겨받아 분석부터</span><br>
+<span class="p">$</span> grep -l "협업" cases/*<br>
+<span class="g">cases/04 cases/06</span> <span class="p">외부 기관, 다른 회사 개발자</span><br>
+<span class="p">$</span> echo $HINT<br>
+<span class="g">사례 제목을 누르면 그 사례가 여기 찍힙니다</span> <span class="cur"></span>
+  </div>
+  <div data-con="career">
+<span class="bar">shin@dexit: career.log</span>
+<span class="p">$</span> tail -f career.log<br>
+<span class="p">2022.04</span> 자바, 스프링 백엔드 과정 시작<br>
+<span class="p">2022.10</span> 900시간 무결석 수료, 출석률 우수 표창 <span class="y">[DONE]</span><br>
+<span class="p">2023.01</span> ㈜제오시스 입사, 스마트공장 MES<br>
+<span class="p">2024.01</span> 7개 제조사 적용, 퇴사 <span class="y">[DONE]</span><br>
+<span class="p">2024.02</span> ㈜디엑시트 입사, 공공 웹 시스템 <span class="g">[RUN ]</span><br>
+<span class="p">2024.11</span> 서울연구원 레거시 전환 착수<br>
+<span class="p">2026.04</span> 늘봄허브, AI 기반 개발 전면 적용<br>
+<span class="p">2026.07</span> 기획예산처 고도화 단독 개발 <span class="g">[RUN ]</span><br>
+<span class="p">2026.09</span> 정보처리기사 <span class="y">[DONE]</span><br>
+<span class="p">2027.02</span> 컴퓨터공학 학사 <span class="g">[PLAN]</span><br>
+<span class="p">uptime</span> 백엔드 <span class="career-len">3년 7개월</span> <span class="cur"></span>
+  </div>
+  <div data-con="method">
+<span class="bar">shin@dexit: 일하는 방식</span>
+<span class="code">String name = Optional.ofNullable(user).map(User::getName).orElse(<span class="y">""</span>); <span class="p">// user.getName()부터 부르면 user가 null일 때 NPE</span></span><br>
+<span class="code"></span><br>
+<span class="code"><span class="b">catch</span> (SettlementException e) { <span class="p">// Exception으로 받으면 취약점, 원인이 묻힌다</span></span><br>
+<span class="code">&nbsp;&nbsp;&nbsp;&nbsp;log.error(<span class="y">"정산 실패 month={} code={}"</span>, month, e.getCode()); <span class="p">// e를 그대로 넘기면 내부 정보가 로그에 남는다</span></span><br>
+<span class="code">&nbsp;&nbsp;&nbsp;&nbsp;<span class="b">throw</span> e;</span><br>
+<span class="code">}</span><br>
+<span class="code"></span><br>
+<span class="code"><span class="b">if</span> (!ALLOWED_EXT.contains(ext(file)) || !ALLOWED_MIME.contains(detectMime(file)) || file.getSize() &gt; MAX_SIZE)</span><br>
+<span class="code">&nbsp;&nbsp;&nbsp;&nbsp;<span class="b">throw new</span> BadRequestException(<span class="y">"허용되지 않은 파일"</span>); <span class="p">// 확장자만 보면 우회된다. 실제 형식과 크기까지</span></span><br>
+<span class="code">String stored = UUID.randomUUID() + <span class="y">"."</span> + ext(file); <span class="p">// 원본 파일명을 경로에 쓰면 경로 조작</span></span><br>
+<span class="code"></span><br>
+<span class="code"><span class="b">@Profile</span>(<span class="y">"dev"</span>) Relay relay = <span class="b">new</span> ReplayRelay(config.get(<span class="y">"relay.sample"</span>)); <span class="p">// 재현 전문은 개인정보 제거본만, 경로는 설정에서</span></span><br>
+<span class="code"></span><br>
+<span class="code"><span class="b">int</span> limit = config.getInt(<span class="y">"settlement.limit"</span>); <span class="p">// 코드에 박으면 바꿀 때마다 배포</span></span><br>
+<span class="code"></span><br>
+<span class="code">Snapshot snap = snapshots.save(); <span class="p">// 되돌릴 지점 없이 반영하면 복구 불가</span></span><br>
+<span class="code"><span class="b">try</span> {</span><br>
+<span class="code">&nbsp;&nbsp;&nbsp;&nbsp;settlements.apply(result);</span><br>
+<span class="code">} <span class="b">catch</span> (DataAccessException e) {</span><br>
+<span class="code">&nbsp;&nbsp;&nbsp;&nbsp;snapshots.restore(snap); <span class="p">// 원복 먼저, 수정은 그다음</span></span><br>
+<span class="code">&nbsp;&nbsp;&nbsp;&nbsp;<span class="b">throw</span> e; <span class="p">// 원복했다고 삼키지 않는다</span></span><br>
+<span class="code">}</span><br>
+<span class="code"></span><br>
+<span class="p">$</span> cat method.txt<br>
+<span class="b">1</span> 오류는 기록하고, 같은 문제는 개발 단계에서 차단<br>
+<span class="b">2</span> 검출된 취약점 조치로 쌓인 지식으로 다음 프로젝트 미리 대비<br>
+<span class="b">3</span> 개발 환경을 운영과 최대한 같게 구성<br>
+<span class="b">4</span> 미리 테스트해 운영에서만 드러나는 경우의 수 최소화<br>
+<span class="b">5</span> 반영 전에 되돌릴 길부터 확보<br>
+<span class="b">6</span> 문제가 생기면 원복 먼저, 수정은 그다음 <span class="cur"></span>
+  </div>
+  <div data-con="infra">
+<span class="bar">shin@dexit: infra</span>
+<span class="p">$</span> systemctl status apache tomcat jboss jenkins<br>
+<span class="g">active (4)</span> <span class="p">Linux 서버 설정부터 빌드, 배포 구성까지, JDK 1.8 ~ 21</span><br>
+<span class="p">$</span> cat .gitlab-ci.yml | head -n 1<br>
+<span class="g">deploy: master push 시 Docker 자동 배포</span> <span class="p">회사 표준으로 채택</span><br>
+<span class="p">$</span> cloud status<br>
+<span class="g">Naver Cloud</span> <span class="p">SaaS 프로젝트 CI/CD 운영 중</span> <span class="cur"></span>
+  </div>
+  <div data-con="case1">
+<span class="bar">shin@dexit: cases/01</span>
+<span class="p">$</span> cat cases/01/summary<br>
+<span class="y">서울연구원</span> 레거시 전환과 운영 인수 <span class="p">2024.11 ~ 2025.02, 이후 유지보수</span><br>
+<span class="p">stack</span> Java, Spring, MyBatis, MySQL, Oracle<br>
+<span class="p">$</span> cat cases/01/problem<br>
+연구보고서, 기사, 채용, 파일과 미디어 중심 사이트가 PHP 드루팔에 묶임<br>
+문서 없음, 유지보수와 조회 성능 모두 제약<br>
+<span class="p">$</span> cat cases/01/approach<br>
+맞춤형 DB 구조를 직접 분석해 Java, Spring으로 재설계<br>
+텍스트 데이터는 SQL로 1차 이관, 파일 데이터는 Java 이관 기능을 따로 구현<br>
+URL 매핑 컨트롤러로 이관 검증을 기능화해 원본과 대조<br>
+<span class="p">$</span> diff origin migrated<br>
+<span class="g">0 differences</span><br>
+<span class="p">$</span> cat cases/01/result<br>
+외부 기관 API 송수신 협의와 검증, 인사팀 DB 연동 조직도 자동화<br>
+구축 후 유지보수 인수, SSL 인증서 교체와 외부 API 이슈 대응<br>
+<span class="g">[DONE]</span> 레거시 현대화, 조직도 자동화, DB 조회 구조와 성능 개선 <span class="cur"></span>
+  </div>
+  <div data-con="case2">
+<span class="bar">shin@dexit: cases/02</span>
+<span class="p">$</span> cat cases/02/summary<br>
+<span class="y">늘봄허브</span> 다중 권한 플랫폼과 만족도 통계 허브 <span class="p">2026.04 ~ 2026.08</span><br>
+<span class="p">stack</span> Java, Spring, MyBatis, 권한 제어, AI 기반 개발<br>
+<span class="p">$</span> cat cases/02/problem<br>
+개인강사, 기관회원, 학교회원, 관리자마다 메뉴와 데이터가 다름<br>
+학교와 교육청 단위로 흩어진 만족도 조사와 현황 통계를 한곳에서<br>
+<span class="p">$</span> ls roles/<br>
+<span class="g">instructor org school admin</span><br>
+<span class="p">$</span> cat cases/02/approach<br>
+역할별 접근 제어 설계, 메뉴 권한과 데이터 권한 분리<br>
+만족도 조사와 통계 요청 기능 표준화<br>
+메뉴 단위 기준 기능을 먼저 완성한 뒤 같은 패턴으로 확장<br>
+이 프로젝트부터 AI 기반 개발 전면 적용, 그 전까지는 디버깅 보조 수준<br>
+<span class="p">$</span> cat cases/02/result<br>
+학교, 교육청, 프로그램별 만족도 통계 페이지 제작과 배포, 하나의 허브로<br>
+<span class="g">[DONE]</span> 역할이 늘어도 같은 구조로 확장, 권한에 맞게 한 화면에서 조회와 추출 <span class="p">하자 대응 중</span> <span class="cur"></span>
+  </div>
+  <div data-con="case3">
+<span class="bar">shin@dexit: cases/03</span>
+<span class="p">$</span> cat cases/03/summary<br>
+<span class="y">사내 CMS</span> 반복 구축 표준화 <span class="p">2026.03 ~ 2026.04, 사내 솔루션</span><br>
+<span class="p">stack</span> Laravel, PHP, Apache, 캐시<br>
+<span class="p">$</span> cat cases/03/problem<br>
+공공과 문화 사이트를 구축할 때마다 메뉴, 게시판, 팝업, 배너를 매번 다시 제작<br>
+<span class="p">$</span> cat cases/03/approach<br>
+반복 기능을 CMS로 구조화<br>
+데이터가 바뀌는 시점에만 캐시를 자동 최신화하는 구조 설계<br>
+<span class="p">$</span> cache status<br>
+<span class="g">fresh</span> <span class="p">변경 시점에만 갱신, 그 외에는 캐시 응답</span><br>
+<span class="p">$</span> cat cases/03/result<br>
+관리자가 쓰기 쉽도록 기능 단순화, 복잡한 로직은 기능 단위로 정리해 재사용<br>
+<span class="g">[DONE]</span> 메뉴, 게시판, 팝업, 배너를 재사용 가능한 사내 솔루션으로 정리 <span class="cur"></span>
+  </div>
+  <div data-con="case4">
+<span class="bar">shin@dexit: cases/04</span>
+<span class="p">$</span> cat cases/04/summary<br>
+<span class="y">교통비 정산 시스템</span> 안성, 제주 교통비 지원금 SaaS 2종, 유지보수로 인수 <span class="p">2024.06 ~ 07, 2025.10 ~ 진행 중</span><br>
+<span class="p">stack</span> Spring Boot, Docker, Naver Cloud, 외부 API<br>
+<span class="p">$</span> cat cases/04/problem<br>
+정산 숫자 한 건, 알림 한 번이 빗나가도 사용자 신뢰에 바로 영향<br>
+안성과 제주 두 시스템 모두 코레일에서 교통 데이터를 받는 구조, 개발 환경에서 검증 불가<br>
+<span class="p">$</span> cat cases/04/approach<br>
+외부 기관에 개발 서버 접속 허용 요청, 보안을 이유로 난색<br>
+검증 없이 반영해 정산이 틀리면 그쪽 기관도 곤란해진다는 점을 사례로 설명<br>
+보안 요구는 우리가 맞추겠다고 제안: 접속 전용 PC, 용도 외 프로그램 삭제, CCTV 자리<br>
+IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 같은 흐름으로 태우는 환경 구축<br>
+<span class="p">$</span> <span class="b">SELECT</span> count(*) <span class="b">FROM</span> settlement <span class="b">WHERE</span> mismatch = 1;<br>
+<span class="g">0</span><br>
+<span class="p">$</span> cat cases/04/result<br>
+정산 로직과 알림 분석, 수정, 테스트 후 운영 반영<br>
+처음엔 시간 대비 필요성으로 반려, 같은 누락이 반복되며 대응 시간이 커졌다는 근거로 재제안해 진행<br>
+<span class="g">[RUN ]</span> 정산과 알림 정확성 개선, 검증 환경과 절차 문서화, 후임자도 같은 환경에서 검증, 제주 확대 운영 <span class="cur"></span>
+  </div>
+  <div data-con="case5">
+<span class="bar">shin@dexit: cases/05</span>
+<span class="p">$</span> cat cases/05/summary<br>
+<span class="y">스마트공장 MES</span> 7개 제조사 구축 <span class="p">2023.01 ~ 2024.01, ㈜제오시스</span><br>
+<span class="p">stack</span> PHP, CodeIgniter3, MySQL, MariaDB, Google Charts<br>
+<span class="p">$</span> cat cases/05/problem<br>
+설비에서 올라오는 데이터를 현장에서 바로 읽어야 함<br>
+기획자가 없어 업무 흐름 정리부터 개발자가 담당, 공장마다 공정이 달라 같은 화면 재사용 불가<br>
+<span class="p">$</span> ls modules/<br>
+<span class="g">설비IO수집 실시간모니터링 수발주 MRP 바코드 전자결재폼빌더 메뉴권한</span><br>
+<span class="p">$</span> cat cases/05/approach<br>
+제조 실행계층 전체 담당, 데이터 없는 설비는 로딩 후 조회하도록 쿼리를 나눠 서버 부하 절감<br>
+매번 현장에 가서 작업 흐름을 묻고 시스템에 반영<br>
+공장 PC와 바코드 기기에 맞춰 버튼과 글자 크기, 포커스와 탭 순서를 실제 작업 순서로<br>
+<span class="p">$</span> ls plants/<br>
+<span class="g">케미탑 신화아이티 APCM 휴코 프레쉬아워 KCG 한국기계</span><br>
+<span class="g">[DONE]</span> 컴퓨터가 익숙하지 않은 작업자가 두 번 안에 원하는 정보에 닿는 화면 <span class="cur"></span>
+  </div>
+  <div data-con="case6">
+<span class="bar">shin@dexit: cases/06</span>
+<span class="p">$</span> cat cases/06/summary<br>
+<span class="y">늘봄허브 멱등 DDL</span> 다중 환경 스키마 협업 <span class="p">3개 서버, NCP adm/user 분리</span><br>
+<span class="p">stack</span> MySQL, DDL, 멱등성, Naver Cloud<br>
+<span class="p">$</span> cat cases/06/problem<br>
+다른 회사 개발자와 함께 개발, 상대 회사 개발서버, 재단 개발서버, 운영서버에 adm/user 분리까지<br>
+메뉴와 기능마다 먼저 반영하는 서버가 달라 반영 시점과 순서가 제각각<br>
+환경별로 DDL을 따로 관리하면 누락과 불일치가 생기는 구조<br>
+<span class="p">$</span> cat cases/06/approach<br>
+수정하는 모든 DDL을 멱등으로 작성, 컬럼이 있어도 없어도 몇 번을 실행해도 같은 결과<br>
+<span class="p">$</span> mysql &lt; schema.sql &amp;&amp; mysql &lt; schema.sql &amp;&amp; mysql &lt; schema.sql<br>
+<span class="g">OK OK OK</span><br>
+<span class="p">$</span> diff env1 env2 env3 env4 env5 env6<br>
+<span class="g">0 differences</span><br>
+<span class="g">[DONE]</span> 하나의 DDL 세트를 어느 환경에 어떤 순서로 실행해도 무결성 유지, 환경별 반영 이력 추적 불필요 <span class="cur"></span>
+  </div>
+  <div data-con="build">
+<span class="bar">shin@dexit: projects.log</span>
+<span class="p">$</span> tail -f projects.log<br>
+<span class="p">2023.01</span> ㈜제오시스 스마트공장 MES, 7개 제조사 <span class="y">[DONE]</span><br>
+<span class="p">2024.02</span> ㈜디엑시트 합류, 공공 웹 시스템<br>
+<span class="p">2024.04</span> 아트코리아랩 <span class="y">[DONE]</span><br>
+<span class="p">2024.11</span> 서울연구원 <span class="y">[DONE]</span><br>
+<span class="p">2025.03</span> 제천시립도서관 <span class="y">[DONE]</span><br>
+<span class="p">2025.05</span> 세종 한글문화도시센터 <span class="y">[DONE]</span><br>
+<span class="p">2025.06</span> KMF <span class="y">[DONE]</span><br>
+<span class="p">2025.06</span> 충북 늘봄학교 기능개선 <span class="y">[DONE]</span><br>
+<span class="p">2025.07</span> 경기도 장애인체육회 <span class="y">[DONE]</span><br>
+<span class="p">2025.09</span> 음성 화훼 통합정보 <span class="y">[DONE]</span><br>
+<span class="p">2025.09</span> 중소기업창업진흥원 <span class="y">[DONE]</span><br>
+<span class="p">2026.02</span> 바이오코리아 <span class="y">[DONE]</span><br>
+<span class="p">2026.03</span> 사내 Laravel CMS <span class="y">[DONE]</span><br>
+<span class="p">2026.04</span> 늘봄허브 <span class="y">[DONE]</span> <span class="p">하자 대응 중</span><br>
+<span class="p">2026.07</span> 기획예산처 고도화 <span class="g">[RUN ]</span><br>
+<span class="p">2026.08</span> 충북테크노파크 재구축 <span class="g">[RUN ]</span><br>
+<span class="p">진행 중</span> 세종 관광문화재단, 세종미식과 세종한글 <span class="g">[RUN ]</span> <span class="cur"></span>
+  </div>
+  <div data-con="maint">
+<span class="bar">shin@dexit: ops.log</span>
+<span class="p">$</span> tail -f ops.log<br>
+<span class="p">2024.02</span> 청남대 <span class="y">[DONE]</span><br>
+<span class="p">2024.02</span> 시흥형 기본교통비 <span class="y">[DONE]</span> <span class="p">2026.07 마감</span><br>
+<span class="p">2024.02</span> 음성군청 새싹체험관 <span class="y">[DONE]</span><br>
+<span class="p">2024.02</span> 한국교육개발원, 세종시 문화재단 <span class="y">[DONE]</span><br>
+<span class="p">2024.02</span> 지하도상가 홍보 <span class="y">[DONE]</span><br>
+<span class="p">2024.05</span> 국립부여박물관 <span class="y">[DONE]</span><br>
+<span class="p">2024.06</span> 교통비 정산 시스템, 안성 <span class="y">[DONE]</span><br>
+<span class="p">2025.02</span> 서울연구원, 서울아카이브 <span class="g">[RUN ]</span><br>
+<span class="p">2025.06</span> 충북 늘봄학교 <span class="g">[RUN ]</span><br>
+<span class="p">2025.07</span> 서울예술의전당 <span class="g">[RUN ]</span><br>
+<span class="p">2025.10</span> 교통비 정산 시스템, 안성과 제주 재투입 <span class="g">[RUN ]</span> <span class="cur"></span>
+  </div>
+  <div data-con="mes">
+<span class="bar">shin@dexit: mes.log</span>
+<span class="p">$</span> tail -f mes.log<br>
+<span class="p">2023.01</span> ㈜제오시스 합류, 스마트공장 MES<br>
+<span class="p">plant</span> 케미탑 <span class="y">[DONE]</span><br>
+<span class="p">plant</span> 신화아이티 <span class="y">[DONE]</span><br>
+<span class="p">plant</span> APCM <span class="y">[DONE]</span><br>
+<span class="p">plant</span> 휴코 <span class="y">[DONE]</span><br>
+<span class="p">plant</span> 프레쉬아워 <span class="y">[DONE]</span><br>
+<span class="p">plant</span> KCG <span class="y">[DONE]</span><br>
+<span class="p">plant</span> 한국기계 <span class="y">[DONE]</span><br>
+<span class="p">2024.01</span> 7개 제조사 적용 완료 <span class="cur"></span>
+  </div>
+  <div data-con="contact">
+<span class="bar">shin@dexit: contact</span>
+<span class="p">$</span> whoami<br>
+<span class="g">신의</span> <span class="p">백엔드 개발자, ㈜디엑시트 개발팀 대리</span><br>
+<span class="p">$</span> uptime<br>
+<span class="g">백엔드 <span class="career-len">3년 7개월</span></span> <span class="p">구축 15건, 유지보수 11건, MES 7개 제조사</span><br>
+<span class="p">$</span> mail -s <span class="y">"채용 문의"</span> foodfor456@naver.com<br>
+<span class="g">응답 대기 중</span> <span class="cur"></span>
+  </div>
+</div>
+</aside>
+<main class="main">
+
+<!-- 소개 -->
+<section id="pg-about" data-pg="about">
+  <div class="hero">
+    <div>
+      <h1 data-con-src="about">구축 <em>15건</em>, 동시 운영 <em>11건</em>.<br>같은 오류를 <em>두 번</em> 내지 않는 백엔드.</h1>
+      <p class="lead">공공, 교육, 문화, 제조 도메인의 웹 시스템을 요구 분석부터 구축과 운영까지.<br>숫자 하나가 어긋나면 신뢰가 무너지는 정산 기능의 데이터 정합성.<br>문서 없이 넘겨받은 레거시의 분석과 전환.<br>11건 동시 운영, 야간 반영과 폐쇄망 같은 제약 속의 안정화.</p>
     </div>
   </div>
 
-  <!-- ══ STORY ══ -->
-  <section id="story" data-pg="home">
-    <div class="sechead"><span class="secno">SS.A</span><h2>About · 마무리에 진심인 개발자</h2><span class="secsub">Story · Attitude</span></div>
-    <div class="story">
-      <div>
-        <p class="rv">저는 <b>프로젝트의 마무리</b>를 일의 기준으로 삼습니다.<br class="d">시작은 누구나 할 수 있지만, 끝을 매듭짓는 것이 시스템의 가치를 결정한다고 믿습니다.<br class="d">요구사항 분석부터 <span class="nb">설계·구현·배포·운영</span>까지 스스로 완결해 왔고,<br class="d">전임자와 문서가 없는 시스템도 소스 분석부터 시작해 안정화했습니다.<br class="d"><span class="nb">예약·정산·권한·교부금</span>처럼 <b>돈과 직결된 기능</b>일수록 검증 쿼리와 관리자 점검으로 데이터 정합성을 지켰습니다.</p>
-        <p class="rv" style="margin-top:16px">이 기준은 시간을 들여 쌓았습니다.<br class="d"><b>900시간 양성과정을 무결석으로 수료해 출석률 우수 표창</b>을 받았고,<br class="d">실무와 병행해 학점은행제로 컴퓨터공학 학사 과정을 끝맺고 있습니다.<br class="d"><span class="nb">최근 1년은</span> <b>AI 도구를 개발 프로세스에 접목</b>하는 데 시간을 쏟았습니다. 도구는 계속 바뀌지만, 요구를 분석해 안정적인 시스템으로 만드는 힘은<br class="d">매일의 실무로만 쌓인다고 믿습니다.</p>
-      </div>
-      <div class="pull rv">"아무리 좋은 프로젝트라도, 예산이 크고 일정이 길어도,<br class="d">결국 <b style="color:var(--ac-deep)">마무리</b>가 프로젝트의 가치를 결정합니다.<br class="d"><span class="pull-em">저는 끝을 책임지는 개발자입니다."</span></div>
-    </div>
-    <div class="facts">
-      <div class="fact rv"><span class="k">전 단계 완결</span><p>기획자가 없는 제조 현장에서 업무 흐름 분석부터 화면 설계까지, 요구사항 수집→운영을 스스로 끝내 본 경험.</p></div>
-      <div class="fact rv"><span class="k">비용과 직결된 데이터</span><p>교통비 지원금·교부금처럼 숫자 한 건이 신뢰를 좌우하는 시스템에서 정합성 검증 절차를 만들어 운영 오류를 감소.</p></div>
-      <div class="fact rv"><span class="k">AI를 실무에</span><p>Claude Code 기반 AI-assisted 개발을 운영 프로젝트에 도입해 기준 기능을 먼저 완성·검증한 뒤 동일 패턴을 AI로 확장.</p></div>
-    </div>
-  </section>
+  <div class="glance">
+    <div><b class="career-len">3년 7개월</b><span>백엔드 경력, ㈜디엑시트 대리 재직중</span></div>
+    <div><b>구축 15건</b><span>유지보수 11건, MES 7개 제조사</span></div>
+    <div><b>공공, 교육, 문화, 제조</b><span>Java, Spring, 전자정부프레임워크, MySQL</span></div>
+  </div>
 
-  <!-- ══ SKILLS ══ -->
-  <section id="skills" class="band" data-pg="skills">
-    <div class="sechead"><span class="secno">SS.00</span><h2>기술 매트릭스</h2><span class="secsub">Stack · primary / utilized</span></div>
-    <div class="lgbar" aria-hidden="true">
-      <span class="lg-item pri"><span class="sq"></span>주력 스택</span>
-      <span class="lg-item util"><span class="sq"></span>활용 스택</span>
-    </div>
-    <div class="skills" id="skillsGrid"></div>
+  <h2 data-con-src="method">일하는 방식</h2>
+  <p>프로젝트의 마무리를 일의 기준으로 삼습니다. 시작은 누구나 할 수 있지만 끝을 매듭짓는 것이 시스템의 가치를 결정한다고 생각합니다. 요구사항 분석부터 설계, 구현, 배포, 운영까지 맡아 왔고, 전임자와 문서가 없는 시스템도 소스 분석부터 시작해 안정화했습니다.</p>
+  <p>오류는 고치고 끝내지 않고 기록해 둡니다. 같은 문제가 다시 나오지 않도록 개발 단계에서 미리 막는 쪽을 택하고, 프로젝트마다 검출된 취약점을 조치하며 쌓인 지식으로 다음 프로젝트에서는 같은 취약점을 미리 대비합니다. 운영에서만 확인되는 기능은 운영과 최대한 같은 개발 환경을 만들어 미리 테스트하고, 운영에 올라가서야 드러나는 경우의 수를 줄여 갑니다. 반영 전에는 되돌릴 길부터 확보합니다. 문제가 생기면 먼저 원복해 서비스를 정상으로 돌려놓고, 그다음에 원인을 고쳐 다시 반영합니다. 교통비와 교부금 정산처럼 돈이 걸린 기능은 화면이 멀쩡해 보여도 DB 값을 직접 확인한 뒤에야 끝냅니다.</p>
+  <p>고객은 개발자가 아니니 같은 요구도 사람마다 다르게 표현합니다. "이 화면이 느리다", "숫자가 이상하다", "이것도 되게 해 달라"는 말을 들으면 되묻기 전에 먼저 해석합니다. 그 뒤에 있는 실제 필요를 짚어 화면과 데이터 구조, 처리 순서로 옮겨 정리한 다음, 그 결과를 들고 한 번에 확인받습니다. 같은 것을 여러 번 캐물으면 고객이 지치기 때문입니다. 확인받을 때는 개발 용어를 섞지 않고 고객이 쓰는 말로 바꿔 설명합니다. 개발 용어를 고객 앞에서 그대로 쓰는 것도 실례라고 생각합니다. 요청한 말을 그대로 만드는 것보다 고객이 원하는 결과가 나오게 만드는 쪽을 택합니다.</p>
+  <p>바뀔 수 있는 값은 코드에 박아 두지 않습니다. 메뉴, 권한, 정산 기준처럼 운영 중에 달라지는 것은 설정과 데이터로 빼서 코드를 고치지 않고도 바꿀 수 있게 만듭니다. 기능은 모듈 단위로 나누고 서로 직접 붙지 않게 해서, 한 곳을 고칠 때 다른 곳이 같이 깨지지 않도록 결합도를 낮춥니다. 사내 CMS에서 메뉴, 게시판, 팝업, 배너를 그렇게 떼어 낸 것이 한 예입니다.</p>
+  <p>화면은 안의 로직이 아무리 복잡해도 처음 본 사람이 설명 없이 쓸 수 있어야 한다고 생각합니다. 제조 현장에서는 컴퓨터가 익숙하지 않은 작업자가 두 번 안에 원하는 정보에 닿도록 버튼과 글자를 키우고 포커스 순서를 작업 순서에 맞췄습니다. 복잡함은 코드 안에서 개발자가 감당하고 사용자 앞에는 쉬움만 남기려 합니다.</p>
+  <p>생성형 AI는 개발에 적극적으로 씁니다. 다만 AI 코드는 100% 정답이 아니고 책임은 제게 있으니, 어떤 작업을 AI에 맡길지 실측으로 기준을 세우고, 결과물은 여러 AI가 서로 검증한 뒤에야 통과시키는 절차를 만들어 사내에 정착시켰습니다. 지금은 작업 세션 2개와 검증 세션 1개, 이를 지휘하는 PM 세션 1개로 나눠 진행합니다. 그렇게 확보한 시간으로 GitLab CI/CD와 Docker 기반 자동 배포 개발 서버를 만들었고, 회사 표준이 되어 다음 프로젝트의 개발 환경 세팅을 맡았습니다.</p>
+</section>
 
-    <div class="console sec rv" aria-label="운영 환경">
-      <div class="cbar"><span class="led"></span>ENV — production experience</div>
-      <div class="cbody">
-        <span class="ln"><span class="p">$</span> java -version</span>
-        <span class="ln"><span class="g">✓ JDK 1.8 ~ 17</span> <span class="p">— 프로젝트별 환경 구성·운영</span></span>
-        <span class="ln"><span class="p">$</span> systemctl status apache tomcat jenkins</span>
-        <span class="ln"><span class="g">● active (3)</span> <span class="p">— Linux 서버 설정부터 CI/CD 구성까지 직접</span></span>
-        <span class="ln"><span class="p">$</span> cloud status</span>
-        <span class="ln"><span class="g">✓ Naver Cloud</span> <span class="p">— SaaS 프로젝트 CI/CD 구축·운영 중</span> <span class="caret"></span></span>
-      </div>
-    </div>
-  </section>
+<!-- 기술 -->
+<section id="pg-skills" data-pg="skills">
+  <h2 data-con-src="skills">기술</h2>
+  <div class="tw"><table>
+    <tr><th>구분</th><th>주력</th><th>활용</th></tr>
+    <tr><td class="k">백엔드</td><td>Java, Spring Framework, Spring Boot, 전자정부프레임워크, MyBatis</td><td>PHP, Laravel, CodeIgniter3</td></tr>
+    <tr><td class="k">데이터베이스</td><td>MySQL, MariaDB, SQL 튜닝</td><td>CUBRID, PostgreSQL, OracleDB, 데이터 마이그레이션</td></tr>
+    <tr><td class="k">인프라와 운영</td><td>Linux, Apache, Tomcat, Jenkins, GitLab CI/CD, Git</td><td>JBoss, Docker, Naver Cloud, NAS, SVN</td></tr>
+    <tr><td class="k">화면</td><td>JSP, JSTL, JavaScript, jQuery</td><td>Thymeleaf, Ajax, HTML5, CSS3, Bootstrap</td></tr>
+    <tr><td class="k">AI 활용</td><td>Claude Code 기반 개발, 자체 제작 스킬, 다중 세션 운용</td><td>커뮤니티 검증 스킬 도입과 실험</td></tr>
+  </table></div>
 
-  <!-- ══ CAREER ══ -->
-  <section id="career" class="band" data-pg="career">
-    <div class="sechead"><span class="secno">SS.08</span><h2>경력 타임라인 · 3년 7개월</h2><span class="secsub">Career · 2022 ~ Now</span></div>
-    <div class="tl">
-      <div class="tstop rv"><div class="tyr">2022.04 ~ 10</div><h3>JAVA &amp; Spring 백엔드 과정</h3><p>그린컴퓨터아트학원 · NCS 국비 900시간 · 무결석 수료 (출석률 우수 표창)</p></div>
-      <div class="tstop rv"><div class="tyr">2023.01 ~ 2024.01</div><h3>㈜제오시스 · 개발부서 사원</h3><p>스마트공장(제조) 웹 시스템 개발 · 1년 1개월 · 7개 고객사</p></div>
-      <div class="tstop now rv"><div class="tyr">2024.02 ~ 재직중</div><h3>㈜디엑시트 · 개발팀 대리</h3><p>공공·교육·문화 정보화 시스템 기획·구축 · Legacy 전환 · 업무 자동화 · 유지보수</p></div>
-      <div class="tstop now rv"><div class="tyr">2026 (병행)</div><h3>컴퓨터공학 학사 취득예정</h3><p>학점은행제 · 국가평생교육진흥원 · 정보처리기사 준비 중</p></div>
-    </div>
+  <h2 data-con-src="infra">인프라와 운영 경험</h2>
+  <div class="tw"><table>
+    <tr><td class="k">서버</td><td>Linux 서버 설정, JDK 1.8~21 환경 구성, Apache, Tomcat, JBoss 운영</td></tr>
+    <tr><td class="k">빌드와 배포</td><td>Jenkins와 Git 연동 빌드, 배포 구성.<br>기획예산처 프로젝트에서 GitLab CI/CD, GitLab Runner, Docker 기반 자동 배포 개발 서버를 구축해 회사 표준으로 채택됨(디자인 담당 dev 브랜치, master 확인 후 push 시 자동 반영)</td></tr>
+    <tr><td class="k">클라우드</td><td>Naver Cloud 기반 SaaS 프로젝트 CI/CD 구축과 운영</td></tr>
+    <tr><td class="k">보안과 운영</td><td>서버 취약점 조치, NAS 구성, 운영 환경 점검, 무중단이 요구되는 사이트의 야간 반영, 폐쇄망 사이트 방문 반영</td></tr>
+  </table></div>
+</section>
 
-    <div class="console sec rv" aria-label="현재 진행·예정 프로젝트">
-      <div class="cbar"><span class="led"></span>NOW — tail -f projects.log</div>
-      <div class="cbody">
-        <span class="ln"><span class="p">$</span> tail -f projects.log</span>
-        <span class="ln"><span class="g">[RUN ]</span> 늘봄허브 — <span class="y">마무리 단계</span> <span class="p">· 파란샘 협력 · AI 기반 개발 전면 적용</span></span>
-        <span class="ln"><span class="g">[RUN ]</span> 세종 관광문화재단 (세종미식 · 세종한글) <span class="p">· Java/Spring 백엔드 전담</span></span>
-        <span class="ln"><span class="b">[PLAN]</span> 기획예산처 재구축 (파란샘) <span class="p">· 예정</span></span>
-        <span class="ln"><span class="g">✓ running</span> <span class="p">— 3 projects in pipeline</span> <span class="caret"></span></span>
-      </div>
-    </div>
-  </section>
+<!-- 주요 사례 -->
+<section id="pg-cases" data-pg="cases">
+  <h2 data-con-src="cases">주요 사례</h2>
 
-  <!-- ══ METHOD ══ -->
-  <section id="method" class="band" data-pg="cases">
-    <div class="sechead"><span class="secno">SS.M</span><h2>정합성 검증 루프</h2><span class="secsub">Signature Method</span></div>
-    <p class="mdesc">교통비·교부금 정산처럼 <b>비용과 직결되는 기능</b>에서,<br class="d">흩어져 있던 정합성 점검을 하나의 반복 루프로 표준화했습니다.<br class="d">교통비 정산(Case 04) 등 비용 직결 기능에 공통 적용한 방법론입니다.</p>
-    <div class="loop rv">
-      <div class="step"><span class="lg">P</span><p>오류 재현 케이스 확인</p></div>
-      <div class="arrow">→</div>
-      <div class="step"><span class="lg">A</span><p>검증 쿼리 작성</p></div>
-      <div class="arrow">→</div>
-      <div class="step"><span class="lg">S</span><p>관리자 화면 점검</p></div>
-      <div class="arrow">→</div>
-      <div class="step"><span class="lg">R</span><p>운영 오류 감소</p></div>
-    </div>
-  </section>
+  <div class="case">
+    <h3 data-con-src="case1"><span class="no">1</span>서울연구원: 레거시 전환과 운영 인수</h3>
+    <p class="meta">㈜디엑시트, 공공기관, 구축 후 유지보수까지 인수. 2024.11~2025.02</p>
+    <p class="tags">#Java #Spring #MyBatis #MySQL #Oracle #레거시전환 #데이터이관</p>
+    <dl>
+      <dt>문제</dt><dd>연구보고서, 기사, 채용, 파일과 미디어가 중심인 사이트가 PHP 드루팔 레거시 구조에 묶여 있었습니다.<br>문서가 없어 구조 파악부터 해야 했고 유지보수와 조회 성능 모두 제약이 컸습니다.</dd>
+      <dt>접근</dt><dd>맞춤형 DB 구조를 직접 분석해 Java와 Spring으로 재설계했습니다.<br>텍스트 데이터는 SQL로 1차 이관하고, 파일 데이터는 Java 이관 기능을 따로 구현했으며, URL 매핑 컨트롤러로 이관 검증 자체를 기능으로 만들어 원본과 대조했습니다.</dd>
+      <dt>해결</dt><dd>외부 기관에 제공하는 API 송수신을 협의하고 검증했으며, 인사팀 DB와 연동해 수기로 갱신하던 조직도를 자동화했습니다.<br>구축 후 유지보수까지 인수해 SSL 인증서 교체와 외부 API 이슈에 대응했습니다.</dd>
+      <dt>성과</dt><dd>레거시 구조를 현대화하고 조직도 갱신을 자동화했습니다.<br>파일과 미디어 중심 사이트의 DB 조회 구조와 성능을 개선해 운영을 안정화했습니다.</dd>
+    </dl>
+  </div>
 
-  <!-- ══ CASES ══ -->
-  <section id="cases" data-pg="cases">
-    <div class="sechead"><span class="secno">SS.01</span><h2>선정 케이스</h2><span class="secsub">Selected Work · 01–06</span></div>
-    <div class="cards" id="caseGrid"></div>
-  </section>
+  <div class="case">
+    <h3 data-con-src="case2"><span class="no">2</span>늘봄허브: 다중 권한 플랫폼과 만족도 통계 허브</h3>
+    <p class="meta">㈜디엑시트, 교육, 학교와 교육청 단위 방과후 플랫폼. 2026.04~2026.08</p>
+    <p class="tags">#Java #Spring #MyBatis #권한제어 #AI기반개발</p>
+    <dl>
+      <dt>문제</dt><dd>개인강사, 기관회원, 학교회원, 관리자마다 보아야 할 메뉴와 데이터가 달랐고, 학교와 교육청 단위로 흩어져 있던 만족도 조사와 현황 통계를 한곳에서 다뤄야 했습니다.</dd>
+      <dt>접근</dt><dd>역할별 접근 제어를 설계해 메뉴 권한과 데이터 권한을 분리하고, 만족도 조사와 통계 요청 기능을 표준화했습니다.<br>메뉴 단위로 기준이 되는 기능을 먼저 완성한 뒤 같은 패턴으로 확장했습니다.<br>이 프로젝트부터 AI 기반 개발을 전면 적용했고, 그 전까지는 디버깅에 도움을 받는 정도였습니다.</dd>
+      <dt>해결</dt><dd>학교, 교육청, 프로그램별 만족도 통계 페이지를 제작해 배포하고 하나의 허브로 묶었습니다.</dd>
+      <dt>성과</dt><dd>역할이 늘어나도 같은 구조로 확장할 수 있게 됐고, 흩어져 있던 통계를 권한에 맞게 한 화면에서 조회하고 추출하게 됐습니다.<br>개발은 2026.08에 마쳤고 하자 대응을 이어가고 있습니다.</dd>
+    </dl>
+  </div>
 
-  <!-- ══ INFRA & CREDENTIALS ══ -->
-  <section id="infra" data-pg="skills">
-    <div class="sechead"><span class="secno">SS.06</span><h2>인프라 &amp; 운영</h2><span class="secsub">Build · Deploy · Operate</span></div>
-    <div class="rows rv">
-      <div class="row"><span class="k">Server</span><p><b>Linux 서버 설정</b> · JDK 1.8~17 환경 구성 · Apache/Tomcat 운영</p></div>
-      <div class="row"><span class="k">CI / CD</span><p><b>Jenkins + Git 연동</b> 빌드·배포 환경 구성</p></div>
-      <div class="row"><span class="k">Cloud</span><p><b>Naver Cloud 기반 SaaS</b> 프로젝트 CI/CD 구축·운영</p></div>
-      <div class="row"><span class="k">Security / Ops</span><p>서버 취약점 조치 · NAS 구성 · 운영 환경 점검</p></div>
-    </div>
+  <div class="case">
+    <h3 data-con-src="case3"><span class="no">3</span>사내 CMS: 반복 구축 표준화</h3>
+    <p class="meta">㈜디엑시트, 사내 솔루션, 공공과 문화 사이트 반복 구축용. 2026.03~2026.04</p>
+    <p class="tags">#Laravel #PHP #Apache #캐시</p>
+    <dl>
+      <dt>문제</dt><dd>공공과 문화 사이트를 구축할 때마다 메뉴, 게시판, 팝업, 배너 같은 동일한 구조를 매번 다시 만드는 비효율이 있었습니다.</dd>
+      <dt>접근</dt><dd>반복되는 기능을 CMS로 구조화하고, 데이터가 바뀌는 시점에만 캐시를 자동으로 최신화하는 구조를 설계했습니다.</dd>
+      <dt>해결</dt><dd>관리자가 쓰기 쉽도록 기능을 단순화하고, 복잡한 로직을 기능 단위로 정리해 재사용 가능한 사내 솔루션으로 개발했습니다.</dd>
+      <dt>성과</dt><dd>반복 제작하던 메뉴, 게시판, 팝업, 배너를 재사용 가능한 사내 솔루션으로 정리했습니다.</dd>
+    </dl>
+  </div>
 
-  </section>
+  <div class="case">
+    <h3 data-con-src="case4"><span class="no">4</span>교통비 정산 시스템: 안성, 제주</h3>
+    <p class="meta">㈜디엑시트, 공공과 교통, 유지보수로 이어받은 지자체 교통비 지원금 정산 SaaS 2종. 2024.06~07, 2025.10~진행 중</p>
+    <p class="tags">#SpringBoot #Docker #NaverCloud #외부API #정합성검증</p>
+    <dl>
+      <dt>문제</dt><dd>지자체 교통비 지원금처럼 금액과 직결되는 기능은 정산 숫자가 한 건만 어긋나도, 알림이 한 번만 빗나가도 사용자 신뢰에 바로 영향을 줍니다.<br>안성과 제주 두 시스템 모두 코레일에서 교통 데이터를 받는 구조라, 이어받았을 때는 개발 환경에서 검증이 안 되고 운영에 반영해야만 결과를 볼 수 있는 상태였습니다.</dd>
+      <dt>접근</dt><dd>정산 오류를 실제 케이스로 재현하고 검증한 뒤 반영했습니다.<br>운영에서만 확인되던 기능을 개발 환경에서 확인하려고 외부 기관에 우리 개발 서버의 접속 허용을 요청했습니다.<br>기관 쪽이 보안을 이유로 난색을 보여, 검증 없이 반영해 정산이 틀리면 그쪽 기관도 함께 곤란해진다는 점을 사례로 정리해 설명하고 보안 요구는 우리가 맞추겠다고 제안했습니다.<br>접속 전용 PC를 따로 두고 그 용도 외 프로그램은 모두 지우며 CCTV에 보이는 자리에 두는 조건으로 IP 허용을 받았고, 과거 전문 파일을 개발 서버가 읽어 운영과 같은 흐름으로 태우는 환경을 만들었습니다.</dd>
+      <dt>해결</dt><dd>정산 로직과 알림을 분석해 수정하고 테스트한 뒤 운영에 반영했습니다.<br>이 제안은 처음에 시간 대비 필요성을 이유로 반려됐으나, 같은 누락이 반복되면서 대응에 쓰는 시간이 만드는 시간보다 커졌다는 근거로 다시 제안해 진행됐습니다.</dd>
+      <dt>성과</dt><dd>정산 숫자와 알림의 정확성이 개선되고 운영 오류가 줄었습니다.<br>검증 환경과 절차는 문서로 남겨 지금은 후임자도 같은 환경에서 검증합니다.<br>재투입 뒤 제주도 사업까지 확대 운영 중입니다.</dd>
+    </dl>
+  </div>
 
-  <section id="credentials" data-pg="career">
-    <div class="sechead"><span class="secno">SS.07</span><h2>학력 · 교육 · 자격</h2><span class="secsub">Credentials</span></div>
-    <div class="rows rv">
-      <div class="row"><span class="k">학위 (취득예정)</span><p><b>컴퓨터공학 학사</b> · 학점은행제 · 국가평생교육진흥원 · 2026.08 취득예정 · 실무 병행</p></div>
-      <div class="row"><span class="k">2022.04 ~ 10</span><p>그린컴퓨터아트학원 <b class="nb">JAVA &amp; Spring 백엔드 웹개발 과정</b>(NCS·국비) 수료 · 900시간 무결석 · 출석률 우수 표창</p></div>
-      <div class="row"><span class="k">준비 중</span><p><b>정보처리기사</b> 취득 준비 중</p></div>
-      <div class="row"><span class="k">병역</span><p>육군 병장 만기전역</p></div>
-    </div>
-  </section>
+  <div class="case">
+    <h3 data-con-src="case5"><span class="no">5</span>스마트공장 MES: 7개 제조사 구축</h3>
+    <p class="meta">㈜제오시스, 제조, 설비 데이터 수집, 현장 화면, 바코드, 수발주. 2023.01~2024.01</p>
+    <p class="tags">#PHP #CodeIgniter3 #MySQL #MariaDB #GoogleCharts #현장UX</p>
+    <dl>
+      <dt>문제</dt><dd>설비에서 올라오는 데이터를 현장에서 바로 읽을 수 있어야 했고, 기획자가 없어 업무 흐름을 정리하는 일부터 개발자가 해야 하는 환경이었습니다.<br>공장마다 공정이 달라 같은 화면을 그대로 쓸 수도 없었습니다.</dd>
+      <dt>접근</dt><dd>설비 IO 데이터 수집과 실시간 설비 모니터링, 수발주와 MRP, 바코드 관리, 전자결재 폼 빌더, 사용자별 메뉴 권한까지 제조 실행계층 전체를 맡았습니다.<br>데이터가 없는 설비는 로딩 후 조회하도록 쿼리를 나눠 서버 부하를 줄였습니다.</dd>
+      <dt>해결</dt><dd>매번 현장에 가서 작업 흐름을 묻고 시스템에 옮겼습니다.<br>공장 PC와 바코드 기기 환경에 맞춰 버튼과 글자 크기, 포커스와 탭 이동 순서를 실제 작업 순서대로 다시 짰습니다.</dd>
+      <dt>성과</dt><dd>케미탑, 신화아이티, APCM, 휴코, 프레쉬아워, KCG, 한국기계 7개 제조사에 구축하고 적용했습니다.<br>컴퓨터가 익숙하지 않은 작업자가 두 번 안에 원하는 정보에 닿도록 화면을 구성했습니다.</dd>
+    </dl>
+  </div>
 
-  <!-- ══ PROJECT LEDGER ══ -->
-  <section id="projects" data-pg="projects">
-    <div class="sechead"><span class="secno">SS.10</span><h2>전체 프로젝트 이력</h2><span class="secsub">Project Ledger · 구축 14 · 유지보수 11 · 제조 7 · 예정 1</span></div>
+  <div class="case">
+    <h3 data-con-src="case6"><span class="no">6</span>늘봄허브: 멱등 DDL로 다중 환경 스키마 협업</h3>
+    <p class="meta">㈜디엑시트, 늘봄허브의 3개 서버와 NCP adm/user 분리 환경. 2026.04~2026.08</p>
+    <p class="tags">#MySQL #DDL #멱등성 #NaverCloud #협업</p>
+    <dl>
+      <dt>문제</dt><dd>다른 회사 개발자와 함께 개발하는 프로젝트로, 환경이 상대 회사 개발서버, 재단 개발서버, 운영서버 3개에 NCP adm과 user 분리까지 겹친 구조였습니다.<br>특정 메뉴는 재단 개발서버에, 특정 기능은 상대 회사 개발서버에 먼저 반영해 테스트하는 방식이라 환경마다 반영 시점과 순서가 제각각이었고, 환경별로 DDL을 따로 관리하며 반영하는 것은 누락과 불일치를 부르는 구조였습니다.</dd>
+      <dt>접근</dt><dd>환경별 DDL 관리 자체를 없애기 위해 수정하는 모든 DDL을 멱등으로 작성했습니다.<br>컬럼이 이미 있어도, 없어도, 몇 번을 실행해도 같은 결과가 되도록 존재 여부를 확인하고 적용하는 방식입니다.</dd>
+      <dt>해결</dt><dd>하나의 DDL 세트를 어느 환경에 어떤 순서로 실행해도 무결성이 유지되는 반영 체계를 만들었습니다.<br>환경별 반영 이력을 따로 추적할 필요가 없어졌습니다.</dd>
+      <dt>성과</dt><dd>6개 반영 지점(3개 환경과 adm/user)에서 환경 간 스키마 불일치 없이 협업 개발을 마쳤습니다.</dd>
+    </dl>
+  </div>
+</section>
 
-    <div id="projectGroups"></div>
-  </section>
+<!-- 프로젝트 이력 -->
+<section id="pg-projects" data-pg="projects">
+  <h2 data-con-src="build">㈜디엑시트 구축과 개발 (2024~진행 중, 15건)</h2>
+  <div class="tw"><table>
+    <tr><th>기간</th><th>프로젝트</th><th>내용</th></tr>
+    <tr><td class="dt">2026.08~</td><td>충북테크노파크 재구축</td><td>PHP로 만들어진 기존 사이트를 기획예산처와 같은 자사 Java CMS 기반으로 재구축.<br>Java 21, JBoss, MariaDB.<br>기획예산처 고도화와 병행</td></tr>
+    <tr><td class="dt">2026.07~</td><td>기획예산처 고도화</td><td>재정경제부에서 분리 신설되는 부처 사이트 고도화를 단독 개발 중.<br>Java 21, Spring Boot, 전자정부프레임워크 5.0, JBoss, CUBRID.<br>GitLab CI/CD, Runner, Docker 기반 자동 배포 개발 서버를 구축해 회사 표준으로 채택됨</td></tr>
+    <tr><td class="dt">2026.04~08</td><td>늘봄허브</td><td>역할별 권한 분리와 학교, 교육청 단위 만족도 조사와 통계 허브 구축.<br>이 프로젝트부터 AI 기반 개발을 전면 적용.<br>개발 완료 후 하자 대응 중 (사례 2, 6)</td></tr>
+    <tr><td class="dt">진행 중</td><td>세종 관광문화재단 (세종미식, 세종한글)</td><td>재단 산하 사이트 2종을 Java와 Spring으로 구축, 백엔드 전담</td></tr>
+    <tr><td class="dt">2026.03~04</td><td>사내 Laravel CMS</td><td>메뉴, 게시판, 팝업, 배너 등 반복 구축 기능을 표준화한 사내 솔루션.<br>데이터 변경 시점에만 캐시를 자동 최신화 (사례 3)</td></tr>
+    <tr><td class="dt">2026.02~03</td><td>바이오코리아</td><td>오픈 직전에 투입돼 화면에 노출돼 있던 결제 등 핵심 로직을 안정화하고 일정 내 마무리</td></tr>
+    <tr><td class="dt">2025.09~2026.02</td><td>음성 화훼 통합정보</td><td>앱, 관리자, 사용자 3개 사이트로 구성된 통합정보시스템 신규 구축.<br>사이트 분석부터 오픈까지 수행.<br>농가별 통계와 엑셀 업로드, 제약조건 기반 무결성 데이터 적재</td></tr>
+    <tr><td class="dt">음성 화훼와 병행</td><td>중소기업창업진흥원</td><td>사내 개발자가 진행하던 건이 일정 내 완수가 어렵다고 판단돼 지원 투입.<br>두 프로젝트를 동시에 수행했고 요구사항 변동이 많은 사업이었으나 감리를 무사 통과</td></tr>
+    <tr><td class="dt">2025.07~08</td><td>경기도 장애인체육회</td><td>관리자 교부금 기능 담당.<br>사이트관리자, 기관관리자, 회계사 3개 권한별 역할 배정 기능 설계와 개발.<br>1개월 미만의 일정과 설계 담당 PM 교체 상황에서 후임자와 소통해 일정 내 완수</td></tr>
+    <tr><td class="dt">2025.06~08</td><td>충북 늘봄학교 기능개선</td><td>사용자, 관리자, 강사 페이지로 구성된 방과후 시스템 기능개선.<br>금액 관련 수치 불일치 문제를 중점 분석하고 수정해 정산 데이터 정합성 확보</td></tr>
+    <tr><td class="dt">2025.06~07</td><td>KMF (WordPress)</td><td>건강기능식품 홍보 사이트.<br>카페24 환경의 트래픽 이슈 대응, PDF 구글 드라이브 연동 뷰어와 QR코드 생성 기능</td></tr>
+    <tr><td class="dt">2025.05~06</td><td>세종 한글문화도시센터</td><td>사용자와 관리자 사이트 전반 개발 주도, 신입 개발자의 기능 이관 작업 가이드.<br>타 프로젝트 배정으로 중도 인계</td></tr>
+    <tr><td class="dt">2025.03~05</td><td>제천시립도서관</td><td>사용자, 관리자, 통합검색 3개 컨테이너 중 사용자와 관리자 페이지 담당.<br>예약 기능 중심.<br>통합검색 담당 신입 기술 멘토링을 병행하며 일정 내 오픈</td></tr>
+    <tr><td class="dt">2024.11~2025.02</td><td>서울연구원</td><td>PHP 드루팔 사이트를 Java Spring Framework로 전환 구축.<br>맞춤형 DB 마이그레이션, 외부 제공 API 개발, DB 최적화, 인사팀 DB 연동 조직도 자동화 (사례 1)</td></tr>
+    <tr><td class="dt">2024.04~05</td><td>아트코리아랩</td><td>예술가 대상 공간과 장비 대여 사이트.<br>개발자 퇴사로 중단된 프로젝트를 인수해 예약 기능, SNS 로그인 등 미구현 요구사항 개발.<br>디자인팀과 협업해 퍼블리싱 다수</td></tr>
+  </table></div>
 
-  <!-- ══ CONTACT ══ -->
-  <footer id="contact" data-pg="contact">
-    <span class="en">Contact</span>
-    <div class="big">사용자가 불편 없이 쓰고, 관리자가 쉽게 운영하고,<br>팀이 <span class="hl">믿고 이어가는 시스템</span>을 만듭니다.</div>
-    <div class="ct">
-      <b>신의 · Backend Developer</b><br>
-      <b>foodfor456@naver.com</b> · 충북 청주시
-    </div>
+  <h2 data-con-src="maint">㈜디엑시트 유지보수 (2024~진행 중, 11건)</h2>
+  <div class="tw"><table>
+    <tr><th>기간</th><th>시스템</th><th>내용</th></tr>
+    <tr><td class="dt">2025.10~</td><td>교통비 정산 시스템 (안성, 제주)</td><td>Spring Boot 기반 무상교통 정산 SaaS 유지보수에 재투입, 제주도 사업까지 확대 운영.<br>외부 기관 IP 허용을 받아 운영 재현 검증 환경 구축.<br>Docker 이미지 패키징, Git CI와 Naver Cloud CD 운영 (사례 4)</td></tr>
+    <tr><td class="dt">2025.07~</td><td>서울예술의전당</td><td>타사 이관 사업을 인수해 소스 분석 후 운영.<br>예약, 이벤트, 회원등급 등 다기능 사이트, PostgreSQL.<br>야간 반영 등 무중단 운영 요구 대응</td></tr>
+    <tr><td class="dt">2025.06~</td><td>충북 늘봄학교</td><td>알림톡과 앱 푸시 관련 이슈 대응과 운영</td></tr>
+    <tr><td class="dt">2025.02~</td><td>서울연구원, 서울아카이브</td><td>직접 구축한 사이트의 유지보수 연장.<br>SSL 인증서 교체, 외부 수신 API 이슈 대응</td></tr>
+    <tr><td class="dt">2024.06~07</td><td>교통비 정산 시스템 (안성)</td><td>Spring Boot와 Docker 기반, Naver Cloud 연동 Git CI/CD 환경에서 배포와 운영.<br>미완성 상태로 이어받은 시스템의 이슈 대응</td></tr>
+    <tr><td class="dt">2024.05~07</td><td>국립부여박물관</td><td>노후 시스템 제약 안에서 요구사항 대응, 게시판 태그 검색 이슈 해결, 웹 접근성 개선 사업</td></tr>
+    <tr><td class="dt">2024.02~07</td><td>청남대</td><td>형상관리 미비 사이트를 인수해 도청 방문으로 운영 서버 직접 반영.<br>파일 비교와 검증 절차를 세워 안정화</td></tr>
+    <tr><td class="dt">2024.02~2026.07</td><td>시흥형 기본교통비</td><td>코레일 데이터 가공과 DB 적재, 고객 매칭 정산.<br>스케줄러(배치) 이슈 대응, SQL 쿼리 개선, 현금 정산 요구사항 다수</td></tr>
+    <tr><td class="dt">2024.02~07</td><td>음성군청 새싹체험관</td><td>전임자 부재로 소스 전체 분석 후 운영.<br>개인과 단체회원 예약, JSP 화면 연산 과다로 인한 속도 저하 개선</td></tr>
+    <tr><td class="dt">2024.02~07</td><td>한국교육개발원, 세종시 문화재단</td><td>교육자 매칭 시스템은 4개 컨테이너로 나눠 운영하며 반영 기록 절차를 만들어 레거시 제약 속 기능 추가.<br>문화재단은 사전 승인을 받아 별도 환경에서 소스를 분석해 예약, 콘텐츠, 팝업 수정</td></tr>
+    <tr><td class="dt">2024.02~07</td><td>지하도상가 홍보</td><td>반영하려면 직접 방문하거나 현장 직원의 협조가 필요한 시스템.<br>변경분을 모아 일괄 반영하는 방식으로 운영</td></tr>
+  </table></div>
 
-    <div class="console sec rv" style="max-width:560px" aria-label="연락처 콘솔">
-      <div class="cbar"><span class="led"></span>CONTACT — shin@dexit</div>
-      <div class="cbody">
-        <span class="ln"><span class="p">$</span> whoami</span>
-        <span class="ln"><span class="g">신의</span> <span class="p">— Backend Developer · ㈜디엑시트 개발팀 대리</span></span>
-        <span class="ln"><span class="p">$</span> mail -s <span class="y">"채용 문의"</span> foodfor456@naver.com</span>
-        <span class="ln"><span class="g">✓ 응답 대기 중</span> <span class="caret"></span></span>
-      </div>
-    </div>
-    <div class="thanks">— THANK YOU</div>
-  </footer>
+  <h2 data-con-src="mes">㈜제오시스 스마트공장 MES (2023.01~2024.01, 7개 제조사)</h2>
+  <p class="tags">#케미탑 #신화아이티 #APCM #휴코 #프레쉬아워 #KCG #한국기계</p>
+  <p class="tags">#PHP8 #CodeIgniter3 #MySQL #MariaDB #Apache #Bootstrap4 #jQuery #GoogleCharts #Ajax</p>
+  <ul>
+    <li>설비별 실시간 모니터링: IO 통신 수집 데이터를 가공해 기기 온도, 동작 여부, 생산량, 가동시간을 Ajax 기반 실시간 차트로 시각화. 데이터 없는 설비는 로딩 처리 후 조회하도록 쿼리를 구성해 서버 부하 절감</li>
+    <li>수익 분석: 매출 대비 매입 비율 차트, 연관 테이블 구조 설계로 데이터 정합성 확보</li>
+    <li>전자결재 폼 빌더: 고객이 휴가, 지출결의서 등 결재 양식을 직접 생성. 사전 정의 class 기반으로 입력 필드, 서브테이블, datepicker가 자동 구성되는 구조</li>
+    <li>입고 현황 캘린더, MRP 현재고 조회, 사용자별 메뉴 권한 관리(fancyTree), 나의 메뉴 즐겨찾기</li>
+    <li>기획자 부재 환경에서 현장 작업자 중심 UX 직접 설계: 텍스트와 버튼 확대, 주 사용 영역 자동 포커싱, 탭 동작 개선 등 바코드 기기와 현장 PC 최적화</li>
+    <li>중도 합류 후 잦은 고객 미팅으로 도메인을 빠르게 습득, "공장 상황을 한눈에"라는 핵심 요구에 맞춰 기능 간소화 주도</li>
+  </ul>
+</section>
 
+<!-- 경력과 학력 -->
+<section id="pg-career" data-pg="career">
+  <h2 data-con-src="career">이력</h2>
+  <div class="tw"><table>
+    <tr><th>기간</th><th>내용</th></tr>
+    <tr><td class="dt">2027.02 예정</td><td>컴퓨터공학 학사, 학점은행제(국가평생교육진흥원). 실무와 병행</td></tr>
+    <tr><td class="dt">2026.09</td><td>정보처리기사</td></tr>
+    <tr><td class="dt">2024.02 ~ 재직중</td><td><b>㈜디엑시트 개발팀 대리</b><br>공공, 교육, 문화 정보화 시스템 구축과 운영, 레거시 전환, 유지보수</td></tr>
+    <tr><td class="dt">2023.01 ~ 2024.01</td><td><b>㈜제오시스 개발부서 사원</b><br>스마트공장 MES 개발, 7개 제조사 적용</td></tr>
+    <tr><td class="dt">2022.04 ~ 10</td><td>자바(JAVA)와 스프링 프레임워크 백엔드 웹 개발자 과정, 900시간 무결석 수료, 출석률 우수 표창</td></tr>
+  </table></div>
+</section>
+<!-- 연락처 -->
+<section id="pg-contact" data-pg="contact">
+  <p class="motto">쓰는 사람 누구에게나 불편이 없고,<br>데이터의 무결성과 신뢰를 중요한 가치로 여기며,<br>고객이 믿고 맡길 수 있는 시스템을 만듭니다.</p>
+
+  <h2 data-con-src="contact">연락처</h2>
+  <div class="tw"><table>
+    <tr><td class="k">이름</td><td>신의</td></tr>
+    <tr><td class="k">이메일</td><td><a class="mail" href="mailto:foodfor456@naver.com?subject=%EC%B1%84%EC%9A%A9%20%EB%AC%B8%EC%9D%98" data-copy="foodfor456@naver.com">foodfor456@naver.com</a> <span class="small">누르면 메일 앱이 열리고 주소는 복사됩니다</span></td></tr>
+    <tr><td class="k">거주</td><td>충북 청주시</td></tr>
+    <tr><td class="k">경력</td><td>백엔드 <span class="career-len">3년 7개월</span></td></tr>
+  </table></div>
+</section>
+
+<div class="pgnav">
+  <a href="#" class="prev"></a>
+  <a href="#" class="next"></a>
 </div>
-
-<div class="pgnav" aria-label="페이지 이동">
-  <button class="top" type="button">TOP ↑</button>
-  <button class="prev" type="button"></button>
-  <button class="next" type="button"></button>
+</main>
 </div>
+</div>
+<button type="button" class="totop" id="totop">위로 &#8593;</button>
 
 <script>
 (function(){
-
-  /* ── 콘텐츠 데이터 (하드코딩 대신 데이터 기반 렌더링) ── */
-  var DATA = {"skills":[{"no":"01 · Backend","name":"백엔드","badges":[{"t":"Java","pri":true},{"t":"Spring Framework","pri":true},{"t":"Spring Boot","pri":true},{"t":"eGovFrame","pri":true},{"t":"MyBatis","pri":true},{"t":"PHP","pri":false},{"t":"Laravel","pri":false},{"t":"CodeIgniter3","pri":false}]},{"no":"02 · Database","name":"데이터베이스","badges":[{"t":"MySQL","pri":true},{"t":"MariaDB","pri":true},{"t":"PostgreSQL","pri":false},{"t":"OracleDB","pri":false},{"t":"SQL 튜닝","pri":true},{"t":"데이터 마이그레이션","pri":false}]},{"no":"03 · Infra / DevOps","name":"인프라 · 운영","badges":[{"t":"Linux","pri":true},{"t":"Apache","pri":true},{"t":"Tomcat","pri":true},{"t":"Jenkins","pri":true},{"t":"Git · GitHub · SVN","pri":true},{"t":"Docker","pri":false},{"t":"Naver Cloud","pri":false},{"t":"NAS","pri":false}]},{"no":"04 · View","name":"프론트엔드","badges":[{"t":"JSP","pri":true},{"t":"Thymeleaf","pri":false},{"t":"JSTL","pri":true},{"t":"HTML5","pri":false},{"t":"CSS3","pri":false},{"t":"JavaScript","pri":true},{"t":"jQuery","pri":true},{"t":"Ajax","pri":false},{"t":"Bootstrap","pri":false}]},{"no":"05 · AI Eng.","name":"AI 활용","badges":[{"t":"Claude Code","pri":true},{"t":"AI-assisted development","pri":true},{"t":"Superpowers","pri":false},{"t":"개인 커스텀 스킬","pri":false}]}],"cases":[{"no":"01 · Case Study","title":"서울연구원 · Legacy 전환 · 운영 인수","meta":"㈜디엑시트 · 공공기관 · 구축 + 유지보수 인수","tags":["Java Spring Framework","MySQL / Oracle","MyBatis"],"pasr":[{"k":"문제 Problem","body":"연구보고서·기사·채용·파일/미디어 중심의 사이트가 <span class=\"nb\">PHP/Drupal Legacy</span> 구조에 묶여 유지보수와 조회 성능에 제약이 있었습니다."},{"k":"접근 Approach","body":"맞춤형 DB 구조를 분석해 Java/Spring으로 재설계.<br class=\"d\">텍스트 데이터는 <b>SQL로 1차 이관</b>,<br class=\"d\">파일 데이터는 <b>Java 이관 기능을 별도 구현</b>하고 URL 매핑 컨트롤러로 검증을 기능화했습니다."},{"k":"해결 Solution","body":"외부 업체 API 송수신을 협의·검증하고, 인사팀 DB와 연동해 수기로 갱신하던 <b>조직도를 자동화</b>.<br class=\"d\">구축 후 유지보수까지 인수해 SSL 인증서 교체·외부 API 이슈에 대응했습니다."},{"k":"성과 Result","body":"Legacy 구조 현대화 및 조직도 자동화.<br class=\"d\">파일/미디어 중심 사이트의 <b>DB 조회 구조·성능 개선</b>으로 운영 안정화."}]},{"no":"02 · Case Study","title":"늘봄 허브 · 다중권한 만족도·통계 허브","meta":"㈜디엑시트 · 교육 · 파란샘 협력 · 다중권한 플랫폼 + 만족도 통계 허브 · 2026.04~진행","tags":["Java Spring","MyBatis","권한 제어","AI-assisted Dev"],"pasr":[{"k":"문제 Problem","body":"개인강사·기관회원·학교회원·관리자 등 역할마다 보는 메뉴·데이터가 달랐고,<br class=\"d\">학교·교육청 단위로 흩어진 만족도 조사와 현황 통계를 한곳에서 다뤄야 했습니다."},{"k":"접근 Approach","body":"<b>역할별 접근 제어</b>(메뉴·데이터 권한 분리)를 설계하고,<br class=\"d\">만족도 조사·통계 요청(조회·추출) 기능을 표준화했습니다.<br class=\"d\">메뉴 단위 기준 기능을 먼저 완성한 뒤 동일 패턴으로 확장했습니다."},{"k":"해결 Solution","body":"학교·교육청·프로그램별 만족도 통계 페이지를 <b>제작·배포하고 허브로 구성</b>했습니다."},{"k":"성과 Result","body":"역할마다 흩어져 있던 만족도·현황 통계를 권한에 맞게 <b>한 허브에서 조회·추출</b>하도록 통합."}]},{"no":"03 · Case Study","title":"내부 CMS · 반복 구축 표준화","meta":"㈜디엑시트 · 사내 솔루션 · 공공·문화 사이트 반복 구축용","tags":["Laravel","PHP","Apache","Cache"],"pasr":[{"k":"문제 Problem","body":"공공·문화 사이트를 구축할 때마다 메뉴·게시판·팝업·배너 등 동일한 구조를 반복 제작하는 비효율이 있었습니다."},{"k":"접근 Approach","body":"반복 기능을 CMS로 구조화하고, <b>데이터가 변경되는 시점에만 캐시를 자동 최신화</b>하는 구조를 설계했습니다."},{"k":"해결 Solution","body":"관리자 사용성을 고려해 기능을 단순화하고,<br class=\"d\">복잡한 로직을 기능 단위로 정리해 재사용 가능한 사내 솔루션으로 개발했습니다."},{"k":"성과 Result","body":"중간 시연에서 대표·이사·실장 등 내부 관계자의 <b>긍정적 피드백</b>을 확보."}]},{"no":"04 · Case Study","title":"교통비 정산 플랫폼 · 안성·제주 (Forcitizen)","meta":"㈜디엑시트 · 공공·교통 · 지자체 교통비 지원금 정산 · SaaS","tags":["Spring Boot","Naver Cloud","외부 API","정합성 검증 루프"],"pasr":[{"k":"문제 Problem","body":"지자체 교통비 지원금처럼 <b>금액과 직결되는 기능</b>은 정산 숫자가 한 건만 어긋나도,<br class=\"d\">알림이 한 번만 빗나가도 사용자 신뢰에 직접 영향을 줍니다."},{"k":"접근 Approach","body":"위 <b>정합성 검증 루프</b>로 정산 오류를 재현·검증·반영.<br class=\"d\">운영 전용 기능을 로컬에서 검증하려고 회사 PC로 운영 환경을 맞추고 외부 API 개발키·파일을 받아 <b>완전한 로컬 개발환경을 구축</b>했습니다(SaaS라 작은 수정도 전체 재기동)."},{"k":"해결 Solution","body":"교통비 정산 로직·알림을 분석·수정·테스트해 운영에 반영.<br class=\"d\">구축한 로컬 검증 환경은 담당자가 지금도 사용 중입니다."},{"k":"성과 Result","body":"<b>정산 숫자·알림 정확성 개선</b>, 운영 오류 감소.<br class=\"d\">운영 검증을 로컬에서 재현하는 체계를 자산으로 남김."}]},{"no":"05 · Case Study","title":"스마트공장 · 현장 운영 화면 구축","meta":"㈜제오시스 · 제조 · IO 수집 / 현장 화면 / 바코드·수발주","tags":["PHP 8.x","CodeIgniter3","MySQL/MariaDB","Google Charts"],"pasr":[{"k":"문제 Problem","body":"IO 통신으로 적재된 설비 데이터를 현장에서 바로 읽을 수 있어야 했고, <b>기획자가 없는 환경</b>이었습니다."},{"k":"접근 Approach","body":"설비 온도·동작 여부·수발주 물량·바코드 데이터를 가공해 화면에 표시하고,<br class=\"d\">공장 PC·바코드 기기 환경을 고려해 현장 친화적으로 구성했습니다."},{"k":"해결 Solution","body":"버튼·텍스트 크기, 포커스·탭 이동 순서를 실제 작업 흐름에 맞게 개선하고, <b>업무 흐름을 직접 정리</b>했습니다."},{"k":"성과 Result","body":"현장 친화 화면 구성.<br class=\"d\">케미탑·신화아이티·APCM·휴코·프레쉬아워·KCG·한국기계 등 <b>다수 고객사 수행</b>."}]},{"no":"06 · Case Study","title":"늘봄허브 · 멱등 DDL로 다중 환경 스키마 협업","meta":"㈜디엑시트 · 파란샘 협력 · 3개 서버 × NCP adm/user 분리 환경 · 2026.04~진행","tags":["MySQL","DDL","멱등성 Idempotency","Naver Cloud","협업"],"pasr":[{"k":"문제 Problem","body":"파란샘 개발자와의 협업 프로젝트로, 환경이 <b>파란샘 개발서버 · 재단 개발서버 · 운영서버</b> 3개에 NCP <b>adm / user 분리</b>까지 겹친 구조였습니다.<br class=\"d\">특정 메뉴는 재단 개발서버에, 특정 기능은 파란샘 개발서버에 <b>먼저 반영해 테스트하는 방식</b>이라 환경마다 반영 시점과 순서가 제각각이었고,<br class=\"d\">환경별로 DDL을 따로 관리하며 반영하는 것은 누락·불일치를 부르는 구조였습니다."},{"k":"접근 Approach","body":"환경별 DDL 관리 자체를 없애기 위해, 수정하는 <b>모든 DDL을 멱등(idempotent)으로 작성</b>했습니다.<br class=\"d\">컬럼이 이미 있어도, 없어도, 몇 번을 실행해도 같은 결과가 되도록 존재 여부를 확인하고 적용하는 방식입니다."},{"k":"해결 Solution","body":"하나의 DDL 세트를 <b>어느 환경에 어떤 순서로 실행해도 무결성이 유지</b>되는 반영 체계를 만들었습니다.<br class=\"d\">환경별 반영 이력을 따로 추적할 필요가 없어졌습니다."},{"k":"성과 Result","body":"6개 반영 지점(3개 환경 × adm/user)에서 <b>환경 간 스키마 불일치 없이</b> 협업 개발 진행 중."}]}],"groups":[{"title":"예정 프로젝트","cnt":"Scheduled · 1","items":[{"has":false,"nm":"기획예산처 재구축 <span class=\"tag plan\">예정</span>","desc":"마더사(파란샘) 협력 · 시스템 재구축 프로젝트 투입 예정","detail":null}]},{"title":"㈜디엑시트 · 구축 · 개발","cnt":"2024–진행 · 14","items":[{"has":true,"nm":"늘봄허브 <span class=\"tag run\">진행 · 마무리</span>","desc":"파란샘 협력 · AI 기반 개발 전면 적용 · 만족도 통계 허브 (Case 02)","detail":"<span class=\"dt\">2026.04 ~ 진행 중</span>마더사(파란샘) 협력 프로젝트에 <b>사내 최우선 투입</b>.<br class=\"d\">개인강사·기관회원·학교회원·관리자 등 역할별 권한 분리와 학교·교육청 단위 만족도 조사·통계 허브를 구축.<br class=\"d\"><b>AI 기반 개발(바이브 코딩)을 전면 적용</b>하고, 커뮤니티에서 검증된 스킬(superpowers,<br class=\"d\">frontend-design 등)을 도입·실험하며 AI 협업 개발 프로세스를 지속 개선 중."},{"has":true,"nm":"충북 늘봄학교 기능개선","desc":"방과후 시스템 · 금액 수치 정합성 중점 기능개선","detail":"<span class=\"dt\">2025.06 ~ 2025.08</span>사용자·관리자·강사 페이지로 구성된 방과후 늘봄학교 시스템 기능개선.<br class=\"d\"><b>금액 관련 수치 불일치 문제를 중점 분석·수정</b>해 정산 데이터 정합성을 확보. 이후 알림톡·앱 푸시 유지보수로 운영을 이어감."},{"has":true,"nm":"세종 관광문화재단 (세종미식 · 세종한글) <span class=\"tag run\">진행</span>","desc":"<span class=\"nb\">Java/Spring 구축</span>, 백엔드 전담 · 재단 산하 사이트 2종","detail":"<span class=\"dt\">진행 중</span>세종 관광문화재단 산하 사이트 2종(세종미식 / 세종한글)을 <b>Java/Spring으로 구축,<br class=\"d\">백엔드 전담</b>으로 수행 중."},{"has":true,"nm":"서울연구원","desc":"<span class=\"nb\">PHP(Drupal)→Java/Spring 전환</span>, DB 마이그레이션, 조직도 자동화","detail":"<span class=\"dt\">2024.11 ~ 2025.02</span>PHP(드루팔) 사이트를 <b>Java Spring Framework로 전환 구축</b>.<br class=\"d\">맞춤형 DB 구조 마이그레이션, 외부 제공 API 개발 및 외부 업체 협업,<br class=\"d\">성능 향상을 위한 DB 최적화, <b>인사팀 DB 연동 조직도 자동화</b> 구현.<br class=\"d\">구축 후 유지보수까지 인수해 운영 중 (Case 01)."},{"has":true,"nm":"교통비 정산 (안성·제주)","desc":"Forcitizen 정산 정합성, 외부 API 연동 로컬 검증환경 구축","detail":"<span class=\"dt\">2024.06 ~ 07 · 2025.10 ~ 진행 중 (재투입)</span>Spring Boot 기반 무상교통 정산 SaaS(Forcitizen).<br class=\"d\">정합성 검증 루프로 정산 오류를 재현·검증·반영하고,<br class=\"d\">외부 API 개발키·파일을 받아 <b>완전한 로컬 검증 환경을 직접 구축</b>했고, 담당자가 지금도 사용 중.<br class=\"d\">재투입 후 <b>제주도 사업까지 확대 운영</b>,<br class=\"d\">Docker 이미지 패키징과 Git(CI)·네이버 클라우드(CD) 기반 CI/CD 운영 (Case 04)."},{"has":true,"nm":"경기도 장애인체육회","desc":"관리자 교부금 기능 + 3권한 역할 설계","detail":"<span class=\"dt\">2025.07 ~ 2025.08</span>관리자 <b>교부금 기능 담당</b>. 사이트관리자·기관관리자·회계사 3개 권한별 역할 배정 기능을 설계·개발.<br class=\"d\">1개월 미만의 촉박한 일정과 설계 담당 PM 교체 상황에서 후임자와 긴밀히 소통해 <b>일정 내 완수</b>."},{"has":true,"nm":"제천시립도서관","desc":"사용자·관리자·통합검색 3컨테이너, 예약 기능 중심","detail":"<span class=\"dt\">2025.03 ~ 2025.05</span>사용자·관리자·통합검색 3개 컨테이너 중 <b>사용자·관리자 페이지 담당</b>,<br class=\"d\">예약 기능 중심 개발.<br class=\"d\">통합검색 담당 신입사원 <b>기술 멘토링을 병행</b>하며 촉박한 일정 내 오픈 완수."},{"has":true,"nm":"바이오코리아","desc":"협력 프로젝트 중간 투입, 결제 등 핵심 로직 안정화","detail":"<span class=\"dt\">2026.02 ~ 2026.03</span>마더사(이노디스) 협력 프로젝트에 <b>중간 투입</b>되어 개발 지원.<br class=\"d\">View에 노출된 결제 등 핵심 로직을 안정화하고 <b>일정 내 마무리</b>."},{"has":true,"nm":"중소기업창업진흥원","desc":"일정 위기 사업에 구원투수 투입, 감리 무사 통과","detail":"<span class=\"dt\">음성화훼와 병행 수행</span>사내 개발자가 먼저 진행 중이던 건이 <b>일정 내 완수가 어렵다고 판단되어 구원투수로 지원 투입</b>.<br class=\"d\">당시 음성화훼 통합정보시스템을 개발 중이어서 <b>두 프로젝트를 동시에 수행</b>.<br class=\"d\">요구사항 변동이 많은 난도 높은 사업이었으나 <b>감리를 무사 통과</b>."},{"has":true,"nm":"음성화훼 통합정보","desc":"앱·관리자·사용자 3사이트 신규 구축, 무결성 데이터 적재","detail":"<span class=\"dt\">2025.09 ~ 2026.02</span>앱·관리자·사용자 3개 사이트로 구성된 통합정보시스템 <b>신규 구축,<br class=\"d\">사이트 분석부터 오픈까지 수행</b>.<br class=\"d\">농가별 통계와 엑셀 업로드, 제약조건 기반 무결성 데이터 적재 구현."},{"has":true,"nm":"세종 한글문화도시센터","desc":"사용자·관리자 사이트 전반 개발 주도","detail":"<span class=\"dt\">2025.05 ~ 2025.06</span>사용자·관리자 사이트 <b>전반 개발 주도</b>, 신입 개발자의 기능 이관 작업 가이드.<br class=\"d\">타 프로젝트 배정으로 중도 인계."},{"has":true,"nm":"KMF (WordPress)","desc":"트래픽 이슈 대응, PDF·QR 기능 구현","detail":"<span class=\"dt\">2025.06 ~ 2025.07</span>워드프레스(PHP) 기반 건강기능식품 홍보 사이트.<br class=\"d\">카페24 환경의 <b>트래픽 이슈 대응</b>, PDF 구글 드라이브 연동 뷰어 및 QR코드 생성 기능 개발."},{"has":true,"nm":"아트코리아랩","desc":"중단 프로젝트 인수, 예약·SNS 로그인 등 핵심기능 개발","detail":"<span class=\"dt\">2024.04 ~ 2024.05</span>예술가 대상 공간·장비 대여 사이트. <b>개발자 퇴사로 중단된 프로젝트를 인수</b>해 예약 기능,<br class=\"d\">SNS 로그인 등 미구현 요구사항 개발.<br class=\"d\">디자인팀과 협업하여 퍼블리싱 다수 수행."},{"has":true,"nm":"내부 Laravel CMS","desc":"반복 구축 표준화 사내 솔루션, 캐시 자동 최신화","detail":"<span class=\"dt\">2026.03 ~ 2026.04</span>PHP 라라벨(Laravel) 기반 자사 CMS 개발.<br class=\"d\">메뉴·게시판·팝업·배너 등 반복 구축 기능을 표준화하고,<br class=\"d\"><b>데이터 변경 시점에만 캐시를 자동 최신화</b>하는 구조 설계.<br class=\"d\">중간 시연에서 내부 관계자의 긍정적 피드백 확보 (Case 03)."}]},{"title":"㈜디엑시트 · 유지보수","cnt":"2024–진행 · 11","items":[{"has":true,"nm":"서울예술의전당","desc":"예약·이벤트·회원등급, PostgreSQL, 야간 반영 운영","detail":"<span class=\"dt\">2025.07 ~ 진행 중</span>타사 이관 사업을 인수해 <b>소스 분석 후 운영</b>. 예약·이벤트·회원등급 등 다기능 사이트,<br class=\"d\">PostgreSQL 환경.<br class=\"d\">야간(22시) 반영 등 <b>무중단 운영 요구사항</b>에 대응."},{"has":true,"nm":"서울연구원·서울아카이브","desc":"구축 후 유지보수 연장, SSL·외부 API 이슈 대응","detail":"<span class=\"dt\">2025.02 ~ 진행 중</span><b>직접 구축한 사이트의 유지보수 연장</b> 수행. SSL 인증서 교체,<br class=\"d\">외부 수신 API 이슈 대응."},{"has":true,"nm":"충북 늘봄학교","desc":"알림톡·앱 푸시 관련 유지보수","detail":"<span class=\"dt\">2025.06 ~ 진행 중</span>알림톡·앱 푸시 관련 이슈 대응 및 운영."},{"has":true,"nm":"안성시 무상교통서비스","desc":"포시티즌, <span class=\"nb\">Spring Boot·Docker</span> 패키징, <span class=\"nb\">Naver Cloud CI/CD</span>","detail":"<span class=\"dt\">2024.06 ~ 2024.07</span><span class=\"nb\">Spring Boot·Docker</span> 기반,<br class=\"d\">네이버 클라우드 연동 Git CI/CD 환경에서 배포·운영.<br class=\"d\"><b>미완성 상태 시스템의 이슈 대응</b>. 2025.10 재투입해 제주도 사업까지 확대 운영 중 · 상세는 구축 목록의 \"교통비 정산\" 참조."},{"has":true,"nm":"시흥형 기본교통비","desc":"코레일 데이터 가공→교통비 정산, SQL 튜닝 다수","detail":"<span class=\"dt\">2024 ~ </span>코레일 데이터 가공·DB 적재 및 고객 매칭 정산 시스템.<br class=\"d\"><b>스케줄러(배치) 이슈 대응</b>, SQL 쿼리 개선, 현금 정산 관련 요구사항 다수 처리."},{"has":true,"nm":"청남대","desc":"도청 산하 사이트, 형상관리 보강·운영 안정화","detail":"<span class=\"dt\">2024.02 ~ 2024.07</span><b>형상관리 미비 사이트를 인수</b>, 도청 방문을 통한 운영 서버 직접 반영.<br class=\"d\">파일 비교·검증 프로세스를 수립해 안정화."},{"has":true,"nm":"한국교육개발원","desc":"교육자 매칭 시스템, 폐쇄망 · 4컨테이너 운영","detail":"<span class=\"dt\">폐쇄망 · 레거시</span>폐쇄망 환경 + 오래된 소스로 분석에 시간이 드는 시스템.<br class=\"d\"><b>4개 컨테이너로 나눠 운영</b>하며,<br class=\"d\">반영할 때마다 컨테이너별로 <b>기록을 남기는 절차</b>를 만들어 혼선 없이 레거시 제약 속 기능 추가를 수행."},{"has":true,"nm":"세종시 문화재단","desc":"예약·콘텐츠·팝업 수정 운영, 폐쇄망","detail":"<span class=\"dt\">폐쇄망 · 레거시</span>폐쇄망 환경이라 유지보수 접근이 제한되고, 오래된 소스로 분석 난도가 높은 시스템.<br class=\"d\"><b>사전 승인을 받아 소스를 별도 환경에서 심층 분석</b>해 예약·콘텐츠·팝업 수정 요구사항을 처리."},{"has":true,"nm":"국립부여박물관","desc":"게시판 검색 개선, 디자이너 협업 접근성 사업","detail":"<span class=\"dt\">2024.05 ~ 2024.07</span>노후 시스템 제약 내 요구사항 대응,<br class=\"d\"><b>게시판 태그 검색 이슈 해결</b>, 웹 접근성 개선 사업 수행."},{"has":true,"nm":"음성군청 새싹체험관","desc":"예약(개인·단체회원), View(JSP) 연산 성능 개선","detail":"<span class=\"dt\">2024 ~ </span><b>전임자 부재로 소스 전체 분석 후 운영</b>.<br class=\"d\">JSP 뷰단 연산 과다로 인한 속도 저하를 핵심 구간 위주로 개선."},{"has":true,"nm":"지하도상가 홍보","desc":"데이터 노출형 사이트, 폐쇄망 방문 반영 운영","detail":"<span class=\"dt\">폐쇄망</span>폐쇄망 환경이라 반영하려면 <b>직접 방문하거나 현장 직원의 협조</b>가 필요한 시스템.<br class=\"d\">현장 협조가 원활하지 않은 여건에서도 <b>변경분을 모아 일괄 반영하는 방식</b>으로 운영을 지속."}]},{"title":"㈜제오시스 · 스마트공장","cnt":"2023–2024 · 7개사","items":[{"has":true,"nm":"스마트공장 MES 시스템 (7개사)","desc":"케미탑·신화아이티·APCM·휴코·프레쉬아워·KCG·한국기계 · IO 설비 데이터 수집·가공, 현장 운영 화면","detail":"<span class=\"dt\">2023.01 ~ 2024.01 · PHP 8.x(CodeIgniter3) · MySQL/MariaDB · Google Charts</span>\n            <b>설비별 실시간 모니터링</b>: IO 통신 수집 데이터를 가공해 기기 온도·동작 여부·생산량·가동시간을 Ajax 기반 실시간 차트로 시각화. 데이터 없는 설비는 로딩 처리 후 조회하도록 쿼리를 구성해 서버 부하 절감.<br class=\"d\">\n            <b>수익 분석</b>: 매출 대비 매입 비율 차트 구현,<br class=\"d\">연관 테이블 구조 설계로 데이터 정합성 확보.<br class=\"d\">\n            <b>전자결재 폼 빌더</b>: 고객이 휴가·지출결의서 등 결재 양식을 직접 생성. 사전 정의 class 기반으로 입력 필드·서브테이블·datepicker가 자동 구성되는 구조 설계.<br class=\"d\">\n            입고 현황 캘린더, MRP 현재고 조회,<br class=\"d\">사용자별 메뉴 권한 관리(fancyTree), '나의 메뉴' 즐겨찾기 등 구현.<br class=\"d\">\n            <b>기획자 부재 환경에서 현장 작업자 중심 UX 직접 설계</b>: 텍스트·버튼 확대,<br class=\"d\">주 사용 영역 자동 포커싱, 탭 동작 개선 등 바코드 기기·현장 PC 최적화.<br class=\"d\">\n            중도 합류 후 잦은 고객 미팅으로 도메인을 빠르게 습득,<br class=\"d\">'공장 상황을 한눈에'라는 핵심 요구에 맞춰 기능 간소화 주도."}]}]};
-
-  function el(html){ var t=document.createElement('template'); t.innerHTML=html.trim(); return t.content.firstChild; }
-
-  // 기술 매트릭스
-  var skillsGrid = document.getElementById('skillsGrid');
-  DATA.skills.forEach(function(c){
-    skillsGrid.appendChild(el(
-      '<div class="skl rv"><span class="kno">'+c.no+'</span><h3>'+c.name+'</h3>'+
-      '<div class="badges">'+c.badges.map(function(b){return '<span class="b'+(b.pri?' pri':'')+'">'+b.t+'</span>';}).join('')+'</div></div>'));
-  });
-
-  // 케이스 스터디
-  var caseGrid = document.getElementById('caseGrid');
-  DATA.cases.forEach(function(c){
-    caseGrid.appendChild(el(
-      '<div class="card rv" tabindex="0"><span class="cno">'+c.no+'</span><h3>'+c.title+'</h3>'+
-      '<div class="cmeta">'+c.meta+'</div>'+
-      '<div class="tags">'+c.tags.map(function(t){return '<span class="tag">'+t+'</span>';}).join('')+'</div>'+
-      '<div class="pasr">'+c.pasr.map(function(p){return '<div><span class="k">'+p.k+'</span><p>'+p.body+'</p></div>';}).join('')+'</div>'+
-      '<div class="hint">CLICK TO EXPAND [+]</div></div>'));
-  });
-
-  // 프로젝트 이력
-  var pgWrap = document.getElementById('projectGroups');
-  DATA.groups.forEach(function(g){
-    pgWrap.appendChild(el(
-      '<details class="grp rv" open><summary>'+g.title+' <span class="cnt">'+g.cnt+'</span></summary>'+
-      '<div class="plist">'+g.items.map(function(it){
-        return '<div class="pj'+(it.has?' has':'')+'"><span class="nm">'+it.nm+'</span><p>'+it.desc+'</p>'+
-               (it.detail?'<div class="pjd">'+it.detail+'</div>':'')+'</div>';
-      }).join('')+'</div></details>'));
-  });
-
-  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  // mobile menu
-  var ham = document.querySelector('.ham'), nav = document.getElementById('nav');
-  ham.addEventListener('click', function(){
-    var open = nav.classList.toggle('openm');
-    ham.setAttribute('aria-expanded', open);
-  });
-  nav.querySelectorAll('a').forEach(function(a){
-    a.addEventListener('click', function(){ nav.classList.remove('openm'); ham.setAttribute('aria-expanded','false'); });
-  });
-
-  // scroll reveal
-  var io = new IntersectionObserver(function(es){
-    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, {threshold:.12});
-  document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
-
-  // page router (비동기 페이지 전환)
-  var links = Array.prototype.slice.call(nav.querySelectorAll('a'));
-  var pages = ['home','skills','projects','cases','career','contact'];
-  var pageNames = {home:'About', skills:'Skills', projects:'Projects', cases:'Cases', career:'Career', contact:'Contact'};
-  var current = 'home';
-  function show(pg){
-    if(pages.indexOf(pg) < 0) pg = 'home';
-    current = pg;
-    document.querySelectorAll('[data-pg]').forEach(function(el){
-      el.classList.toggle('act', el.dataset.pg === pg);
-    });
-    links.forEach(function(a){ a.classList.toggle('on', a.dataset.page === pg); });
-    window.scrollTo({top:0, left:0, behavior:'instant'});
-    // 표시된 페이지의 reveal 요소 활성화
-    document.querySelectorAll('[data-pg].act .rv, .hero.act .rv').forEach(function(el){ el.classList.add('in'); });
-    document.querySelectorAll('[data-pg].act.rv').forEach(function(el){ el.classList.add('in'); });
-    updatePgnav();
+  var pages=['about','skills','cases','projects','career','contact'];
+  var names={about:'소개',skills:'기술',cases:'주요 사례',projects:'프로젝트',career:'이력',contact:'마치며'};
+  var prev=document.querySelector('.pgnav .prev'), next=document.querySelector('.pgnav .next');
+  function show(id){
+    if(pages.indexOf(id)<0) id='about';
+    document.querySelectorAll('section[data-pg]').forEach(function(s){ s.classList.toggle('act', s.getAttribute('data-pg')===id); });
+    document.querySelectorAll('nav.tabs a').forEach(function(a){ a.classList.toggle('on', a.getAttribute('data-page')===id); });
+    var sec=document.querySelector('section[data-pg="'+id+'"]'); var first=sec&&sec.querySelector('[data-con-src]'); var cid=first?first.getAttribute('data-con-src'):id;
+    document.querySelectorAll('#console [data-con]').forEach(function(c){ c.classList.toggle('act', c.getAttribute('data-con')===cid); });
+    typeConsole(cid);
+    var i=pages.indexOf(id);
+    if(i>0){ prev.textContent='이전: '+names[pages[i-1]]; prev.href='#'+pages[i-1]; prev.style.visibility='visible'; } else { prev.style.visibility='hidden'; }
+    if(i<pages.length-1){ next.textContent='다음: '+names[pages[i+1]]; next.href='#'+pages[i+1]; next.style.visibility='visible'; } else { next.style.visibility='hidden'; }
+    window.scrollTo(0,0);
   }
-
-  // 하단 도달 시 이전/다음 페이지 버튼
-  var pgnav = document.querySelector('.pgnav');
-  var btnPrev = pgnav.querySelector('.prev'), btnNext = pgnav.querySelector('.next'), btnTop = pgnav.querySelector('.top');
-  function updatePgnav(){
-    var i = pages.indexOf(current);
-    btnPrev.style.display = i > 0 ? '' : 'none';
-    btnNext.style.display = i < pages.length - 1 ? '' : 'none';
-    if(i > 0) btnPrev.textContent = '← ' + pageNames[pages[i-1]];
-    if(i < pages.length - 1) btnNext.textContent = pageNames[pages[i+1]] + ' →';
-    btnTop.style.display = document.documentElement.scrollHeight > window.innerHeight + 40 ? '' : 'none';
-    checkBottom();
+  var conRun=0;
+  function typeConsole(id){
+    var blk=document.querySelector('#console [data-con="'+id+'"]'); if(!blk) return; var box=document.getElementById('console'); box.scrollTop=0;
+    if(!blk.dataset.src) blk.dataset.src=blk.innerHTML;
+    var run=++conRun;
+    var src=blk.dataset.src.replace(/<span class="cur"><\/span>/g,'');
+    var parts=src.split('<br>');
+    var head=parts[0]; var cut=head.indexOf('</span>')+7;
+    var bar=head.slice(0,cut); parts[0]=head.slice(cut);
+    blk.innerHTML=bar;
+    var out=document.createElement('span'); blk.appendChild(out);
+    var cur=document.createElement('span'); cur.className='cur'; blk.appendChild(cur);
+    function plain(html){ var d=document.createElement('div'); d.innerHTML=html; return d.textContent; }
+    function step(i){
+      if(run!==conRun) return;
+      if(i>=parts.length) return;
+      var line=parts[i].trim(); if(!line){ step(i+1); return; } if(line==='<span class="code"></span>'){ out.insertAdjacentHTML('beforeend','<br>'); step(i+1); return; }
+      var isCmd=line.indexOf('<span class="p">$</span>')===0; var isCode=line.indexOf('<span class="code">')===0;
+      if(isCmd||isCode){
+        var text=plain(line), k=0, tmp=document.createElement('span'); out.appendChild(tmp);
+        (function tick(){
+          if(run!==conRun) return;
+          k++; tmp.textContent=text.slice(0,k); box.scrollTop=box.scrollHeight;
+          if(k<text.length){ setTimeout(tick, isCode?5:14); }
+          else { setTimeout(function(){ if(run!==conRun) return; tmp.outerHTML=line+'<br>'; setTimeout(function(){ step(i+1); }, isCode?30:140); }, isCode?0:60); }
+        })();
+      } else {
+        setTimeout(function(){ if(run!==conRun) return; out.insertAdjacentHTML('beforeend', line+'<br>'); box.scrollTop=box.scrollHeight; step(i+1); }, 55);
+      }
+    }
+    setTimeout(function(){ step(0); }, 150);
   }
-  function checkBottom(){
-    var atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 60;
-    pgnav.classList.toggle('show', atBottom);
-  }
-  window.addEventListener('scroll', checkBottom, {passive:true});
-  document.addEventListener('click', function(){ setTimeout(checkBottom, 60); });
-  window.addEventListener('resize', checkBottom);
-  function go(step){
-    var i = pages.indexOf(current) + step;
-    if(i < 0 || i >= pages.length) return;
-    history.pushState(null, '', '#' + pages[i]);
-    show(pages[i]);
-  }
-  document.querySelector('.logo').addEventListener('click', function(e){ e.preventDefault(); history.pushState(null,'','#home'); show('home'); });
-  btnTop.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
-  btnPrev.addEventListener('click', function(){ go(-1); });
-  btnNext.addEventListener('click', function(){ go(1); });
-  links.forEach(function(a){
-    a.addEventListener('click', function(e){
-      e.preventDefault();
-      history.pushState(null, '', '#' + a.dataset.page);
-      show(a.dataset.page);
-      nav.classList.remove('openm'); ham.setAttribute('aria-expanded','false');
-    });
-  });
-  window.addEventListener('popstate', function(){ show(location.hash.replace('#','') || 'home'); });
-  show(location.hash.replace('#','') || 'home');
-
-  // count-up
-  if(!reduce){
-    var cio = new IntersectionObserver(function(es){
-      es.forEach(function(e){
-        if(!e.isIntersecting) return;
-        cio.unobserve(e.target);
-        var el = e.target, end = parseFloat(el.dataset.cnt), dec = (''+el.dataset.cnt).indexOf('.') >= 0 ? 1 : 0;
-        var t0 = null;
-        function tick(t){
-          if(!t0) t0 = t;
-          var p = Math.min((t - t0) / 900, 1);
-          el.textContent = (end * (1 - Math.pow(1 - p, 3))).toFixed(dec);
-          if(p < 1) requestAnimationFrame(tick); else el.textContent = el.dataset.cnt;
-        }
-        requestAnimationFrame(tick);
-      });
-    }, {threshold:.5});
-    document.querySelectorAll('[data-cnt]').forEach(function(el){ cio.observe(el); });
-  }
-
-  // console typing (lines appear one by one)
-  if(!reduce){
-    var lns = document.querySelectorAll('#cbody .ln');
-    lns.forEach(function(l){ l.style.visibility = 'hidden'; });
-    var i = 0;
-    (function next(){
-      if(i >= lns.length) return;
-      lns[i].style.visibility = 'visible';
-      i++;
-      setTimeout(next, i % 2 === 1 ? 420 : 700);
-    })();
-  }
-
-  // skill badge hover → legend highlight
-  var lgPri = document.querySelector('.lg-item.pri'), lgUtil = document.querySelector('.lg-item.util');
-  var skillsGrid = document.querySelector('.skills');
-  document.querySelectorAll('.skl .b').forEach(function(b){
-    var target = b.classList.contains('pri') ? lgPri : lgUtil;
-    b.addEventListener('mouseenter', function(){ target.classList.add('hot'); });
-    b.addEventListener('mouseleave', function(){ target.classList.remove('hot'); });
-  });
-  // legend hover → matching skills highlight (나머지는 흐리게)
-  [[lgPri,'f-pri'],[lgUtil,'f-util']].forEach(function(pair){
-    pair[0].addEventListener('mouseenter', function(){ skillsGrid.classList.add(pair[1]); });
-    pair[0].addEventListener('mouseleave', function(){ skillsGrid.classList.remove(pair[1]); });
-  });
-
-  // project row expand/collapse
-  document.querySelectorAll('.pj.has').forEach(function(p){
-    p.setAttribute('tabindex','0');
-    function toggle(){ p.classList.toggle('open'); }
-    p.addEventListener('click', toggle);
-    p.addEventListener('keydown', function(e){ if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggle(); } });
-  });
-
-  // case card expand/collapse
-  document.querySelectorAll('.card').forEach(function(c){
-    function toggle(){ c.classList.toggle('open'); }
-    c.addEventListener('click', toggle);
-    c.addEventListener('keydown', function(e){ if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggle(); } });
-  });
-
-  // print: open all groups
-  window.addEventListener('beforeprint', function(){
-    document.querySelectorAll('details').forEach(function(d){ d.open = true; });
-    document.querySelectorAll('.card').forEach(function(c){ c.classList.add('open'); });
-  });
+  document.querySelectorAll('[data-con-src]').forEach(function(h){ h.addEventListener('click', function(){ var id=h.getAttribute('data-con-src'); document.querySelectorAll('#console [data-con]').forEach(function(c){ c.classList.toggle('act', c.getAttribute('data-con')===id); }); typeConsole(id); }); });
+  (function(){
+    var now=new Date();
+    var m=12+(now.getFullYear()-2024)*12+(now.getMonth()+1-2);
+    var txt=Math.floor(m/12)+'년 '+(m%12)+'개월';
+    document.querySelectorAll('.career-len').forEach(function(e){ e.textContent=txt; });
+  })();
+  var toast=document.createElement('div'); toast.className='copied'; toast.textContent='메일 주소를 복사했습니다'; document.body.appendChild(toast); var toastTimer=null;
+  document.querySelectorAll('a.mail').forEach(function(a){ a.addEventListener('click', function(){ var v=a.getAttribute('data-copy'); if(navigator.clipboard){ navigator.clipboard.writeText(v).then(function(){ toast.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(function(){ toast.classList.remove('show'); }, 1800); }); } }); });
+  var totop=document.getElementById('totop');
+  totop.addEventListener('click', function(){ window.scrollTo({top:0,behavior:'smooth'}); });
+  window.addEventListener('scroll', function(){ totop.classList.toggle('show', window.scrollY>300); });
+  window.addEventListener('hashchange', function(){ show(location.hash.replace('#','')); });
+  show(location.hash.replace('#','')||'about');
 })();
 </script>
 </body>
