@@ -19,6 +19,8 @@ b,strong{font-weight:700}
 .side{position:fixed;top:118px;left:20px;width:calc(50% - 488px);min-width:280px;z-index:5}
 header.top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;padding:30px 0 16px;border-bottom:2px solid var(--ink)}
 header.top .name{font-size:30px;font-weight:800;margin:0 0 4px;letter-spacing:-.02em;line-height:1.2}
+header.top .name a{color:var(--ink);text-decoration:none}
+header.top .name a:hover{color:var(--ac)}
 header.top .role{font-size:14px;color:var(--mute);margin:0}
 header.top .links{display:flex;flex-direction:column;align-items:flex-end;gap:2px;font-size:13.5px;line-height:1.6}
 header.top .links a{color:var(--mute);text-decoration:none;border-bottom:1px solid transparent}
@@ -124,7 +126,7 @@ td.dt{white-space:nowrap;color:var(--mute);width:1%}
 
 <header class="top">
   <div>
-    <p class="name">신의</p>
+    <p class="name"><a href="#about">신의</a></p>
     <p class="role">백엔드 개발자. 공공, 교육, 문화, 제조 도메인의 웹 시스템 구축과 운영</p>
   </div>
   <div class="links">
