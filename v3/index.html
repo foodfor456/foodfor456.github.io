@@ -179,9 +179,9 @@ td.k .run{color:var(--ac);font-weight:600}
 <span class="p">$</span> tail -f projects.log<br>
 <span class="g">[RUN ]</span> 기획예산처 사이트 고도화 <span class="p">(2026.07~, 단독 개발, 전자정부프레임워크 5.0, JDK 21, JBoss, CUBRID)</span><br>
 <span class="g">[RUN ]</span> 충북테크노파크 재구축 <span class="p">(2026.08~, PHP 사이트를 자사 Java CMS로, JDK 21, JBoss, MariaDB)</span><br>
-<span class="g">[RUN ]</span> 세종 관광문화재단 세종미식, 세종한글 <span class="p">(Java, Spring 백엔드 전담)</span><br>
+<span class="g">[RUN ]</span> 세종 관광문화재단 세종미식, 세종한글 <span class="p">(2026.07~, Java, Spring 백엔드 전담)</span><br>
 <span class="g">[RUN ]</span> 교통비 정산 시스템 안성, 제주 <span class="p">(2025.10~ 유지보수 재투입, Spring Boot, Docker, Naver Cloud)</span><br>
-<span class="y">[DONE]</span> 늘봄허브 <span class="p">(2026.04~2026.08 개발 완료, 하자 대응 중)</span><br>
+<span class="g">[RUN ]</span> 늘봄허브 <span class="p">(2026.04~, 개발 완료 후 하자 대응 중)</span><br>
 <span class="p">$</span> wc -l projects.log ops.log<br>
 <span class="g">15</span> 구축 <span class="p">|</span> <span class="g">11</span> 유지보수 <span class="p">|</span> <span class="g">7</span> 제조사 MES<br>
 <span class="p">$</span> <span class="b">SELECT</span> integrity <span class="b">FROM</span> settlement;<br>
@@ -258,7 +258,7 @@ td.k .run{color:var(--ac);font-weight:600}
           <img src="img/neulbom.jpg" alt="늘봄허브 첫 화면" loading="lazy" width="1280" height="800">
        </figure>
         <h3>늘봄허브, 다중 권한 플랫폼과 만족도 통계 허브</h3>
-        <p class="meta">교육, 학교와 교육청 단위 방과후 플랫폼. 2026.04 ~ 2026.08</p>
+        <p class="meta">교육, 학교와 교육청 단위 방과후 플랫폼. 2026.04 ~ 진행 중</p>
         <dl>
           <dt>문제</dt><dd>개인강사, 기관회원, 학교회원, 관리자마다 보아야 할 메뉴와 데이터가 달랐고, 학교와 교육청 단위로 흩어져 있던 만족도 조사와 현황 통계를 한곳에서 다뤄야 했습니다.</dd>
           <dt>접근</dt><dd>역할별 접근 제어를 설계해 메뉴 권한과 데이터 권한을 분리하고, 만족도 조사와 통계 요청 기능을 표준화했습니다.<br>메뉴 단위로 기준이 되는 기능을 먼저 완성한 뒤 같은 패턴으로 확장했습니다.<br>이 프로젝트부터 AI 기반 개발을 전면 적용했고, 그 전까지는 디버깅에 도움을 받는 정도였습니다.</dd>
@@ -288,7 +288,7 @@ td.k .run{color:var(--ac);font-weight:600}
           <img src="img/artskorealab.jpg" alt="아트코리아랩 홈페이지 첫 화면" loading="lazy" width="1280" height="800">
        </figure>
         <h3>늘봄허브, 멱등 DDL로 다중 환경 스키마 협업</h3>
-        <p class="meta">늘봄허브의 3개 서버와 NCP adm/user 분리 환경. 2026.04 ~ 2026.08</p>
+        <p class="meta">늘봄허브의 3개 서버와 NCP adm/user 분리 환경. 2026.04 ~ 진행 중</p>
         <dl>
           <dt>문제</dt><dd>다른 회사 개발자와 함께 개발하는 프로젝트로, 환경이 상대 회사 개발서버, 재단 개발서버, 운영서버 3개에 NCP adm과 user 분리까지 겹친 구조였습니다.<br>특정 메뉴는 재단 개발서버에, 특정 기능은 상대 회사 개발서버에 먼저 반영해 테스트하는 방식이라 환경마다 반영 시점과 순서가 제각각이었고, 환경별로 DDL을 따로 관리하며 반영하는 것은 누락과 불일치를 부르는 구조였습니다.</dd>
           <dt>접근</dt><dd>환경별 DDL 관리 자체를 없애기 위해 수정하는 모든 DDL을 멱등으로 작성했습니다.<br>컬럼이 이미 있어도, 없어도, 몇 번을 실행해도 같은 결과가 되도록 존재 여부를 확인하고 적용하는 방식입니다.</dd>
@@ -336,10 +336,10 @@ td.k .run{color:var(--ac);font-weight:600}
       <tr><th>기간</th><th>프로젝트</th><th>내용</th></tr>
       <tr><td class="k">2026.08 ~ <span class="run">진행 중</span></td><td class="n">충북테크노파크 재구축</td><td>PHP로 만들어진 기존 사이트를 기획예산처와 같은 자사 Java CMS 기반으로 재구축.<br>Java 21, JBoss, MariaDB.<br>기획예산처 고도화와 병행</td></tr>
       <tr><td class="k">2026.07 ~ <span class="run">진행 중</span></td><td class="n">기획예산처 고도화</td><td>재정경제부에서 분리 신설되는 부처 사이트 고도화를 단독 개발 중.<br>Java 21, Spring Boot, 전자정부프레임워크 5.0, JBoss, CUBRID.<br>GitLab CI/CD, Runner, Docker 기반 자동 배포 개발 서버를 구축해 회사 표준으로 채택됨</td></tr>
-      <tr><td class="k">2026.04 ~ 08</td><td class="n">늘봄허브</td><td>역할별 권한 분리와 학교, 교육청 단위 만족도 조사와 통계 허브 구축.<br>이 프로젝트부터 AI 기반 개발을 전면 적용.<br>개발 완료 후 하자 대응 중</td></tr>
-      <tr><td class="k"><span class="run">진행 중</span></td><td class="n">세종 관광문화재단<br>(세종미식, 세종한글)</td><td>재단 산하 사이트 2종을 Java와 Spring으로 구축, 백엔드 전담</td></tr>
+      <tr><td class="k">2026.04 ~ <span class="run">진행 중</span></td><td class="n">늘봄허브</td><td>역할별 권한 분리와 학교, 교육청 단위 만족도 조사와 통계 허브 구축.<br>이 프로젝트부터 AI 기반 개발을 전면 적용.<br>개발 완료 후 하자 대응 중</td></tr>
+      <tr><td class="k">2026.07 ~ <span class="run">진행 중</span></td><td class="n">세종 관광문화재단<br>(세종미식, 세종한글)</td><td>재단 산하 사이트 2종을 Java와 Spring으로 구축, 백엔드 전담</td></tr>
       <tr><td class="k">2026.03 ~ 04</td><td class="n">사내 Laravel CMS</td><td>메뉴, 게시판, 팝업, 배너 등 반복 구축 기능을 표준화한 사내 솔루션.<br>데이터 변경 시점에만 캐시를 자동 최신화</td></tr>
-      <tr><td class="k">2026.02 ~ 03</td><td class="n">바이오코리아</td><td>오픈 직전에 투입돼 화면에 노출돼 있던 결제 등 핵심 로직을 안정화하고 일정 내 마무리</td></tr>
+      <tr><td class="k">2025.12 ~ 2026.03</td><td class="n">바이오코리아</td><td>오픈 직전에 투입돼 화면에 노출돼 있던 결제 등 핵심 로직을 안정화하고 일정 내 마무리</td></tr>
       <tr><td class="k">2025.09 ~ 2026.02</td><td class="n">음성 화훼 통합정보</td><td>앱, 관리자, 사용자 3개 사이트로 구성된 통합정보시스템 신규 구축.<br>사이트 분석부터 오픈까지 수행.<br>농가별 통계와 엑셀 업로드, 제약조건 기반 무결성 데이터 적재</td></tr>
       <tr><td class="k">음성 화훼와 병행</td><td class="n">중소기업창업진흥원</td><td>사내 개발자가 진행하던 건이 일정 내 완수가 어렵다고 판단돼 지원 투입.<br>두 프로젝트를 동시에 수행했고 요구사항 변동이 많은 사업이었으나 감리를 무사 통과</td></tr>
       <tr><td class="k">2025.07 ~ 08</td><td class="n">경기도 장애인체육회</td><td>관리자 교부금 기능 담당.<br>사이트관리자, 기관관리자, 회계사 3개 권한별 역할 배정 기능 설계와 개발.<br>1개월 미만의 일정과 설계 담당 PM 교체 상황에서 후임자와 소통해 일정 내 완수</td></tr>
