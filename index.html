@@ -922,6 +922,7 @@ IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 �
   });
   /* 페이지에 들어갈 때 항목 위치: 아래로 오면 첫 항목, 위로 오면 마지막 항목 */
   function enterPage(sec, fromBelow){
+    var g=sec.querySelector('#gal'); if(g){ var f=g.querySelector('.gcard'); g._gx=null; g.scrollLeft=fromBelow? g.scrollWidth-g.clientWidth : f.offsetLeft; return; }
     var two=sec.querySelector('.wrap.two');
     if(two){ var n=two.querySelectorAll('.right .pane').length; two._go(fromBelow? n-1 : 0); var pane=two.querySelector('.right .pane.on'); if(pane){ pane.scrollTop=fromBelow? pane.scrollHeight : 0; pane._target=pane.scrollTop; } return; }
     var inner=sec.querySelector('.page>.wrap'); if(inner&&!inner.classList.contains('two')){ inner.scrollTop=fromBelow? inner.scrollHeight : 0; inner._target=inner.scrollTop; }
