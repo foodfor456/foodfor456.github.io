@@ -60,6 +60,8 @@ html{scroll-snap-type:none}
 
 /* 단계형 페이지: 왼쪽 제목과 목록, 오른쪽 현재 항목 */
 .page>.wrap.two{display:grid;grid-template-columns:300px 1fr;gap:64px;overflow:hidden;mask-image:none;-webkit-mask-image:none;padding-bottom:0}
+.two .left{padding-top:16vh}
+.proj .left{padding-top:5vh}
 .two .left h2{font-size:clamp(34px,3.2vw,48px);font-weight:800;line-height:1.15;letter-spacing:-.03em;margin:0 0 34px}
 .steps{list-style:none;margin:0;padding:0}
 .steps li{margin:0 0 6px}
@@ -76,6 +78,8 @@ html{scroll-snap-type:none}
 @keyframes panein{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 
 .how .pane p{font-size:17px;line-height:1.8;color:#444;max-width:820px}
+.how .pane.on,.skills .pane.on{padding-top:16vh}
+.proj .pane.on{padding-top:5vh}
 .two .pane .key{font-size:clamp(34px,4.3vw,68px);font-weight:800;line-height:1.15;letter-spacing:-.035em;margin:0 0 34px;max-width:none;word-break:keep-all}
 .how .pane h3{display:none}
 .how .pane ol{margin:12px 0 0;padding-left:22px;max-width:820px;font-size:16px;color:#444}
@@ -88,6 +92,7 @@ html{scroll-snap-type:none}
 .mes ul li b{font-weight:700}
 @media (max-width:900px){
   .page>.wrap.two{display:block}
+  .two .left,.two .pane.on{padding-top:0}
   .two .left h2{margin-bottom:16px}
   .steps{display:none}
   .two .pane{display:block;height:auto;overflow:visible;mask-image:none;-webkit-mask-image:none;padding-bottom:0;animation:none;margin-bottom:40px}
@@ -426,11 +431,11 @@ td.k .run{color:var(--ac);font-weight:600}
     <div class="right" id="howBody">
       <div class="pane on">
         <h3>끝까지</h3>
-        <p class="key">프로젝트의 마무리를 일의 기준으로 삼습니다.</p><p>시작은 누구나 할 수 있지만 끝을 매듭짓는 것이 시스템의 가치를 결정한다고 생각합니다.<br>요구사항 분석부터 설계, 구현, 배포, 운영까지 맡아 왔고, 전임자와 문서가 없는 시스템도 소스 분석부터 시작해 안정화했습니다.</p>
+        <p class="key">프로젝트의 마무리를<br>일의 기준으로 삼습니다.</p><p>시작은 누구나 할 수 있지만 끝을 매듭짓는 것이 시스템의 가치를 결정한다고 생각합니다.<br>요구사항 분석부터 설계, 구현, 배포, 운영까지 맡아 왔고, 전임자와 문서가 없는 시스템도 소스 분석부터 시작해 안정화했습니다.</p>
       </div>
       <div class="pane">
         <h3>오류와 원복</h3>
-        <p class="key">오류는 고치고 끝내지 않고 기록해 둡니다.</p><p>같은 문제가 다시 나오지 않도록 개발 단계에서 미리 막는 쪽을 택하고, 프로젝트마다 검출된 취약점을 조치하며 쌓인 지식으로 다음 프로젝트에서는 같은 취약점을 미리 대비합니다.<br>운영에서만 확인되는 기능은 운영과 최대한 같은 개발 환경을 만들어 미리 테스트하고, 운영에 올라가서야 드러나는 경우의 수를 줄여 갑니다.<br>반영 전에는 되돌릴 길부터 확보합니다.<br>문제가 생기면 먼저 원복해 서비스를 정상으로 돌려놓고, 그다음에 원인을 고쳐 다시 반영합니다.<br>교통비와 교부금 정산처럼 돈이 걸린 기능은 화면이 멀쩡해 보여도 DB 값을 직접 확인한 뒤에야 끝냅니다.</p>
+        <p class="key">오류는 고치고 끝내지 않고<br>기록해 둡니다.</p><p>같은 문제가 다시 나오지 않도록 개발 단계에서 미리 막는 쪽을 택하고, 프로젝트마다 검출된 취약점을 조치하며 쌓인 지식으로 다음 프로젝트에서는 같은 취약점을 미리 대비합니다.<br>운영에서만 확인되는 기능은 운영과 최대한 같은 개발 환경을 만들어 미리 테스트하고, 운영에 올라가서야 드러나는 경우의 수를 줄여 갑니다.<br>반영 전에는 되돌릴 길부터 확보합니다.<br>문제가 생기면 먼저 원복해 서비스를 정상으로 돌려놓고, 그다음에 원인을 고쳐 다시 반영합니다.<br>교통비와 교부금 정산처럼 돈이 걸린 기능은 화면이 멀쩡해 보여도 DB 값을 직접 확인한 뒤에야 끝냅니다.</p>
         <ol>
           <li>오류는 기록하고, 같은 문제는 개발 단계에서 차단</li>
           <li>검출된 취약점 조치로 쌓인 지식으로 다음 프로젝트 미리 대비</li>
@@ -442,19 +447,19 @@ td.k .run{color:var(--ac);font-weight:600}
       </div>
       <div class="pane">
         <h3>고객의 말</h3>
-        <p class="key">고객은 개발자가 아니니 같은 요구도 사람마다 다르게 표현합니다.</p><p>"이 화면이 느리다", "숫자가 이상하다", "이것도 되게 해 달라"는 말을 들으면 되묻기 전에 먼저 해석합니다.<br>그 뒤에 있는 실제 필요를 짚어 화면과 데이터 구조, 처리 순서로 옮겨 정리한 다음, 그 결과를 들고 한 번에 확인받습니다.<br>같은 것을 여러 번 캐물으면 고객이 지치기 때문입니다.<br>확인받을 때는 개발 용어를 섞지 않고 고객이 쓰는 말로 바꿔 설명합니다.<br>개발 용어를 고객 앞에서 그대로 쓰는 것도 실례라고 생각합니다.<br>요청한 말을 그대로 만드는 것보다 고객이 원하는 결과가 나오게 만드는 쪽을 택합니다.</p>
+        <p class="key">고객은 개발자가 아니니<br>같은 요구도 사람마다 다르게 표현합니다.</p><p>"이 화면이 느리다", "숫자가 이상하다", "이것도 되게 해 달라"는 말을 들으면 되묻기 전에 먼저 해석합니다.<br>그 뒤에 있는 실제 필요를 짚어 화면과 데이터 구조, 처리 순서로 옮겨 정리한 다음, 그 결과를 들고 한 번에 확인받습니다.<br>같은 것을 여러 번 캐물으면 고객이 지치기 때문입니다.<br>확인받을 때는 개발 용어를 섞지 않고 고객이 쓰는 말로 바꿔 설명합니다.<br>개발 용어를 고객 앞에서 그대로 쓰는 것도 실례라고 생각합니다.<br>요청한 말을 그대로 만드는 것보다 고객이 원하는 결과가 나오게 만드는 쪽을 택합니다.</p>
       </div>
       <div class="pane">
         <h3>바뀌는 값</h3>
-        <p class="key">바뀔 수 있는 값은 코드에 박아 두지 않습니다.</p><p>메뉴, 권한, 정산 기준처럼 운영 중에 달라지는 것은 설정과 데이터로 빼서 코드를 고치지 않고도 바꿀 수 있게 만듭니다.<br>기능은 모듈 단위로 나누고 서로 직접 붙지 않게 해서, 한 곳을 고칠 때 다른 곳이 같이 깨지지 않도록 결합도를 낮춥니다.<br>사내 CMS에서 메뉴, 게시판, 팝업, 배너를 그렇게 떼어 낸 것이 한 예입니다.</p>
+        <p class="key">바뀔 수 있는 값은<br>코드에 박아 두지 않습니다.</p><p>메뉴, 권한, 정산 기준처럼 운영 중에 달라지는 것은 설정과 데이터로 빼서 코드를 고치지 않고도 바꿀 수 있게 만듭니다.<br>기능은 모듈 단위로 나누고 서로 직접 붙지 않게 해서, 한 곳을 고칠 때 다른 곳이 같이 깨지지 않도록 결합도를 낮춥니다.<br>사내 CMS에서 메뉴, 게시판, 팝업, 배너를 그렇게 떼어 낸 것이 한 예입니다.</p>
       </div>
       <div class="pane">
         <h3>화면</h3>
-        <p class="key">화면은 안의 로직이 아무리 복잡해도 처음 본 사람이 설명 없이 쓸 수 있어야 한다고 생각합니다.</p><p>제조 현장에서는 컴퓨터가 익숙하지 않은 작업자가 두 번 안에 원하는 정보에 닿도록 버튼과 글자를 키우고 포커스 순서를 작업 순서에 맞췄습니다.<br>복잡함은 코드 안에서 개발자가 감당하고 사용자 앞에는 쉬움만 남기려 합니다.</p>
+        <p class="key">화면은 안의 로직이 아무리 복잡해도<br>처음 본 사람이 설명 없이 쓸 수 있어야 합니다.</p><p>제조 현장에서는 컴퓨터가 익숙하지 않은 작업자가 두 번 안에 원하는 정보에 닿도록 버튼과 글자를 키우고 포커스 순서를 작업 순서에 맞췄습니다.<br>복잡함은 코드 안에서 개발자가 감당하고 사용자 앞에는 쉬움만 남기려 합니다.</p>
       </div>
       <div class="pane">
         <h3>AI</h3>
-        <p class="key">생성형 AI는 개발에 적극적으로 씁니다.</p><p>다만 AI 코드는 100% 정답이 아니고 책임은 제게 있으니, 어떤 작업을 AI에 맡길지 실측으로 기준을 세우고, 결과물은 여러 AI가 서로 검증한 뒤에야 통과시키는 절차를 만들어 사내에 정착시켰습니다.<br>지금은 작업 세션 2개와 검증 세션 1개, 이를 지휘하는 PM 세션 1개로 나눠 진행합니다.<br>그렇게 확보한 시간으로 GitLab CI/CD와 Docker 기반 자동 배포 개발 서버를 만들었고, 회사 표준이 되어 다음 프로젝트의 개발 환경 세팅을 맡았습니다.</p>
+        <p class="key">생성형 AI는<br>개발에 적극적으로 씁니다.</p><p>다만 AI 코드는 100% 정답이 아니고 책임은 제게 있으니, 어떤 작업을 AI에 맡길지 실측으로 기준을 세우고, 결과물은 여러 AI가 서로 검증한 뒤에야 통과시키는 절차를 만들어 사내에 정착시켰습니다.<br>지금은 작업 세션 2개와 검증 세션 1개, 이를 지휘하는 PM 세션 1개로 나눠 진행합니다.<br>그렇게 확보한 시간으로 GitLab CI/CD와 Docker 기반 자동 배포 개발 서버를 만들었고, 회사 표준이 되어 다음 프로젝트의 개발 환경 세팅을 맡았습니다.</p>
       </div>
     </div>
   </div>
