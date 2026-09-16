@@ -221,7 +221,7 @@ td.k .run{color:var(--ac);font-weight:600}
     <div>
       <h1>구축 15건, 동시 운영 11건.<br>같은 오류를 두 번 내지 않는 백엔드.</h1>
       <p class="lead">공공, 교육, 문화, 제조 도메인의 웹 시스템을<br>요구 분석부터 구축과 운영까지 맡습니다.<br>숫자 하나가 어긋나면 신뢰가 무너지는 정산 기능의 데이터 정합성,<br>문서 없이 넘겨받은 레거시의 분석과 전환,<br>야간 반영과 폐쇄망 같은 제약 속의 안정화를 해 왔습니다.</p>
-      <p class="who"><b>신의</b>, 백엔드 개발자<br>경력 <span class="career-len">3년 7개월</span>, ㈜디엑시트 개발팀 대리 재직중<br>충북 청주</p>
+      <p class="who"><b>신의</b>, 백엔드 개발자<br>백엔드 <span class="career-len">3년 7개월</span> 재직중<br>Java, Spring, 전자정부프레임워크, MySQL<br>충북 청주</p>
     </div>
     <div>
       <div class="console" id="con" aria-label="운영 로그 콘솔">
@@ -257,7 +257,7 @@ td.k .run{color:var(--ac);font-weight:600}
 <span class="p">$</span> <span class="b">SELECT</span> integrity <span class="b">FROM</span> settlement;<br>
 <span class="g">0 rows mismatched</span><br>
 <span class="p">$</span> uptime<br>
-<span class="g">백엔드 <span class="career-len">3년 7개월</span></span> <span class="p">㈜디엑시트 개발팀 대리 재직중</span> <span class="cur"></span>
+<span class="g">백엔드 <span class="career-len">3년 7개월</span> 재직중</span> <span class="cur"></span>
         </div>
         <div data-con="maint">
 <span class="bar">shin@dexit: ops.log</span>
@@ -720,7 +720,7 @@ IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 �
         <dt>이름</dt><dd>신의</dd>
         <dt>이메일</dt><dd><a class="mail" href="mailto:foodfor456@naver.com?subject=%EC%B1%84%EC%9A%A9%20%EB%AC%B8%EC%9D%98" data-copy="foodfor456@naver.com">foodfor456@naver.com</a></dd>
         <dt>거주</dt><dd>충북 청주시</dd>
-        <dt>경력</dt><dd>백엔드 <span class="career-len">3년 7개월</span>, ㈜디엑시트 개발팀 대리 재직중</dd>
+        <dt>경력</dt><dd>백엔드 <span class="career-len">3년 7개월</span> 재직중</dd>
       </dl>
     </div>
     <p class="motto">쓰는 사람 누구에게나 불편이 없고,<br>데이터의 무결성과 신뢰를 중요한 가치로 여기며,<br>고객이 믿고 맡길 수 있는 시스템을 만듭니다.</p>
@@ -767,13 +767,20 @@ IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 �
   function glide(to){ var from=window.scrollY, dist=to-from; if(Math.abs(dist)<2) return; pageLock=true; var t0=performance.now(), dur=Math.min(1100, 700+Math.abs(dist)*0.25); document.documentElement.style.scrollBehavior='auto';
     (function frame(now){ var p=Math.min(1,(now-t0)/dur); window.scrollTo(0, from+dist*easeInOut(p)); if(p<1) requestAnimationFrame(frame); else { setTimeout(function(){ pageLock=false; document.documentElement.style.scrollBehavior=''; },150); } })(t0); }
   function currentSnap(){ var y=window.scrollY+2, cur=snaps[0]; snaps.forEach(function(s){ if(s.offsetTop<=y) cur=s; }); return cur; }
-  window.addEventListener('wheel',function(e){
+  /* 안쪽 스크롤을 부드럽게 */
+  function smoothInner(el, dy){
+    var max=el.scrollHeight-el.clientHeight;
+    if(el._target==null||Math.abs(el._target-el.scrollTop)>400) el._target=el.scrollTop;
+    el._target=Math.max(0, Math.min(max, el._target+dy));
+    if(el._anim) return; el._anim=true;
+    (function frame(){ var d=el._target-el.scrollTop; if(Math.abs(d)<0.5){ el.scrollTop=el._target; el._anim=false; return; } el.scrollTop+=d*0.16; requestAnimationFrame(frame); })();
+  }  window.addEventListener('wheel',function(e){
     if(e.defaultPrevented||reduce) return; if(Math.abs(e.deltaY)<=Math.abs(e.deltaX)) return;
     if(window.innerWidth<=900) return;
     if(pageLock){ e.preventDefault(); return; }
     var sec=currentSnap(), i=snaps.indexOf(sec);
     var inner=e.target.closest ? e.target.closest('.page>.wrap') : null;
-    if(inner){ var canDown=inner.scrollTop+inner.clientHeight<inner.scrollHeight-1, canUp=inner.scrollTop>0; if((e.deltaY>0&&canDown)||(e.deltaY<0&&canUp)) return; }
+    if(inner){ var canDown=inner.scrollTop+inner.clientHeight<inner.scrollHeight-1, canUp=inner.scrollTop>0; if((e.deltaY>0&&canDown)||(e.deltaY<0&&canUp)){ e.preventDefault(); smoothInner(inner, e.deltaY); return; } }
     e.preventDefault();
     if(e.deltaY>0){ if(i<snaps.length-1) glide(snaps[i+1].offsetTop); }
     else { if(window.scrollY>sec.offsetTop+2) glide(sec.offsetTop); else if(i>0) glide(snaps[i-1].offsetTop); }
