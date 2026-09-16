@@ -54,14 +54,14 @@ html{scroll-snap-type:none}
 .page>.wrap::-webkit-scrollbar-track{background:transparent}
 .dark.page>.wrap{scrollbar-color:rgba(255,255,255,.4) transparent}
 .dark.page>.wrap::-webkit-scrollbar-thumb{background:rgba(255,255,255,.4)}
-.how.page{padding:96px 0 40px}
+.how.page{padding:64px 0 32px}
 .proj.page{padding:96px 0 40px}
 .skills.page{padding:96px 0 40px}
 .cases.page{padding:80px 0 30px}
 
 /* 단계형 페이지: 왼쪽 제목과 목록, 오른쪽 현재 항목 */
 .page>.wrap.two{display:grid;grid-template-columns:300px 1fr;gap:64px;overflow:hidden;mask-image:none;-webkit-mask-image:none;padding-bottom:0}
-.how .left{padding-top:16vh}
+.how .left{padding-top:7vh}
 .proj .left{padding-top:2vh}
 .two .left h2{font-size:clamp(34px,3.2vw,48px);font-weight:800;line-height:1.15;letter-spacing:-.03em;margin:0 0 34px}
 .steps{list-style:none;margin:0;padding:0}
@@ -82,7 +82,7 @@ html{scroll-snap-type:none}
 @keyframes bodyin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 
 .how .pane p:not(.key){font-size:17px;line-height:1.8;color:#444;max-width:880px}
-.how .pane.on{padding-top:16vh}
+.how .pane.on{padding-top:7vh}
 .proj .pane.on{padding-top:2vh}
 .two .pane .key{font-size:clamp(32px,4vw,62px);font-weight:800;line-height:1.15;letter-spacing:-.035em;margin:0 0 34px;max-width:none;word-break:keep-all}
 .proj .pane .key,.skills .pane .key{font-size:clamp(22px,2vw,30px);font-weight:700;line-height:1.35;letter-spacing:-.02em;margin:0 0 22px}
@@ -108,9 +108,9 @@ html{scroll-snap-type:none}
   .two .pane h3{font-size:22px}
 }
 /* 내용이 짧은 탭은 글자와 간격을 키워 채움 */
-.how .pane.s.on{padding-top:20vh}
-.how .pane:nth-child(2).on{padding-top:3vh}
-.how .pane:nth-child(3).on{padding-top:10vh}
+.how .pane.s.on{padding-top:9vh}
+.how .pane:nth-child(2).on{padding-top:0}
+.how .pane:nth-child(3).on{padding-top:4vh}
 .how .pane.s p:not(.key){font-size:20px;line-height:1.9}
 .skills .pane.s .key{font-size:clamp(26px,2.6vw,38px);margin-bottom:30px}
 .skills .pane.s table{font-size:18px}
