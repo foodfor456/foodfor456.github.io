@@ -119,10 +119,13 @@ html{scroll-snap-type:none}
 .gnav button:hover{background:#fff;color:#000;border-color:#fff}
 
 /* 사례 상세 창 */
-.ov{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.72);display:none;align-items:flex-start;justify-content:center;padding:6vh 20px;overflow:auto}
+.ov{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.72);display:none;align-items:center;justify-content:center;padding:4vh 20px;overscroll-behavior:contain}
 .ov.open{display:flex}
-.md{background:#fff;color:#000;--mute:#666;--line:#ddd;--ac:#24457a;width:min(1040px,100%);border-radius:6px;padding:40px 44px 44px;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.4)}
-.md .close{position:absolute;top:18px;right:20px;width:40px;height:40px;border-radius:50%;font-size:26px;line-height:1;display:inline-flex;align-items:center;justify-content:center}
+.md{background:#fff;color:#000;--mute:#666;--line:#ddd;--ac:#24457a;width:min(1040px,100%);max-height:92vh;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:rgba(0,0,0,.35) transparent;border-radius:6px;padding:40px 44px 44px;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.4)}
+.md::-webkit-scrollbar{width:5px}
+.md::-webkit-scrollbar-thumb{background:rgba(0,0,0,.35);border-radius:3px}
+.md .close{position:sticky;top:0;float:right;margin:-10px -14px 0 0}
+.md .close{width:40px;height:40px;border-radius:50%;font-size:26px;line-height:1;display:inline-flex;align-items:center;justify-content:center;background:#fff;z-index:2}
 .md .close:hover{background:#eee}
 .md h3{font-size:clamp(24px,2.2vw,32px);margin:0 60px 6px 0;line-height:1.25}
 .md .meta{font-size:15px;color:var(--mute);margin:0 0 24px}
@@ -776,7 +779,7 @@ IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 �
     (function frame(){ var d=el._target-el.scrollTop; if(Math.abs(d)<0.5){ el.scrollTop=el._target; el._anim=false; return; } el.scrollTop+=d*0.16; requestAnimationFrame(frame); })();
   }  window.addEventListener('wheel',function(e){
     if(e.defaultPrevented||reduce) return; if(Math.abs(e.deltaY)<=Math.abs(e.deltaX)) return;
-    if(window.innerWidth<=900) return;
+    if(window.innerWidth<=900||document.body.classList.contains('lock')) return;
     if(pageLock){ e.preventDefault(); return; }
     var sec=currentSnap(), i=snaps.indexOf(sec);
     var inner=e.target.closest ? e.target.closest('.page>.wrap') : null;
