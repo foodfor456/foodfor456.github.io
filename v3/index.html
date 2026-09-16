@@ -90,7 +90,7 @@ html{scroll-snap-type:none}
 .how .item button{display:flex;justify-content:space-between;align-items:center;width:100%;padding:22px 0;font-size:24px;font-weight:700;letter-spacing:-.02em;text-align:left}
 .how .item button::after{content:'+';font-weight:400;font-size:28px;color:var(--mute);transition:transform .25s}
 .how .item[open] button::after{transform:rotate(45deg)}
-.how .item .body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s ease}
+.how .item .body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s cubic-bezier(.4,0,.2,1)}
 .how .item[open] .body{grid-template-rows:1fr}
 .how .item .body>div{overflow:hidden}
 .how .item .body .in{padding:0 0 30px;max-width:760px}
@@ -839,7 +839,7 @@ IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 �
 
   /* 일하는 방식 펼치기 */
   document.querySelectorAll('.how .item>button').forEach(function(b){
-    b.addEventListener('click',function(){ var it=b.parentElement; var open=it.hasAttribute('open'); if(open){ it.removeAttribute('open'); } else { document.querySelectorAll('.how .item[open]').forEach(function(o){ o.removeAttribute('open'); o.querySelector('button').setAttribute('aria-expanded','false'); }); it.setAttribute('open',''); } b.setAttribute('aria-expanded', open?'false':'true'); if(!open){ setTimeout(function(){ var sc=it.closest('.page>.wrap'); if(sc){ var top=it.offsetTop-sc.offsetTop-8; sc.scrollTo({top:top,behavior:reduce?'auto':'smooth'}); } else { it.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'}); } },120); } });
+    b.addEventListener('click',function(){ var it=b.parentElement; var open=it.hasAttribute('open'); if(open){ it.removeAttribute('open'); } else { document.querySelectorAll('.how .item[open]').forEach(function(o){ o.removeAttribute('open'); o.querySelector('button').setAttribute('aria-expanded','false'); }); it.setAttribute('open',''); } b.setAttribute('aria-expanded', open?'false':'true'); if(!open){ var sc=it.closest('.page>.wrap'); if(sc){ var t0=performance.now(); (function follow(now){ var target=Math.max(0, Math.min(sc.scrollHeight-sc.clientHeight, it.offsetTop-sc.offsetTop-8)); sc.scrollTop+=(target-sc.scrollTop)*0.14; sc._target=sc.scrollTop; if(now-t0<650) requestAnimationFrame(follow); else sc.scrollTop=target; })(t0); } else { it.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'}); } } });
   });
 
   /* 사례 갤러리: 끌어서 넘기기, 화살표, 위치 */
