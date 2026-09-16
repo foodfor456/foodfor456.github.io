@@ -901,7 +901,7 @@ IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 �
     if((e.deltaY>0&&!atEnd)||(e.deltaY<0&&!atStart)){ e.preventDefault(); if(wheelLock) return; wheelLock=true; setTimeout(function(){ wheelLock=false; },450); glideX(galEl, galEl.scrollLeft+(e.deltaY>0?1:-1)*cardW()); }
   },{passive:false});
   /* 휠 한 번에 화면 하나씩, 직접 부드럽게 이동. 긴 섹션은 끝에 닿았을 때만 넘어감 */
-  var snaps=Array.prototype.slice.call(document.querySelectorAll('.snap')), pageLock=false, coolUntil=0;
+  var snaps=Array.prototype.slice.call(document.querySelectorAll('.snap')), pageLock=false, coolUntil=0, lastWheelAt=0, gestureCont=false;
   function easeInOut(t){ return t<.5 ? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2; }
   function glide(to){ var from=window.scrollY, dist=to-from; if(Math.abs(dist)<2) return; pageLock=true; var t0=performance.now(), dur=Math.min(1100, 700+Math.abs(dist)*0.25); document.documentElement.style.scrollBehavior='auto';
     (function frame(now){ var p=Math.min(1,(now-t0)/dur); window.scrollTo(0, from+dist*easeInOut(p)); if(p<1) requestAnimationFrame(frame); else { coolUntil=performance.now()+400; setTimeout(function(){ pageLock=false; document.documentElement.style.scrollBehavior=''; },150); } })(t0); }
@@ -930,6 +930,7 @@ IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 �
     var two=sec.querySelector('.wrap.two'); if(!two) return false;
     var pane=two.querySelector('.right .pane.on'); var n=two.querySelectorAll('.right .pane').length;
     if(pane){ var imax=pane.scrollHeight-pane.clientHeight; var cur=(pane._target!=null&&pane._anim)?pane._target:pane.scrollTop; if((e.deltaY>0&&imax>2&&cur<imax-2)||(e.deltaY<0&&cur>2)){ e.preventDefault(); smoothInner(pane,e.deltaY); return true; } if(pane._edgeAt&&performance.now()-pane._edgeAt<650){ e.preventDefault(); return true; } }
+    if(gestureCont){ e.preventDefault(); return true; }
     if(e.deltaY>0&&two._idx<n-1){ e.preventDefault(); if(!stepLock){ stepLock=true; setTimeout(function(){ stepLock=false; },400); two._go(two._idx+1); coolUntil=performance.now()+400; } return true; }
     if(e.deltaY<0&&two._idx>0){ e.preventDefault(); if(!stepLock){ stepLock=true; setTimeout(function(){ stepLock=false; },400); two._go(two._idx-1); coolUntil=performance.now()+400; } return true; }
     return false;
@@ -937,12 +938,14 @@ IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 �
   window.addEventListener('wheel',function(e){
     if(e.defaultPrevented||reduce) return; if(Math.abs(e.deltaY)<=Math.abs(e.deltaX)) return;
     if(window.innerWidth<=900||document.body.classList.contains('lock')) return;
-    if(pageLock||performance.now()<coolUntil){ e.preventDefault(); return; }
+    var nowT=performance.now(); gestureCont=(nowT-lastWheelAt)<260; lastWheelAt=nowT;
+    if(pageLock||nowT<coolUntil){ e.preventDefault(); return; }
     var sec=currentSnap(), i=snaps.indexOf(sec);
     if(stepWheel(sec,e)) return;
     var inner=e.target.closest ? e.target.closest('.page>.wrap') : null;
     if(inner){ var imax=inner.scrollHeight-inner.clientHeight; var cur=(inner._target!=null&&inner._anim)?inner._target:inner.scrollTop; var canDown=imax>2&&cur<imax-2, canUp=cur>2; if((e.deltaY>0&&canDown)||(e.deltaY<0&&canUp)){ e.preventDefault(); smoothInner(inner, e.deltaY); return; } if(inner._edgeAt&&performance.now()-inner._edgeAt<650){ e.preventDefault(); return; } }
     e.preventDefault();
+    if(gestureCont) return;
     if(e.deltaY>0){ if(i<snaps.length-1){ enterPage(snaps[i+1], false); glide(snaps[i+1].offsetTop); } }
     else { if(window.scrollY>sec.offsetTop+2) glide(sec.offsetTop); else if(i>0){ enterPage(snaps[i-1], true); glide(snaps[i-1].offsetTop); } }
   },{passive:false});
