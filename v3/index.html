@@ -740,12 +740,12 @@ IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 �
   window.addEventListener('scroll',markNav); markNav();
 
   /* 주요 사례에서는 휠을 굴리면 카드가 옆으로 넘어감 */
-  var casesSec=document.getElementById('cases');
+  var casesSec=document.getElementById('cases'), wheelLock=false;
   casesSec.addEventListener('wheel',function(e){
     if(Math.abs(e.deltaY)<=Math.abs(e.deltaX)) return;
     var g=document.getElementById('gal'); var max=g.scrollWidth-g.clientWidth;
     var r=casesSec.getBoundingClientRect(); if(r.top>40||r.bottom<window.innerHeight-40) return;
-    if((e.deltaY>0&&g.scrollLeft<max-1)||(e.deltaY<0&&g.scrollLeft>1)){ e.preventDefault(); g.scrollLeft+=e.deltaY; }
+    if((e.deltaY>0&&g.scrollLeft<max-2)||(e.deltaY<0&&g.scrollLeft>2)){ e.preventDefault(); if(wheelLock) return; wheelLock=true; setTimeout(function(){ wheelLock=false; },450); g.scrollBy({left:(e.deltaY>0?1:-1)*cardW(),behavior:reduce?'auto':'smooth'}); }
   },{passive:false});
 /* 큰 글자를 화면 폭에 맞춤 */
   function fit(){
