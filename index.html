@@ -894,10 +894,10 @@ IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 �
     if((e.deltaY>0&&!atEnd)||(e.deltaY<0&&!atStart)){ e.preventDefault(); if(wheelLock) return; wheelLock=true; setTimeout(function(){ wheelLock=false; },450); glideX(galEl, galEl.scrollLeft+(e.deltaY>0?1:-1)*cardW()); }
   },{passive:false});
   /* 휠 한 번에 화면 하나씩, 직접 부드럽게 이동. 긴 섹션은 끝에 닿았을 때만 넘어감 */
-  var snaps=Array.prototype.slice.call(document.querySelectorAll('.snap')), pageLock=false;
+  var snaps=Array.prototype.slice.call(document.querySelectorAll('.snap')), pageLock=false, coolUntil=0;
   function easeInOut(t){ return t<.5 ? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2; }
   function glide(to){ var from=window.scrollY, dist=to-from; if(Math.abs(dist)<2) return; pageLock=true; var t0=performance.now(), dur=Math.min(1100, 700+Math.abs(dist)*0.25); document.documentElement.style.scrollBehavior='auto';
-    (function frame(now){ var p=Math.min(1,(now-t0)/dur); window.scrollTo(0, from+dist*easeInOut(p)); if(p<1) requestAnimationFrame(frame); else { setTimeout(function(){ pageLock=false; document.documentElement.style.scrollBehavior=''; },150); } })(t0); }
+    (function frame(now){ var p=Math.min(1,(now-t0)/dur); window.scrollTo(0, from+dist*easeInOut(p)); if(p<1) requestAnimationFrame(frame); else { coolUntil=performance.now()+800; setTimeout(function(){ pageLock=false; document.documentElement.style.scrollBehavior=''; },150); } })(t0); }
   function currentSnap(){ var y=window.scrollY+2, cur=snaps[0]; snaps.forEach(function(s){ if(s.offsetTop<=y) cur=s; }); return cur; }
   /* 안쪽 스크롤을 부드럽게 */
   function smoothInner(el, dy){
@@ -923,14 +923,14 @@ IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 �
     var two=sec.querySelector('.wrap.two'); if(!two) return false;
     var pane=two.querySelector('.right .pane.on'); var n=two.querySelectorAll('.right .pane').length;
     if(pane){ var imax=pane.scrollHeight-pane.clientHeight; var cur=(pane._target!=null&&pane._anim)?pane._target:pane.scrollTop; if((e.deltaY>0&&imax>2&&cur<imax-2)||(e.deltaY<0&&cur>2)){ e.preventDefault(); smoothInner(pane,e.deltaY); return true; } }
-    if(e.deltaY>0&&two._idx<n-1){ e.preventDefault(); if(!stepLock){ stepLock=true; setTimeout(function(){ stepLock=false; },500); two._go(two._idx+1); } return true; }
-    if(e.deltaY<0&&two._idx>0){ e.preventDefault(); if(!stepLock){ stepLock=true; setTimeout(function(){ stepLock=false; },500); two._go(two._idx-1); } return true; }
+    if(e.deltaY>0&&two._idx<n-1){ e.preventDefault(); if(!stepLock){ stepLock=true; setTimeout(function(){ stepLock=false; },700); two._go(two._idx+1); coolUntil=performance.now()+700; } return true; }
+    if(e.deltaY<0&&two._idx>0){ e.preventDefault(); if(!stepLock){ stepLock=true; setTimeout(function(){ stepLock=false; },700); two._go(two._idx-1); coolUntil=performance.now()+700; } return true; }
     return false;
   }
   window.addEventListener('wheel',function(e){
     if(e.defaultPrevented||reduce) return; if(Math.abs(e.deltaY)<=Math.abs(e.deltaX)) return;
     if(window.innerWidth<=900||document.body.classList.contains('lock')) return;
-    if(pageLock){ e.preventDefault(); return; }
+    if(pageLock||performance.now()<coolUntil){ e.preventDefault(); return; }
     var sec=currentSnap(), i=snaps.indexOf(sec);
     if(stepWheel(sec,e)) return;
     var inner=e.target.closest ? e.target.closest('.page>.wrap') : null;
