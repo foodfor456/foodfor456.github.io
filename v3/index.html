@@ -73,10 +73,13 @@ html{scroll-snap-type:none}
 .steps li.on button::before{content:'';position:absolute;left:0;top:50%;width:22px;height:3px;background:#000}
 .two .right{min-height:0;position:relative}
 .two .pane{display:none}
-.two .pane.on{display:block;height:100%;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:rgba(0,0,0,.35) transparent;mask-image:linear-gradient(#000 calc(100% - 72px),transparent);-webkit-mask-image:linear-gradient(#000 calc(100% - 72px),transparent);padding-bottom:72px;animation:panein .4s ease}
+.two .pane.on{display:block;height:100%;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:rgba(0,0,0,.35) transparent;mask-image:linear-gradient(#000 calc(100% - 72px),transparent);-webkit-mask-image:linear-gradient(#000 calc(100% - 72px),transparent);padding-bottom:72px}
 .two .pane.on::-webkit-scrollbar{width:5px}
 .two .pane.on::-webkit-scrollbar-thumb{background:rgba(0,0,0,.35);border-radius:3px}
-@keyframes panein{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.two .pane.on .key{animation:keyin .6s cubic-bezier(.2,.7,.2,1) both}
+.two .pane.on>*:not(.key){animation:bodyin .5s ease both;animation-delay:.55s}
+@keyframes keyin{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+@keyframes bodyin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 
 .how .pane p{font-size:17px;line-height:1.8;color:#444;max-width:none}
 .how .pane.on{padding-top:16vh}
@@ -100,7 +103,8 @@ html{scroll-snap-type:none}
   .two .left,.two .pane.on,.how .pane.s.on,.skills .pane.s.on,.proj .pane.mes.on{padding-top:0}
   .two .left h2{margin-bottom:16px}
   .steps{display:none}
-  .two .pane{display:block;height:auto;overflow:visible;mask-image:none;-webkit-mask-image:none;padding-bottom:0;animation:none;margin-bottom:40px}
+  .two .pane{display:block;height:auto;overflow:visible;mask-image:none;-webkit-mask-image:none;padding-bottom:0;margin-bottom:40px}
+  .two .pane.on .key,.two .pane.on>*:not(.key){animation:none}
   .two .pane h3{font-size:22px}
 }
 /* 내용이 짧은 탭은 글자와 간격을 키워 채움 */
@@ -297,6 +301,7 @@ td.k .run{color:var(--ac);font-weight:600}
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
+  .two .pane.on .key,.two .pane.on>*:not(.key){animation:none}
   .console .cur{animation:none}
   .how .item .body,.gcard .im img,.how .item button::after{transition:none}
 }
