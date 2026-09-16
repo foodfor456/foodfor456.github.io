@@ -63,11 +63,11 @@ html{scroll-snap-type:none}
 .two .left h2{font-size:clamp(34px,3.2vw,48px);font-weight:800;line-height:1.15;letter-spacing:-.03em;margin:0 0 34px}
 .steps{list-style:none;margin:0;padding:0}
 .steps li{margin:0 0 6px}
-.steps li button{display:block;text-align:left;font-size:18px;font-weight:600;color:#b0b0b0;padding:6px 0;transition:color .2s,padding-left .25s}
+.steps li button{display:block;text-align:left;font-size:20px;font-weight:600;color:#b8b8b8;padding:7px 0;transition:color .2s,padding-left .25s,font-size .2s}
 .steps li button small{font-weight:500;color:#c4c4c4;margin-left:4px}
 .steps li button:hover{color:#555}
-.steps li.on button{color:#000;font-size:22px;padding-left:30px;position:relative}
-.steps li.on button::before{content:'';position:absolute;left:0;top:50%;width:18px;height:2px;background:#000}
+.steps li.on button{color:#000;font-size:26px;font-weight:800;padding-left:34px;position:relative}
+.steps li.on button::before{content:'';position:absolute;left:0;top:50%;width:22px;height:3px;background:#000}
 .two .right{min-height:0;position:relative}
 .two .pane{display:none}
 .two .pane.on{display:block;height:100%;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:rgba(0,0,0,.35) transparent;mask-image:linear-gradient(#000 calc(100% - 72px),transparent);-webkit-mask-image:linear-gradient(#000 calc(100% - 72px),transparent);padding-bottom:72px;animation:panein .4s ease}
@@ -75,13 +75,13 @@ html{scroll-snap-type:none}
 .two .pane.on::-webkit-scrollbar-thumb{background:rgba(0,0,0,.35);border-radius:3px}
 @keyframes panein{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 .two .pane h3{font-size:clamp(24px,2vw,30px);margin:0 0 18px}
-.how .pane p{font-size:18px;line-height:1.85;max-width:760px}
-.how .pane .key{font-size:clamp(22px,1.9vw,28px);font-weight:700;line-height:1.4;letter-spacing:-.02em;margin:0 0 20px}
-.how .pane h3{font-size:15px;font-weight:600;color:var(--mute);margin:0 0 14px}
+.how .pane p{font-size:19px;line-height:1.85;max-width:760px}
+.how .pane .key{font-size:clamp(28px,2.6vw,40px);font-weight:800;line-height:1.3;letter-spacing:-.03em;margin:0 0 26px;max-width:820px}
+.how .pane h3{display:none}
 .how .pane ol{margin:12px 0 0;padding-left:22px;max-width:760px;font-size:17px}
 .how .pane ol li{margin:0 0 4px}
 .proj .pane h3,.skills .pane h3{font-size:15px;font-weight:600;color:var(--mute);margin:0 0 14px}
-.proj .pane .key,.skills .pane .key{font-size:clamp(22px,1.9vw,28px);font-weight:700;line-height:1.4;letter-spacing:-.02em;margin:0 0 22px;max-width:760px}
+.proj .pane .key,.skills .pane .key{font-size:clamp(24px,2.2vw,34px);font-weight:800;line-height:1.3;letter-spacing:-.03em;margin:0 0 24px;max-width:820px}
 .proj .pane .meta{font-size:15px;color:var(--mute);line-height:1.7;margin:0 0 20px}
 .mes ul li b{font-weight:700}
 @media (max-width:900px){
@@ -202,7 +202,7 @@ td.k .run{color:var(--ac);font-weight:600}
 
 
 /* 마무리, 검정 면 */
-.end{min-height:100vh;height:100vh;display:flex;flex-direction:column;justify-content:space-between;padding:56px 0 20px}
+.end{min-height:100vh;height:100vh;display:flex;flex-direction:column;justify-content:flex-start;padding:56px 0 20px}
 .end .grid{display:grid;grid-template-columns:1fr 1.4fr;gap:48px;align-items:start}
 .end h2{margin-bottom:24px}
 .end .motto{margin:0;white-space:nowrap;line-height:1.5;letter-spacing:-.015em}
@@ -213,8 +213,8 @@ td.k .run{color:var(--ac);font-weight:600}
 .end dl{margin:0;display:grid;grid-template-columns:80px 1fr;row-gap:8px;font-size:18px}
 .end dt{color:var(--mute)}
 .end dd{margin:0}
-.end .grid{margin-top:40px}
-.end .line{display:flex;justify-content:space-between;gap:16px;font-size:15px;color:var(--mute);margin-top:24px;flex-wrap:wrap}
+.end .grid{margin-top:36px}
+.end .line{display:flex;justify-content:space-between;gap:16px;font-size:15px;color:var(--mute);margin-top:auto;flex-wrap:wrap}
 .copied{position:fixed;left:50%;bottom:32px;transform:translateX(-50%);background:#fff;color:#000;border:1px solid #000;font-size:14px;padding:9px 16px;border-radius:4px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:60}
 .copied.show{opacity:.98}
 
