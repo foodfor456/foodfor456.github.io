@@ -81,6 +81,9 @@ html{scroll-snap-type:none}
 .how .pane ol{margin:12px 0 0;padding-left:22px;max-width:760px;font-size:17px}
 .how .pane ol li{margin:0 0 4px}
 .proj .pane h3,.skills .pane h3{margin-bottom:14px}
+.proj .pane .key,.skills .pane .key{font-size:clamp(22px,1.9vw,28px);font-weight:700;line-height:1.4;letter-spacing:-.02em;margin:0 0 22px;max-width:760px}
+.proj .pane .meta{font-size:15px;color:var(--mute);line-height:1.7;margin:0 0 20px}
+.mes ul li b{font-weight:700}
 @media (max-width:900px){
   .page>.wrap.two{display:block}
   .two .left h2{margin-bottom:16px}
@@ -711,6 +714,7 @@ IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 �
     </div>
     <div class="right">
     <div class="pane on" id="p1">
+      <p class="key">공공, 교육, 문화 사이트 15건. 요구 분석부터 오픈까지.</p>
       <div class="tw"><table>
         <tr><th>기간</th><th>프로젝트</th><th>내용</th></tr>
         <tr><td class="k">2026.08 ~ <span class="run">진행 중</span></td><td class="n">충북테크노파크 재구축</td><td>PHP로 만들어진 기존 사이트를 기획예산처와 같은 자사 Java CMS 기반으로 재구축.<br>Java 21, JBoss, MariaDB.<br>기획예산처 고도화와 병행</td></tr>
@@ -731,6 +735,7 @@ IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 �
       </table></div>
     </div>
     <div class="pane" id="p2">
+      <p class="key">동시 운영 11건. 이어받은 시스템의 분석부터 안정화까지.</p>
       <div class="tw"><table>
         <tr><th>기간</th><th>시스템</th><th>내용</th></tr>
         <tr><td class="k">2025.10 ~ <span class="run">진행 중</span></td><td class="n">교통비 정산 시스템<br>(안성, 제주)</td><td>Spring Boot 기반 무상교통 정산 SaaS 유지보수에 재투입, 제주도 사업까지 확대 운영.<br>외부 기관 IP 허용을 받아 운영 재현 검증 환경 구축.<br>Docker 이미지 패키징, Git CI와 Naver Cloud CD 운영</td></tr>
@@ -747,13 +752,13 @@ IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 �
       </table></div>
     </div>
     <div class="pane mes" id="p3">
-      <p>㈜제오시스, 2023.01 ~ 2024.01. 케미탑, 신화아이티, APCM, 휴코, 프레쉬아워, KCG, 한국기계.<br>PHP8, CodeIgniter3, MySQL, MariaDB, Apache, Bootstrap4, jQuery, Google Charts, Ajax.</p>
+      <p class="key">설비 데이터 수집부터 바코드, 수발주까지, 7개 제조사의 제조 실행계층 전체.</p><p class="meta">㈜제오시스, 2023.01 ~ 2024.01. 케미탑, 신화아이티, APCM, 휴코, 프레쉬아워, KCG, 한국기계.<br>PHP8, CodeIgniter3, MySQL, MariaDB, Apache, Bootstrap4, jQuery, Google Charts, Ajax.</p>
       <ul>
-        <li>설비별 실시간 모니터링: IO 통신 수집 데이터를 가공해 기기 온도, 동작 여부, 생산량, 가동시간을 Ajax 기반 실시간 차트로 시각화. 데이터 없는 설비는 로딩 처리 후 조회하도록 쿼리를 구성해 서버 부하 절감</li>
-        <li>수익 분석: 매출 대비 매입 비율 차트, 연관 테이블 구조 설계로 데이터 정합성 확보</li>
-        <li>전자결재 폼 빌더: 고객이 휴가, 지출결의서 등 결재 양식을 직접 생성. 사전 정의 class 기반으로 입력 필드, 서브테이블, datepicker가 자동 구성되는 구조</li>
+        <li><b>설비별 실시간 모니터링</b>: IO 통신 수집 데이터를 가공해 기기 온도, 동작 여부, 생산량, 가동시간을 Ajax 기반 실시간 차트로 시각화. 데이터 없는 설비는 로딩 처리 후 조회하도록 쿼리를 구성해 서버 부하 절감</li>
+        <li><b>수익 분석</b>: 매출 대비 매입 비율 차트, 연관 테이블 구조 설계로 데이터 정합성 확보</li>
+        <li><b>전자결재 폼 빌더</b>: 고객이 휴가, 지출결의서 등 결재 양식을 직접 생성. 사전 정의 class 기반으로 입력 필드, 서브테이블, datepicker가 자동 구성되는 구조</li>
         <li>입고 현황 캘린더, MRP 현재고 조회, 사용자별 메뉴 권한 관리(fancyTree), 나의 메뉴 즐겨찾기</li>
-        <li>기획자 부재 환경에서 현장 작업자 중심 UX 직접 설계: 텍스트와 버튼 확대, 주 사용 영역 자동 포커싱, 탭 동작 개선 등 바코드 기기와 현장 PC 최적화</li>
+        <li><b>기획자 부재 환경에서 현장 작업자 중심 UX 직접 설계</b>: 텍스트와 버튼 확대, 주 사용 영역 자동 포커싱, 탭 동작 개선 등 바코드 기기와 현장 PC 최적화</li>
         <li>중도 합류 후 잦은 고객 미팅으로 도메인을 빠르게 습득, "공장 상황을 한눈에"라는 핵심 요구에 맞춰 기능 간소화 주도</li>
       </ul>
     </div>
