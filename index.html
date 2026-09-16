@@ -58,6 +58,34 @@ html{scroll-snap-type:none}
 .skills.page{padding:96px 0 40px}
 .cases.page{padding:80px 0 30px}
 
+/* 단계형 페이지: 왼쪽 제목과 목록, 오른쪽 현재 항목 */
+.page>.wrap.two{display:grid;grid-template-columns:300px 1fr;gap:64px;overflow:hidden;mask-image:none;-webkit-mask-image:none;padding-bottom:0}
+.two .left h2{font-size:clamp(34px,3.2vw,48px);font-weight:800;line-height:1.15;letter-spacing:-.03em;margin:0 0 34px}
+.steps{list-style:none;margin:0;padding:0}
+.steps li{margin:0 0 6px}
+.steps li button{display:block;text-align:left;font-size:18px;font-weight:600;color:#b0b0b0;padding:6px 0;transition:color .2s,padding-left .25s}
+.steps li button small{font-weight:500;color:#c4c4c4;margin-left:4px}
+.steps li button:hover{color:#555}
+.steps li.on button{color:#000;font-size:22px;padding-left:30px;position:relative}
+.steps li.on button::before{content:'';position:absolute;left:0;top:50%;width:18px;height:2px;background:#000}
+.two .right{min-height:0;position:relative}
+.two .pane{display:none}
+.two .pane.on{display:block;height:100%;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:rgba(0,0,0,.35) transparent;mask-image:linear-gradient(#000 calc(100% - 72px),transparent);-webkit-mask-image:linear-gradient(#000 calc(100% - 72px),transparent);padding-bottom:72px;animation:panein .4s ease}
+.two .pane.on::-webkit-scrollbar{width:5px}
+.two .pane.on::-webkit-scrollbar-thumb{background:rgba(0,0,0,.35);border-radius:3px}
+@keyframes panein{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.two .pane h3{font-size:clamp(24px,2vw,30px);margin:0 0 18px}
+.how .pane p{font-size:19px;line-height:1.85;max-width:760px}
+.how .pane ol{margin:12px 0 0;padding-left:22px;max-width:760px;font-size:17px}
+.how .pane ol li{margin:0 0 4px}
+.proj .pane h3,.skills .pane h3{margin-bottom:14px}
+@media (max-width:900px){
+  .page>.wrap.two{display:block}
+  .two .left h2{margin-bottom:16px}
+  .steps{display:none}
+  .two .pane{display:block;height:auto;overflow:visible;mask-image:none;-webkit-mask-image:none;padding-bottom:0;animation:none;margin-bottom:40px}
+  .two .pane h3{font-size:22px}
+}
 /* 첫 화면 */
 .hero{min-height:100vh;height:100vh;display:flex;flex-direction:column;justify-content:space-between;padding:96px 0 20px}
 .hero .grid{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:start}
@@ -376,15 +404,26 @@ td.k .run{color:var(--ac);font-weight:600}
 </section>
 
 <section class="how snap page" id="how">
-  <div class="wrap">
-    <h2>일하는 방식</h2>
-    <div class="item" open>
-      <button type="button" aria-expanded="true">끝까지</button>
-      <div class="body"><div><div class="in"><p>프로젝트의 마무리를 일의 기준으로 삼습니다.<br>시작은 누구나 할 수 있지만 끝을 매듭짓는 것이 시스템의 가치를 결정한다고 생각합니다.<br>요구사항 분석부터 설계, 구현, 배포, 운영까지 맡아 왔고, 전임자와 문서가 없는 시스템도 소스 분석부터 시작해 안정화했습니다.</p></div></div></div>
+  <div class="wrap two">
+    <div class="left">
+      <h2>일하는<br>방식</h2>
+      <ul class="steps" id="steps">
+        <li class="on"><button type="button">끝까지</button></li>
+        <li><button type="button">오류와 원복</button></li>
+        <li><button type="button">고객의 말</button></li>
+        <li><button type="button">바뀌는 값</button></li>
+        <li><button type="button">화면</button></li>
+        <li><button type="button">AI</button></li>
+      </ul>
     </div>
-    <div class="item">
-      <button type="button" aria-expanded="false">오류와 원복</button>
-      <div class="body"><div><div class="in"><p>오류는 고치고 끝내지 않고 기록해 둡니다.<br>같은 문제가 다시 나오지 않도록 개발 단계에서 미리 막는 쪽을 택하고, 프로젝트마다 검출된 취약점을 조치하며 쌓인 지식으로 다음 프로젝트에서는 같은 취약점을 미리 대비합니다.<br>운영에서만 확인되는 기능은 운영과 최대한 같은 개발 환경을 만들어 미리 테스트하고, 운영에 올라가서야 드러나는 경우의 수를 줄여 갑니다.<br>반영 전에는 되돌릴 길부터 확보합니다.<br>문제가 생기면 먼저 원복해 서비스를 정상으로 돌려놓고, 그다음에 원인을 고쳐 다시 반영합니다.<br>교통비와 교부금 정산처럼 돈이 걸린 기능은 화면이 멀쩡해 보여도 DB 값을 직접 확인한 뒤에야 끝냅니다.</p>
+    <div class="right" id="howBody">
+      <div class="pane on">
+        <h3>끝까지</h3>
+        <p>프로젝트의 마무리를 일의 기준으로 삼습니다.<br>시작은 누구나 할 수 있지만 끝을 매듭짓는 것이 시스템의 가치를 결정한다고 생각합니다.<br>요구사항 분석부터 설계, 구현, 배포, 운영까지 맡아 왔고, 전임자와 문서가 없는 시스템도 소스 분석부터 시작해 안정화했습니다.</p>
+      </div>
+      <div class="pane">
+        <h3>오류와 원복</h3>
+        <p>오류는 고치고 끝내지 않고 기록해 둡니다.<br>같은 문제가 다시 나오지 않도록 개발 단계에서 미리 막는 쪽을 택하고, 프로젝트마다 검출된 취약점을 조치하며 쌓인 지식으로 다음 프로젝트에서는 같은 취약점을 미리 대비합니다.<br>운영에서만 확인되는 기능은 운영과 최대한 같은 개발 환경을 만들어 미리 테스트하고, 운영에 올라가서야 드러나는 경우의 수를 줄여 갑니다.<br>반영 전에는 되돌릴 길부터 확보합니다.<br>문제가 생기면 먼저 원복해 서비스를 정상으로 돌려놓고, 그다음에 원인을 고쳐 다시 반영합니다.<br>교통비와 교부금 정산처럼 돈이 걸린 기능은 화면이 멀쩡해 보여도 DB 값을 직접 확인한 뒤에야 끝냅니다.</p>
         <ol>
           <li>오류는 기록하고, 같은 문제는 개발 단계에서 차단</li>
           <li>검출된 취약점 조치로 쌓인 지식으로 다음 프로젝트 미리 대비</li>
@@ -392,23 +431,24 @@ td.k .run{color:var(--ac);font-weight:600}
           <li>미리 테스트해 운영에서만 드러나는 경우의 수 최소화</li>
           <li>반영 전에 되돌릴 길부터 확보</li>
           <li>문제가 생기면 원복 먼저, 수정은 그다음</li>
-        </ol></div></div></div>
-    </div>
-    <div class="item">
-      <button type="button" aria-expanded="false">고객의 말</button>
-      <div class="body"><div><div class="in"><p>고객은 개발자가 아니니 같은 요구도 사람마다 다르게 표현합니다.<br>"이 화면이 느리다", "숫자가 이상하다", "이것도 되게 해 달라"는 말을 들으면 되묻기 전에 먼저 해석합니다.<br>그 뒤에 있는 실제 필요를 짚어 화면과 데이터 구조, 처리 순서로 옮겨 정리한 다음, 그 결과를 들고 한 번에 확인받습니다.<br>같은 것을 여러 번 캐물으면 고객이 지치기 때문입니다.<br>확인받을 때는 개발 용어를 섞지 않고 고객이 쓰는 말로 바꿔 설명합니다.<br>개발 용어를 고객 앞에서 그대로 쓰는 것도 실례라고 생각합니다.<br>요청한 말을 그대로 만드는 것보다 고객이 원하는 결과가 나오게 만드는 쪽을 택합니다.</p></div></div></div>
-    </div>
-    <div class="item">
-      <button type="button" aria-expanded="false">바뀌는 값</button>
-      <div class="body"><div><div class="in"><p>바뀔 수 있는 값은 코드에 박아 두지 않습니다.<br>메뉴, 권한, 정산 기준처럼 운영 중에 달라지는 것은 설정과 데이터로 빼서 코드를 고치지 않고도 바꿀 수 있게 만듭니다.<br>기능은 모듈 단위로 나누고 서로 직접 붙지 않게 해서, 한 곳을 고칠 때 다른 곳이 같이 깨지지 않도록 결합도를 낮춥니다.<br>사내 CMS에서 메뉴, 게시판, 팝업, 배너를 그렇게 떼어 낸 것이 한 예입니다.</p></div></div></div>
-    </div>
-    <div class="item">
-      <button type="button" aria-expanded="false">화면</button>
-      <div class="body"><div><div class="in"><p>화면은 안의 로직이 아무리 복잡해도 처음 본 사람이 설명 없이 쓸 수 있어야 한다고 생각합니다.<br>제조 현장에서는 컴퓨터가 익숙하지 않은 작업자가 두 번 안에 원하는 정보에 닿도록 버튼과 글자를 키우고 포커스 순서를 작업 순서에 맞췄습니다.<br>복잡함은 코드 안에서 개발자가 감당하고 사용자 앞에는 쉬움만 남기려 합니다.</p></div></div></div>
-    </div>
-    <div class="item">
-      <button type="button" aria-expanded="false">AI</button>
-      <div class="body"><div><div class="in"><p>생성형 AI는 개발에 적극적으로 씁니다.<br>다만 AI 코드는 100% 정답이 아니고 책임은 제게 있으니, 어떤 작업을 AI에 맡길지 실측으로 기준을 세우고, 결과물은 여러 AI가 서로 검증한 뒤에야 통과시키는 절차를 만들어 사내에 정착시켰습니다.<br>지금은 작업 세션 2개와 검증 세션 1개, 이를 지휘하는 PM 세션 1개로 나눠 진행합니다.<br>그렇게 확보한 시간으로 GitLab CI/CD와 Docker 기반 자동 배포 개발 서버를 만들었고, 회사 표준이 되어 다음 프로젝트의 개발 환경 세팅을 맡았습니다.</p></div></div></div>
+        </ol>
+      </div>
+      <div class="pane">
+        <h3>고객의 말</h3>
+        <p>고객은 개발자가 아니니 같은 요구도 사람마다 다르게 표현합니다.<br>"이 화면이 느리다", "숫자가 이상하다", "이것도 되게 해 달라"는 말을 들으면 되묻기 전에 먼저 해석합니다.<br>그 뒤에 있는 실제 필요를 짚어 화면과 데이터 구조, 처리 순서로 옮겨 정리한 다음, 그 결과를 들고 한 번에 확인받습니다.<br>같은 것을 여러 번 캐물으면 고객이 지치기 때문입니다.<br>확인받을 때는 개발 용어를 섞지 않고 고객이 쓰는 말로 바꿔 설명합니다.<br>개발 용어를 고객 앞에서 그대로 쓰는 것도 실례라고 생각합니다.<br>요청한 말을 그대로 만드는 것보다 고객이 원하는 결과가 나오게 만드는 쪽을 택합니다.</p>
+      </div>
+      <div class="pane">
+        <h3>바뀌는 값</h3>
+        <p>바뀔 수 있는 값은 코드에 박아 두지 않습니다.<br>메뉴, 권한, 정산 기준처럼 운영 중에 달라지는 것은 설정과 데이터로 빼서 코드를 고치지 않고도 바꿀 수 있게 만듭니다.<br>기능은 모듈 단위로 나누고 서로 직접 붙지 않게 해서, 한 곳을 고칠 때 다른 곳이 같이 깨지지 않도록 결합도를 낮춥니다.<br>사내 CMS에서 메뉴, 게시판, 팝업, 배너를 그렇게 떼어 낸 것이 한 예입니다.</p>
+      </div>
+      <div class="pane">
+        <h3>화면</h3>
+        <p>화면은 안의 로직이 아무리 복잡해도 처음 본 사람이 설명 없이 쓸 수 있어야 한다고 생각합니다.<br>제조 현장에서는 컴퓨터가 익숙하지 않은 작업자가 두 번 안에 원하는 정보에 닿도록 버튼과 글자를 키우고 포커스 순서를 작업 순서에 맞췄습니다.<br>복잡함은 코드 안에서 개발자가 감당하고 사용자 앞에는 쉬움만 남기려 합니다.</p>
+      </div>
+      <div class="pane">
+        <h3>AI</h3>
+        <p>생성형 AI는 개발에 적극적으로 씁니다.<br>다만 AI 코드는 100% 정답이 아니고 책임은 제게 있으니, 어떤 작업을 AI에 맡길지 실측으로 기준을 세우고, 결과물은 여러 AI가 서로 검증한 뒤에야 통과시키는 절차를 만들어 사내에 정착시켰습니다.<br>지금은 작업 세션 2개와 검증 세션 1개, 이를 지휘하는 PM 세션 1개로 나눠 진행합니다.<br>그렇게 확보한 시간으로 GitLab CI/CD와 Docker 기반 자동 배포 개발 서버를 만들었고, 회사 표준이 되어 다음 프로젝트의 개발 환경 세팅을 맡았습니다.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -658,13 +698,16 @@ IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 �
 </template>
 
 <section class="proj snap page" id="projects">
-  <div class="wrap">
-    <p class="big">구축 15건,<br>동시 운영 11건.</p>
-    <div class="tabs" role="tablist">
-      <button type="button" class="on" data-pane="p1" role="tab">구축과 개발<small>15</small></button>
-      <button type="button" data-pane="p2" role="tab">유지보수<small>11</small></button>
-      <button type="button" data-pane="p3" role="tab">스마트공장 MES<small>7</small></button>
+  <div class="wrap two">
+    <div class="left">
+      <h2>구축 15건,<br>동시 운영 11건.</h2>
+    <ul class="steps">
+      <li class="on"><button type="button">구축과 개발 <small>15</small></button></li>
+      <li><button type="button">유지보수 <small>11</small></button></li>
+      <li><button type="button">스마트공장 MES <small>7</small></button></li>
+    </ul>
     </div>
+    <div class="right">
     <div class="pane on" id="p1">
       <div class="tw"><table>
         <tr><th>기간</th><th>프로젝트</th><th>내용</th></tr>
@@ -712,13 +755,21 @@ IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 �
         <li>중도 합류 후 잦은 고객 미팅으로 도메인을 빠르게 습득, "공장 상황을 한눈에"라는 핵심 요구에 맞춰 기능 간소화 주도</li>
       </ul>
     </div>
+    </div>
   </div>
 </section>
 
 <section class="skills snap page" id="skills">
-  <div class="wrap">
-    <h2>기술과 이력</h2>
-    <h3>기술</h3>
+  <div class="wrap two">
+    <div class="left"><h2>기술과<br>이력</h2>
+      <ul class="steps">
+        <li class="on"><button type="button">기술</button></li>
+        <li><button type="button">인프라와 운영</button></li>
+        <li><button type="button">이력</button></li>
+      </ul>
+    </div>
+    <div class="right">
+    <div class="pane on"><h3>기술</h3>
     <div class="tw"><table>
       <tr><th>구분</th><th>주력</th><th>활용</th></tr>
       <tr><td class="k">백엔드</td><td>Java, Spring Framework, Spring Boot, 전자정부프레임워크, MyBatis</td><td>PHP, Laravel, CodeIgniter3</td></tr>
@@ -728,7 +779,8 @@ IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 �
       <tr><td class="k">AI 활용</td><td>Claude Code 기반 개발, 자체 제작 스킬, 다중 세션 운용</td><td>커뮤니티 검증 스킬 도입과 실험</td></tr>
     </table></div>
 
-    <h3>인프라와 운영 경험</h3>
+    </div>
+    <div class="pane"><h3>인프라와 운영 경험</h3>
     <div class="tw"><table>
       <tr><td class="k">서버</td><td>Linux 서버 설정, JDK 1.8~21 환경 구성, Apache, Tomcat, JBoss 운영</td></tr>
       <tr><td class="k">빌드와 배포</td><td>Jenkins와 Git 연동 빌드, 배포 구성.<br>기획예산처 프로젝트에서 GitLab CI/CD, GitLab Runner, Docker 기반 자동 배포 개발 서버를 구축해 회사 표준으로 채택됨(디자인 담당 dev 브랜치, master 확인 후 push 시 자동 반영)</td></tr>
@@ -736,7 +788,8 @@ IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 �
       <tr><td class="k">보안과 운영</td><td>서버 취약점 조치, NAS 구성, 운영 환경 점검, 무중단이 요구되는 사이트의 야간 반영, 폐쇄망 사이트 방문 반영</td></tr>
     </table></div>
 
-    <h3>이력</h3>
+    </div>
+    <div class="pane"><h3>이력</h3>
     <div class="tw"><table>
       <tr><td class="k">2027.02 예정</td><td>컴퓨터공학 학사, 학점은행제(국가평생교육진흥원).<br>실무와 병행</td></tr>
       <tr><td class="k">2026.09</td><td>정보처리기사</td></tr>
@@ -744,6 +797,8 @@ IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 �
       <tr><td class="k">2023.01 ~ 2024.01</td><td><b>㈜제오시스 개발부서 사원</b><br>스마트공장 MES 개발, 7개 제조사 적용</td></tr>
       <tr><td class="k">2022.04 ~ 10</td><td>자바와 스프링 프레임워크 백엔드 웹 개발자 과정, 900시간 무결석 수료, 출석률 우수 표창</td></tr>
     </table></div>
+    </div>
+    </div>
   </div>
 </section>
 
@@ -809,11 +864,28 @@ IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 �
     el._target=Math.max(0, Math.min(max, el._target+dy));
     if(el._anim) return; el._anim=true;
     (function frame(){ var d=el._target-el.scrollTop; if(Math.abs(d)<0.5){ el.scrollTop=el._target; el._anim=false; return; } el.scrollTop+=d*0.22; requestAnimationFrame(frame); })();
-  }  window.addEventListener('wheel',function(e){
+  }  /* 단계형 페이지: 왼쪽 목록과 오른쪽 패널, 휠로 한 항목씩 */
+  document.querySelectorAll('.page .wrap.two').forEach(function(two){
+    var lis=two.querySelectorAll('.steps li'), panes=two.querySelectorAll('.right .pane');
+    two._go=function(i){ i=Math.max(0,Math.min(panes.length-1,i)); lis.forEach(function(l,k){ l.classList.toggle('on',k===i); }); panes.forEach(function(p,k){ p.classList.toggle('on',k===i); if(k===i){ p.scrollTop=0; p._target=0; } }); two._idx=i; };
+    two._idx=0;
+    lis.forEach(function(l,k){ l.querySelector('button').addEventListener('click',function(){ two._go(k); }); });
+  });
+  var stepLock=false;
+  function stepWheel(sec,e){
+    var two=sec.querySelector('.wrap.two'); if(!two) return false;
+    var pane=two.querySelector('.right .pane.on'); var n=two.querySelectorAll('.right .pane').length;
+    if(pane){ var imax=pane.scrollHeight-pane.clientHeight; var cur=(pane._target!=null&&pane._anim)?pane._target:pane.scrollTop; if((e.deltaY>0&&imax>2&&cur<imax-2)||(e.deltaY<0&&cur>2)){ e.preventDefault(); smoothInner(pane,e.deltaY); return true; } }
+    if(e.deltaY>0&&two._idx<n-1){ e.preventDefault(); if(!stepLock){ stepLock=true; setTimeout(function(){ stepLock=false; },500); two._go(two._idx+1); } return true; }
+    if(e.deltaY<0&&two._idx>0){ e.preventDefault(); if(!stepLock){ stepLock=true; setTimeout(function(){ stepLock=false; },500); two._go(two._idx-1); } return true; }
+    return false;
+  }
+  window.addEventListener('wheel',function(e){
     if(e.defaultPrevented||reduce) return; if(Math.abs(e.deltaY)<=Math.abs(e.deltaX)) return;
     if(window.innerWidth<=900||document.body.classList.contains('lock')) return;
     if(pageLock){ e.preventDefault(); return; }
     var sec=currentSnap(), i=snaps.indexOf(sec);
+    if(stepWheel(sec,e)) return;
     var inner=e.target.closest ? e.target.closest('.page>.wrap') : null;
     if(inner){ var imax=inner.scrollHeight-inner.clientHeight; var cur=(inner._target!=null&&inner._anim)?inner._target:inner.scrollTop; var canDown=imax>2&&cur<imax-2, canUp=cur>2; if((e.deltaY>0&&canDown)||(e.deltaY<0&&canUp)){ e.preventDefault(); smoothInner(inner, e.deltaY); return; } }
     e.preventDefault();
