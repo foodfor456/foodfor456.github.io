@@ -57,7 +57,7 @@ html{scroll-snap-type:none}
 .proj.page{padding:96px 0 40px}
 .skills.page{padding:96px 0 40px}
 .cases.page{padding:80px 0 30px}
-@media (max-width:900px){.page{height:auto}.page>.wrap{overflow:visible}}
+
 /* 첫 화면 */
 .hero{min-height:100vh;height:100vh;display:flex;flex-direction:column;justify-content:space-between;padding:96px 0 20px}
 .hero .grid{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:start}
@@ -207,8 +207,23 @@ td.k .run{color:var(--ac);font-weight:600}
 .end .motto .l1{font-size:clamp(28px,2.6vw,42px);font-weight:800;margin-bottom:14px;letter-spacing:-.03em}
 .end .motto .l2{font-size:clamp(17px,1.35vw,21px);font-weight:500;color:#9a9a9a}
 .end .motto .l4{font-size:clamp(20px,1.7vw,27px);font-weight:700;margin-top:18px}
-  table{min-width:640px}
-  h2{font-size:26px;margin-bottom:24px}
+  .page,.hero,.end,.state{height:auto;min-height:0}
+  .state{min-height:60vh}
+  .page>.wrap{flex:none;height:auto;overflow:visible;mask-image:none;-webkit-mask-image:none;padding-bottom:0}
+  .cases>.wrap{display:block}
+  .cases.page{padding:64px 0 56px}
+  .how.page,.proj.page,.skills.page{padding:64px 0 24px}
+  .gcard{flex-basis:84vw}
+  table{min-width:0}
+  table,tbody,tr,td{display:block;width:100%}
+  table tr:first-child{display:none}
+  tr{padding:14px 0;border-top:1px solid var(--line)}
+  tr:last-child{border-bottom:1px solid var(--line)}
+  th,td{border:0;padding:0}
+  td.k{display:inline;white-space:normal;width:auto;padding:0;font-size:14px;color:var(--mute)}
+  td.n{display:block;white-space:normal;padding:2px 0 6px;font-size:17px}
+  td.k+td:not(.n){display:block;padding-top:4px}
+  .end .motto,.end .motto span{white-space:normal}  h2{font-size:26px;margin-bottom:24px}
 }
 @media (max-height:880px) and (min-width:901px){
   .hero{padding:48px 0 12px}
