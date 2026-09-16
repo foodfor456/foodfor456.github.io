@@ -172,7 +172,11 @@ td.k .run{color:var(--ac);font-weight:600}
 .end{min-height:100vh;height:100vh;display:flex;flex-direction:column;justify-content:space-between;padding:110px 0 20px}
 .end .grid{display:grid;grid-template-columns:1fr 1.4fr;gap:48px;align-items:start}
 .end h2{margin-bottom:24px}
-.end .motto{font-size:clamp(20px,1.7vw,27px);font-weight:600;line-height:1.55;letter-spacing:-.015em;margin:0;white-space:nowrap}
+.end .motto{margin:0;white-space:nowrap;line-height:1.5;letter-spacing:-.015em}
+.end .motto span{display:block}
+.end .motto .l1{font-size:clamp(28px,2.6vw,42px);font-weight:800;margin-bottom:14px;letter-spacing:-.03em}
+.end .motto .l2{font-size:clamp(17px,1.35vw,21px);font-weight:500;color:#9a9a9a}
+.end .motto .l4{font-size:clamp(20px,1.7vw,27px);font-weight:700;margin-top:18px}
 .end dl{margin:0;display:grid;grid-template-columns:80px 1fr;row-gap:8px;font-size:18px}
 .end dt{color:var(--mute)}
 .end dd{margin:0}
@@ -198,7 +202,11 @@ td.k .run{color:var(--ac);font-weight:600}
   .skills{padding-bottom:90px}
   .end{padding-top:70px}
   .end .grid{grid-template-columns:1fr}
-  .end .motto{white-space:normal}
+  .end .motto{margin:0;white-space:nowrap;line-height:1.5;letter-spacing:-.015em}
+.end .motto span{display:block}
+.end .motto .l1{font-size:clamp(28px,2.6vw,42px);font-weight:800;margin-bottom:14px;letter-spacing:-.03em}
+.end .motto .l2{font-size:clamp(17px,1.35vw,21px);font-weight:500;color:#9a9a9a}
+.end .motto .l4{font-size:clamp(20px,1.7vw,27px);font-weight:700;margin-top:18px}
   table{min-width:640px}
   h2{font-size:26px;margin-bottom:24px}
 }
@@ -727,7 +735,7 @@ IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 �
         <dt>경력</dt><dd>백엔드 <span class="career-len">3년 7개월</span> 재직중</dd>
       </dl>
     </div>
-    <p class="motto">정답은 고객이 정합니다.<br>고객이 원하고, 고객이 만족하면 이미 좋은 시스템입니다.<br>그러기에 고객은 믿고 맡깁니다.<br>보이지 않는 보안으로 답합니다.</p>
+    <p class="motto"><span class="l1">정답은 고객이 정합니다.</span><span class="l2">고객이 원하고, 고객이 만족하면 이미 좋은 시스템입니다.</span><span class="l2">그러기에 고객은 믿고 맡깁니다.</span><span class="l4">보이지 않는 보안으로 답합니다.</span></p>
   </div>
   <div class="wrap bottom">
     <p class="word" data-fit>BACKEND</p>
