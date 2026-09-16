@@ -773,17 +773,17 @@ IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 �
   /* 안쪽 스크롤을 부드럽게 */
   function smoothInner(el, dy){
     var max=el.scrollHeight-el.clientHeight;
-    if(el._target==null||Math.abs(el._target-el.scrollTop)>400) el._target=el.scrollTop;
+    if(el._target==null||!el._anim) el._target=el.scrollTop;
     el._target=Math.max(0, Math.min(max, el._target+dy));
     if(el._anim) return; el._anim=true;
-    (function frame(){ var d=el._target-el.scrollTop; if(Math.abs(d)<0.5){ el.scrollTop=el._target; el._anim=false; return; } el.scrollTop+=d*0.16; requestAnimationFrame(frame); })();
+    (function frame(){ var d=el._target-el.scrollTop; if(Math.abs(d)<0.5){ el.scrollTop=el._target; el._anim=false; return; } el.scrollTop+=d*0.22; requestAnimationFrame(frame); })();
   }  window.addEventListener('wheel',function(e){
     if(e.defaultPrevented||reduce) return; if(Math.abs(e.deltaY)<=Math.abs(e.deltaX)) return;
     if(window.innerWidth<=900||document.body.classList.contains('lock')) return;
     if(pageLock){ e.preventDefault(); return; }
     var sec=currentSnap(), i=snaps.indexOf(sec);
     var inner=e.target.closest ? e.target.closest('.page>.wrap') : null;
-    if(inner){ var canDown=inner.scrollTop+inner.clientHeight<inner.scrollHeight-1, canUp=inner.scrollTop>0; if((e.deltaY>0&&canDown)||(e.deltaY<0&&canUp)){ e.preventDefault(); smoothInner(inner, e.deltaY); return; } }
+    if(inner){ var imax=inner.scrollHeight-inner.clientHeight; var cur=(inner._target!=null&&inner._anim)?inner._target:inner.scrollTop; var canDown=imax>2&&cur<imax-2, canUp=cur>2; if((e.deltaY>0&&canDown)||(e.deltaY<0&&canUp)){ e.preventDefault(); smoothInner(inner, e.deltaY); return; } }
     e.preventDefault();
     if(e.deltaY>0){ if(i<snaps.length-1) glide(snaps[i+1].offsetTop); }
     else { if(window.scrollY>sec.offsetTop+2) glide(sec.offsetTop); else if(i>0) glide(snaps[i-1].offsetTop); }
