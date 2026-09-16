@@ -60,8 +60,8 @@ html{scroll-snap-type:none}
 
 /* 단계형 페이지: 왼쪽 제목과 목록, 오른쪽 현재 항목 */
 .page>.wrap.two{display:grid;grid-template-columns:300px 1fr;gap:64px;overflow:hidden;mask-image:none;-webkit-mask-image:none;padding-bottom:0}
-.two .left{padding-top:16vh}
-.proj .left{padding-top:5vh}
+.how .left{padding-top:16vh}
+.proj .left,.skills .left{padding-top:2vh}
 .two .left h2{font-size:clamp(34px,3.2vw,48px);font-weight:800;line-height:1.15;letter-spacing:-.03em;margin:0 0 34px}
 .steps{list-style:none;margin:0;padding:0}
 .steps li{margin:0 0 6px}
@@ -78,9 +78,13 @@ html{scroll-snap-type:none}
 @keyframes panein{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 
 .how .pane p{font-size:17px;line-height:1.8;color:#444;max-width:820px}
-.how .pane.on,.skills .pane.on{padding-top:16vh}
-.proj .pane.on{padding-top:5vh}
+.how .pane.on{padding-top:16vh}
+.proj .pane.on,.skills .pane.on{padding-top:2vh}
 .two .pane .key{font-size:clamp(34px,4.3vw,68px);font-weight:800;line-height:1.15;letter-spacing:-.035em;margin:0 0 34px;max-width:none;word-break:keep-all}
+.proj .pane .key,.skills .pane .key{font-size:clamp(22px,2vw,30px);font-weight:700;line-height:1.35;letter-spacing:-.02em;margin:0 0 22px}
+.skills table{font-size:16.5px}
+.skills table td:nth-child(2){font-weight:600}
+.proj table{font-size:16px}
 .how .pane h3{display:none}
 .how .pane ol{margin:12px 0 0;padding-left:22px;max-width:820px;font-size:16px;color:#444}
 .how .pane ol li{margin:0 0 4px}
@@ -721,7 +725,7 @@ IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 �
     </div>
     <div class="right">
     <div class="pane on" id="p1">
-      <p class="key">공공, 교육, 문화 사이트 15건.<br>요구 분석부터 오픈까지.</p>
+      <p class="key">공공, 교육, 문화 사이트 15건. 요구 분석부터 오픈까지.</p>
       <div class="tw"><table>
         <tr><th>기간</th><th>프로젝트</th><th>내용</th></tr>
         <tr><td class="k">2026.08 ~ <span class="run">진행 중</span></td><td class="n">충북테크노파크 재구축</td><td>PHP로 만들어진 기존 사이트를 기획예산처와 같은 자사 Java CMS 기반으로 재구축.<br>Java 21, JBoss, MariaDB.<br>기획예산처 고도화와 병행</td></tr>
@@ -742,7 +746,7 @@ IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 �
       </table></div>
     </div>
     <div class="pane" id="p2">
-      <p class="key">동시 운영 11건.<br>이어받은 시스템의 분석부터 안정화까지.</p>
+      <p class="key">동시 운영 11건. 이어받은 시스템의 분석부터 안정화까지.</p>
       <div class="tw"><table>
         <tr><th>기간</th><th>시스템</th><th>내용</th></tr>
         <tr><td class="k">2025.10 ~ <span class="run">진행 중</span></td><td class="n">교통비 정산 시스템<br>(안성, 제주)</td><td>Spring Boot 기반 무상교통 정산 SaaS 유지보수에 재투입, 제주도 사업까지 확대 운영.<br>외부 기관 IP 허용을 받아 운영 재현 검증 환경 구축.<br>Docker 이미지 패키징, Git CI와 Naver Cloud CD 운영</td></tr>
@@ -759,7 +763,7 @@ IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 �
       </table></div>
     </div>
     <div class="pane mes" id="p3">
-      <p class="key">7개 제조사의 제조 실행계층 전체.<br>설비 데이터 수집부터 바코드, 수발주까지.</p><p class="meta">㈜제오시스, 2023.01 ~ 2024.01. 케미탑, 신화아이티, APCM, 휴코, 프레쉬아워, KCG, 한국기계.<br>PHP8, CodeIgniter3, MySQL, MariaDB, Apache, Bootstrap4, jQuery, Google Charts, Ajax.</p>
+      <p class="key">7개 제조사의 제조 실행계층 전체. 설비 데이터 수집부터 바코드, 수발주까지.</p><p class="meta">㈜제오시스, 2023.01 ~ 2024.01. 케미탑, 신화아이티, APCM, 휴코, 프레쉬아워, KCG, 한국기계.<br>PHP8, CodeIgniter3, MySQL, MariaDB, Apache, Bootstrap4, jQuery, Google Charts, Ajax.</p>
       <ul>
         <li><b>설비별 실시간 모니터링</b>: IO 통신 수집 데이터를 가공해 기기 온도, 동작 여부, 생산량, 가동시간을 Ajax 기반 실시간 차트로 시각화. 데이터 없는 설비는 로딩 처리 후 조회하도록 쿼리를 구성해 서버 부하 절감</li>
         <li><b>수익 분석</b>: 매출 대비 매입 비율 차트, 연관 테이블 구조 설계로 데이터 정합성 확보</li>
@@ -783,7 +787,7 @@ IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 �
       </ul>
     </div>
     <div class="right">
-    <div class="pane on"><h3>기술</h3><p class="key">Java와 Spring, 전자정부프레임워크 3.8부터 5.0까지.<br>JDK 1.8부터 21까지 프로젝트마다 환경을 맞춰 운영.</p>
+    <div class="pane on"><h3>기술</h3><p class="key">Java와 Spring, 전자정부프레임워크 3.8부터 5.0까지.</p>
     <div class="tw"><table>
       <tr><th>구분</th><th>주력</th><th>활용</th></tr>
       <tr><td class="k">백엔드</td><td>Java, Spring Framework, Spring Boot, 전자정부프레임워크, MyBatis</td><td>PHP, Laravel, CodeIgniter3</td></tr>
@@ -794,7 +798,7 @@ IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 �
     </table></div>
 
     </div>
-    <div class="pane"><h3>인프라와 운영 경험</h3><p class="key">Linux 서버 설정부터 GitLab CI/CD와 Docker 자동 배포까지.<br>직접 만든 개발 서버가 회사 표준이 됐습니다.</p>
+    <div class="pane"><h3>인프라와 운영 경험</h3><p class="key">서버 설정부터 자동 배포까지 직접 구성합니다.</p>
     <div class="tw"><table>
       <tr><td class="k">서버</td><td>Linux 서버 설정, JDK 1.8~21 환경 구성, Apache, Tomcat, JBoss 운영</td></tr>
       <tr><td class="k">빌드와 배포</td><td>Jenkins와 Git 연동 빌드, 배포 구성.<br>기획예산처 프로젝트에서 GitLab CI/CD, GitLab Runner, Docker 기반 자동 배포 개발 서버를 구축해 회사 표준으로 채택됨(디자인 담당 dev 브랜치, master 확인 후 push 시 자동 반영)</td></tr>
@@ -803,7 +807,7 @@ IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 �
     </table></div>
 
     </div>
-    <div class="pane"><h3>이력</h3><p class="key">2022년 과정 수료, 2023년 제조 MES, 2024년부터 공공 웹.<br>2027년 2월 컴퓨터공학 학사.</p>
+    <div class="pane"><h3>이력</h3><p class="key">2022년 과정, 2023년 제조 MES, 2024년부터 공공 웹.</p>
     <div class="tw"><table>
       <tr><td class="k">2027.02 예정</td><td>컴퓨터공학 학사, 학점은행제(국가평생교육진흥원).<br>실무와 병행</td></tr>
       <tr><td class="k">2026.09</td><td>정보처리기사</td></tr>
