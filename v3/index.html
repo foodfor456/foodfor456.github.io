@@ -33,7 +33,7 @@ section{scroll-margin-top:0}
 
 
 /* 화면 단위 스크롤과 오른쪽 내비 */
-html{scroll-snap-type:y proximity}
+html{scroll-snap-type:y mandatory}
 .snap{scroll-snap-align:start}
 .side{position:fixed;right:28px;top:50%;transform:translateY(-50%);z-index:20;display:flex;flex-direction:column;gap:14px;align-items:flex-end;color:#000;transition:color .25s}
 .side.light{color:#fff}
@@ -69,8 +69,8 @@ html{scroll-snap-type:y proximity}
 @keyframes blink{50%{opacity:0}}
 
 /* 큰 문장 + 일하는 방식 */
-.state{padding:150px 0 90px}
-.how{padding:0 0 130px}
+.state{min-height:100vh;display:flex;align-items:center;padding:80px 0}
+.how{padding:0 0 60px}
 .how h2{font-size:22px;color:var(--mute);font-weight:600;margin-bottom:20px}
 .how .item{border-top:1px solid var(--line)}
 .how .item:last-child{border-bottom:1px solid var(--line)}
@@ -124,7 +124,7 @@ html{scroll-snap-type:y proximity}
 body.lock{overflow:hidden}
 
 /* 프로젝트 */
-.proj{padding:150px 0 120px}
+.proj{min-height:100vh;padding:120px 0 60px}
 .proj .big{margin-bottom:56px}
 .tabs{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 26px}
 .tabs button{padding:10px 18px;border:1px solid var(--line);border-radius:999px;font-size:16px;font-weight:600;transition:background .2s,color .2s,border-color .2s}
@@ -147,9 +147,10 @@ td.k .run{color:var(--ac);font-weight:600}
 .mes ul li{margin:0 0 6px}
 
 /* 기술과 이력 */
-.skills{padding:0 0 150px}
+.skills{padding:0 0 60px}
 .skills h3{font-size:22px;margin:56px 0 14px}
 .skills h3:first-of-type{margin-top:0}
+.skills{min-height:100vh;padding-top:120px}
 
 /* 마무리, 검정 면 */
 .end{min-height:100vh;display:flex;flex-direction:column;justify-content:space-between;padding:110px 0 20px}
@@ -326,7 +327,7 @@ td.k .run{color:var(--ac);font-weight:600}
   </div>
 </section>
 
-<section class="how" id="how">
+<section class="how snap" id="how">
   <div class="wrap">
     <h2>일하는 방식</h2>
     <div class="item" open>
@@ -739,13 +740,13 @@ IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 �
   function markNav(){ var y=window.scrollY+window.innerHeight*0.4, cur=0; secs.forEach(function(s,i){ if(s&&s.offsetTop<=y) cur=i; }); sideLinks.forEach(function(a,i){ a.classList.toggle('on', i===cur); }); var cy=window.scrollY+window.innerHeight/2, light=false; darks.forEach(function(d){ if(cy>=d.offsetTop&&cy<d.offsetTop+d.offsetHeight) light=true; }); sideEl.classList.toggle('light', light); }
   window.addEventListener('scroll',markNav); markNav();
 
-  /* 주요 사례에서는 휠을 굴리면 카드가 옆으로 넘어감 */
-  var casesSec=document.getElementById('cases'), wheelLock=false;
-  casesSec.addEventListener('wheel',function(e){
+  /* 갤러리 위에서 휠을 굴리면 카드가 옆으로 넘어감, 양 끝에서는 페이지 스크롤로 넘김 */
+  var galEl=document.getElementById('gal'), wheelLock=false;
+  galEl.addEventListener('wheel',function(e){
     if(Math.abs(e.deltaY)<=Math.abs(e.deltaX)) return;
-    var g=document.getElementById('gal'); var max=g.scrollWidth-g.clientWidth;
-    var r=casesSec.getBoundingClientRect(); if(r.top>40||r.bottom<window.innerHeight-40) return;
-    if((e.deltaY>0&&g.scrollLeft<max-2)||(e.deltaY<0&&g.scrollLeft>2)){ e.preventDefault(); if(wheelLock) return; wheelLock=true; setTimeout(function(){ wheelLock=false; },450); g.scrollBy({left:(e.deltaY>0?1:-1)*cardW(),behavior:reduce?'auto':'smooth'}); }
+    var first=galEl.querySelector('.gcard'); var minL=first.offsetLeft; var maxL=galEl.scrollWidth-galEl.clientWidth;
+    var atStart=galEl.scrollLeft<=minL+2, atEnd=galEl.scrollLeft>=maxL-2;
+    if((e.deltaY>0&&!atEnd)||(e.deltaY<0&&!atStart)){ e.preventDefault(); if(wheelLock) return; wheelLock=true; setTimeout(function(){ wheelLock=false; },450); galEl.scrollBy({left:(e.deltaY>0?1:-1)*cardW(),behavior:reduce?'auto':'smooth'}); }
   },{passive:false});
 /* 큰 글자를 화면 폭에 맞춤 */
   function fit(){
