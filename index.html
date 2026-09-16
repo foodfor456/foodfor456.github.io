@@ -124,6 +124,11 @@ html{scroll-snap-type:none}
 #endWord span.show{visibility:visible}
 #endWord span.dot.blink{animation:dotblink 1.6s ease-in-out infinite}
 @keyframes dotblink{0%,100%{opacity:1}50%{opacity:0}}
+.six{display:grid;grid-template-columns:repeat(3,1fr);gap:0 28px;margin:26px 0 0;max-width:880px}
+.six>div{border-top:2px solid #000;padding:14px 0 18px}
+.six b{display:block;font-size:22px;font-weight:800;letter-spacing:-.02em;line-height:1.2;margin-bottom:6px}
+.six span{display:block;font-size:14.5px;line-height:1.55;color:#555}
+@media (max-width:900px){.six{grid-template-columns:1fr 1fr;gap:0 16px}}
 /* 첫 화면 */
 .hero{min-height:100vh;height:100vh;display:flex;flex-direction:column;justify-content:space-between;padding:96px 0 20px}
 .hero .grid{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:start}
@@ -463,14 +468,14 @@ td.k .run{color:var(--ac);font-weight:600}
       <div class="pane">
         <h3>오류와 원복</h3>
         <p class="key">오류는 고치고 끝내지 않고<br>기록해 둡니다.</p><p>같은 문제가 다시 나오지 않도록 개발 단계에서 미리 막는 쪽을 택하고, 프로젝트마다 검출된 취약점을 조치하며 쌓인 지식으로 다음 프로젝트에서는 같은 취약점을 미리 대비합니다.<br>운영에서만 확인되는 기능은 운영과 최대한 같은 개발 환경을 만들어 미리 테스트하고, 운영에 올라가서야 드러나는 경우의 수를 줄여 갑니다.<br>반영 전에는 되돌릴 길부터 확보합니다.<br>문제가 생기면 먼저 원복해 서비스를 정상으로 돌려놓고, 그다음에 원인을 고쳐 다시 반영합니다.<br>교통비와 교부금 정산처럼 돈이 걸린 기능은 화면이 멀쩡해 보여도 DB 값을 직접 확인한 뒤에야 끝냅니다.</p>
-        <ol>
-          <li>오류는 기록하고, 같은 문제는 개발 단계에서 차단</li>
-          <li>검출된 취약점 조치로 쌓인 지식으로 다음 프로젝트 미리 대비</li>
-          <li>개발 환경을 운영과 최대한 같게 구성</li>
-          <li>미리 테스트해 운영에서만 드러나는 경우의 수 최소화</li>
-          <li>반영 전에 되돌릴 길부터 확보</li>
-          <li>문제가 생기면 원복 먼저, 수정은 그다음</li>
-        </ol>
+        <div class="six">
+          <div><b>기록</b><span>오류는 기록하고, 같은 문제는 개발 단계에서 차단</span></div>
+          <div><b>대비</b><span>검출된 취약점 조치로 쌓인 지식으로 다음 프로젝트 미리 대비</span></div>
+          <div><b>같은 환경</b><span>개발 환경을 운영과 최대한 같게 구성</span></div>
+          <div><b>미리 테스트</b><span>운영에서만 드러나는 경우의 수 최소화</span></div>
+          <div><b>되돌릴 길</b><span>반영 전에 되돌릴 길부터 확보</span></div>
+          <div><b>원복 먼저</b><span>문제가 생기면 원복 먼저, 수정은 그다음</span></div>
+        </div>
       </div>
       <div class="pane">
         <h3>고객의 말</h3>
