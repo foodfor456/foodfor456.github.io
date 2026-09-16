@@ -103,7 +103,9 @@ html{scroll-snap-type:none}
   .two .left,.two .pane.on,.how .pane.s.on,.skills .pane.s.on,.proj .pane.mes.on{padding-top:0}
   .two .left h2{margin-bottom:16px}
   .steps{display:none}
-  .two .pane{display:block;height:auto;overflow:visible;mask-image:none;-webkit-mask-image:none;padding-bottom:0;margin-bottom:40px}
+  .page>.wrap.two{overflow:visible;display:block}
+  .two .right .pane,.two .right .pane.on{display:block;height:auto;overflow:visible;overscroll-behavior:auto;mask-image:none;-webkit-mask-image:none;padding-bottom:0;padding-top:0;margin-bottom:40px}
+  .page>.wrap{overscroll-behavior:auto}
   .two .pane.on .key,.two .pane.on>*:not(.key){animation:none}
   .two .pane h3{font-size:22px}
 }
