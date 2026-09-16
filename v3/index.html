@@ -839,7 +839,7 @@ IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 �
 
   /* 일하는 방식 펼치기 */
   document.querySelectorAll('.how .item>button').forEach(function(b){
-    b.addEventListener('click',function(){ var it=b.parentElement; var open=it.hasAttribute('open'); if(open){ it.removeAttribute('open'); } else { it.setAttribute('open',''); } b.setAttribute('aria-expanded', open?'false':'true'); if(!open){ setTimeout(function(){ var sc=it.closest('.page>.wrap'); if(sc){ var top=it.offsetTop-sc.offsetTop-8; sc.scrollTo({top:top,behavior:reduce?'auto':'smooth'}); } else { it.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'}); } },120); } });
+    b.addEventListener('click',function(){ var it=b.parentElement; var open=it.hasAttribute('open'); if(open){ it.removeAttribute('open'); } else { document.querySelectorAll('.how .item[open]').forEach(function(o){ o.removeAttribute('open'); o.querySelector('button').setAttribute('aria-expanded','false'); }); it.setAttribute('open',''); } b.setAttribute('aria-expanded', open?'false':'true'); if(!open){ setTimeout(function(){ var sc=it.closest('.page>.wrap'); if(sc){ var top=it.offsetTop-sc.offsetTop-8; sc.scrollTo({top:top,behavior:reduce?'auto':'smooth'}); } else { it.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'}); } },120); } });
   });
 
   /* 사례 갤러리: 끌어서 넘기기, 화살표, 위치 */
