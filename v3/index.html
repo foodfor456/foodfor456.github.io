@@ -338,24 +338,9 @@ html.lenis,html.lenis body{height:auto}
   .gcard{flex-basis:min(560px,calc((100vh - 440px)*1.6))}
 }
 
-/* 마우스를 따라다니는 점, 누를 수 있는 곳에서는 커짐 */
-.cur-dot{position:fixed;left:0;top:0;width:50px;height:50px;margin:-25px 0 0 -25px;border-radius:50%;background:#fff;mix-blend-mode:difference;pointer-events:none;z-index:100;opacity:0;transition:opacity .2s}
-.cur-dot.show{opacity:1}
-@media (hover:none),(pointer:coarse){.cur-dot,.c-ring,.c-pt{display:none}}
-/* 비교용 커서: 주소 끝에 ?cur=1, 2, 3 */
-.c-ring,.c-pt{position:fixed;left:0;top:0;border-radius:50%;pointer-events:none;z-index:100;opacity:0;will-change:transform}
-.c-ring{width:40px;height:40px;margin:-20px 0 0 -20px;border:1.5px solid #fff;mix-blend-mode:difference;display:flex;align-items:center;justify-content:center;color:transparent;transition:opacity .2s,background .25s,border-color .25s,color .2s}
-.c-pt{width:6px;height:6px;margin:-3px 0 0 -3px;background:#fff;mix-blend-mode:difference;transition:opacity .2s}
-.c-ring span{display:block;font-size:13px;font-weight:700;white-space:nowrap;letter-spacing:-.02em}
-.c-ring.show,.c-pt.show{opacity:1}
-.c-ring.link{background:#fff}
-.c-ring.label{background:#fff;border-color:#fff;color:#000;mix-blend-mode:normal}
-.c-ring.label+.c-pt,.c-ring.link+.c-pt{opacity:0}
-html.cur-hide,html.cur-hide *{cursor:none!important}
-.mag{transition:transform .25s cubic-bezier(.2,.7,.2,1)}
+/* 마우스 옆에 뜨는 상황 라벨 */
 .c-tag{position:fixed;left:0;top:0;pointer-events:none;z-index:100;opacity:0;background:#000;color:#fff;box-shadow:0 0 0 1px rgba(255,255,255,.4);font-size:12.5px;font-weight:700;line-height:1;padding:7px 11px;border-radius:20px;white-space:nowrap;transition:opacity .18s;will-change:transform}
 .c-tag.show{opacity:1}
-.c-pt.big{width:28px;height:28px;margin:-14px 0 0 -14px;will-change:auto}
 @media (hover:none),(pointer:coarse){.c-tag{display:none}}
 @media (max-height:880px) and (min-width:901px){
   .hero{padding:48px 0 12px}
@@ -1127,50 +1112,16 @@ IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 �
     function play(){ var r=++run; spans.forEach(function(sp){ sp.classList.remove('show','blink'); }); if(reduce){ spans.forEach(function(sp){ sp.classList.add('show'); }); return; } var k=0; (function tick(){ if(r!==run) return; if(k<spans.length){ spans[k].classList.add('show'); k++; setTimeout(tick, 110); } else { spans[spans.length-1].classList.add('blink'); } })(); }
     if('IntersectionObserver' in window){ new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting) setTimeout(play,250); else { run++; } }); },{threshold:.5}).observe(document.getElementById('contact')); } else { play(); }
   })();
-  /* 마우스 효과. 기본은 화살표를 숨긴 작은 점과 상황 라벨. 비교용: ?cur=0(화살표 + 점), 1(지연 링), 2(점과 링), 3(2에 라벨과 자석 효과) */
+  /* 마우스 옆에 뜨는 상황 라벨. 기본 화살표는 그대로 둔다 */
   (function(){
     if(reduce||!window.matchMedia('(hover:hover) and (pointer:fine)').matches) return;
-    var q=(new URLSearchParams(location.search)).get('cur'); var mode=q===null?4:(parseInt(q,10)||0);
-    var SEL='a,button,.gcard,[role="button"],summary';
-    if(mode===0){
-      var d=document.createElement('div'); d.className='cur-dot'; d.setAttribute('aria-hidden','true'); document.body.appendChild(d);
-      var x=0,y=0,tx=0,ty=0,s=0.28,ts=0.28,on=false;
-      window.addEventListener('mousemove',function(e){ tx=e.clientX; ty=e.clientY; if(!on){ on=true; x=tx; y=ty; d.classList.add('show'); } var h=e.target.closest?e.target.closest(SEL):null; ts=h?1:0.28; },{passive:true});
-      document.addEventListener('mouseleave',function(){ on=false; d.classList.remove('show'); });
-      (function frame(){ x+=(tx-x)*0.2; y+=(ty-y)*0.2; s+=(ts-s)*0.18; d.style.transform='translate('+x+'px,'+y+'px) scale('+s+')'; requestAnimationFrame(frame); })();
-      return;
-    }
-    if(mode===4){
-      var p4=document.createElement('div'); p4.className='c-pt big'; p4.setAttribute('aria-hidden','true'); document.body.appendChild(p4);
-      var tag=document.createElement('div'); tag.className='c-tag'; tag.setAttribute('aria-hidden','true'); document.body.appendChild(tag);
-      document.documentElement.classList.add('cur-hide');
-      var px=0,py=0,gx=0,gy=0,qx=0,qy=0,ps=0.36,pts=0.36,vis=false,dn=1;
-      function label(t){ if(!t.closest) return ''; if(t.closest('.md .site a')) return '새 창'; if(t.closest('a.mail')) return '복사'; if(t.closest('.gcard')) return '보기'; if(t.closest('#gal')) return '끌기'; return ''; }
-      window.addEventListener('mousemove',function(e){ gx=e.clientX; gy=e.clientY; if(!vis){ vis=true; px=qx=gx; py=qy=gy; p4.classList.add('show'); } var lb=label(e.target), h=e.target.closest?e.target.closest(SEL):null; pts=h?1:0.36; if(lb){ tag.textContent=lb; tag.classList.add('show'); } else tag.classList.remove('show'); },{passive:true});
-      document.addEventListener('mouseleave',function(){ vis=false; p4.classList.remove('show'); tag.classList.remove('show'); });
-      window.addEventListener('mousedown',function(){ dn=0.7; tag.classList.remove('show'); }); window.addEventListener('mouseup',function(){ dn=1; });
-      (function frame(){ px+=(gx-px)*0.35; py+=(gy-py)*0.35; qx+=(gx-qx)*0.18; qy+=(gy-qy)*0.18; ps+=(pts*dn-ps)*0.2; p4.style.transform='translate('+px+'px,'+py+'px) scale('+ps+')'; tag.style.transform='translate('+(qx+16)+'px,'+(qy+18)+'px)'; requestAnimationFrame(frame); })();
-      return;
-    }
-    var ring=document.createElement('div'); ring.className='c-ring'; ring.setAttribute('aria-hidden','true'); var tx=document.createElement('span'); ring.appendChild(tx); document.body.appendChild(ring);
-    var pt=null; if(mode>=2){ pt=document.createElement('div'); pt.className='c-pt'; pt.setAttribute('aria-hidden','true'); document.body.appendChild(pt); document.documentElement.classList.add('cur-hide'); }
-    var rx=0,ry=0,mx=0,my=0,rs=1,rts=1,shown=false,downK=1;
-    function state(t){
-      var card=(mode>=3&&t.closest)?t.closest('.gcard'):null, drag=(mode>=3&&t.closest&&!card)?t.closest('#gal'):null, h=t.closest?t.closest(SEL):null;
-      ring.classList.toggle('label',!!(card||drag)); ring.classList.toggle('link',!card&&!drag&&!!h);
-      if(card){ tx.textContent='보기'; rts=2.4; } else if(drag){ tx.textContent='끌기'; rts=2.4; } else { tx.textContent=''; rts=h?1.7:1; }
-    }
-    window.addEventListener('mousemove',function(e){ mx=e.clientX; my=e.clientY; if(!shown){ shown=true; rx=mx; ry=my; ring.classList.add('show'); if(pt) pt.classList.add('show'); } state(e.target); if(pt) pt.style.transform='translate('+mx+'px,'+my+'px)'; },{passive:true});
-    document.addEventListener('mouseleave',function(){ shown=false; ring.classList.remove('show'); if(pt) pt.classList.remove('show'); });
-    window.addEventListener('mousedown',function(){ downK=0.8; }); window.addEventListener('mouseup',function(){ downK=1; });
-    (function frame(){ rx+=(mx-rx)*0.16; ry+=(my-ry)*0.16; rs+=(rts*downK-rs)*0.18; ring.style.transform='translate('+rx+'px,'+ry+'px) scale('+rs+')'; tx.style.transform='scale('+(1/rs)+')'; requestAnimationFrame(frame); })();
-    if(mode>=3){
-      document.querySelectorAll('.gnav button,.side a,.console .files button,#mclose,.end a').forEach(function(el){
-        el.classList.add('mag');
-        el.addEventListener('mousemove',function(e){ var r=el.getBoundingClientRect(); var dx=e.clientX-(r.left+r.width/2), dy=e.clientY-(r.top+r.height/2); el.style.transform='translate('+dx*0.35+'px,'+dy*0.35+'px)'; });
-        el.addEventListener('mouseleave',function(){ el.style.transform=''; });
-      });
-    }
+    var tag=document.createElement('div'); tag.className='c-tag'; tag.setAttribute('aria-hidden','true'); document.body.appendChild(tag);
+    var gx=0,gy=0,qx=0,qy=0,vis=false;
+    function label(t){ if(!t.closest) return ''; if(t.closest('.md .site a')) return '새 창'; if(t.closest('a.mail')) return '복사'; if(t.closest('.gcard')) return '보기'; if(t.closest('#gal')) return '끌기'; return ''; }
+    window.addEventListener('mousemove',function(e){ gx=e.clientX; gy=e.clientY; if(!vis){ vis=true; qx=gx; qy=gy; } var lb=label(e.target); if(lb){ tag.textContent=lb; tag.classList.add('show'); } else tag.classList.remove('show'); },{passive:true});
+    document.addEventListener('mouseleave',function(){ vis=false; tag.classList.remove('show'); });
+    window.addEventListener('mousedown',function(){ tag.classList.remove('show'); });
+    (function frame(){ qx+=(gx-qx)*0.2; qy+=(gy-qy)*0.2; tag.style.transform='translate('+(qx+18)+'px,'+(qy+20)+'px)'; requestAnimationFrame(frame); })();
   })();
   /* 메일 복사 */
   var toast=document.createElement('div'); toast.className='copied'; toast.textContent='메일 주소를 복사했습니다'; document.body.appendChild(toast); var toastTimer=null;
