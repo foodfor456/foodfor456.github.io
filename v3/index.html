@@ -198,6 +198,10 @@ html{scroll-snap-type:none}
 .md .close:hover{background:#eee}
 .md h3{font-size:clamp(24px,2.2vw,32px);margin:0 60px 6px 0;line-height:1.25}
 .md .meta{font-size:15px;color:var(--mute);margin:0 0 24px}
+.md .meta:has(+.site){margin-bottom:14px}
+.md .site{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 24px}
+.md .site a{display:inline-flex;align-items:center;gap:6px;border:1px solid #000;padding:8px 14px;font-size:15px;font-weight:600;color:#000;text-decoration:none;transition:background .2s,color .2s}
+.md .site a:hover{background:#000;color:#fff}
 .md .cols{display:grid;grid-template-columns:1.1fr 1fr;gap:36px;align-items:start}
 .md img{display:block;width:100%;height:auto;border:1px solid var(--line);margin-bottom:22px}
 .md dl{margin:0 0 14px}
@@ -349,6 +353,10 @@ html.lenis,html.lenis body{height:auto}
 .c-ring.label+.c-pt,.c-ring.link+.c-pt{opacity:0}
 html.cur-hide,html.cur-hide *{cursor:none!important}
 .mag{transition:transform .25s cubic-bezier(.2,.7,.2,1)}
+.c-tag{position:fixed;left:0;top:0;pointer-events:none;z-index:100;opacity:0;background:#000;color:#fff;box-shadow:0 0 0 1px rgba(255,255,255,.4);font-size:12.5px;font-weight:700;line-height:1;padding:7px 11px;border-radius:20px;white-space:nowrap;transition:opacity .18s;will-change:transform}
+.c-tag.show{opacity:1}
+.c-pt.big{width:10px;height:10px;margin:-5px 0 0 -5px}
+@media (hover:none),(pointer:coarse){.c-tag{display:none}}
 @media (max-height:880px) and (min-width:901px){
   .hero{padding:48px 0 12px}
   .hero h1{font-size:clamp(28px,2.6vw,40px);margin-bottom:18px}
@@ -614,6 +622,7 @@ html.cur-hide,html.cur-hide *{cursor:none!important}
 <template id="c1">
   <h3>서울연구원, 레거시 전환과 운영 인수</h3>
   <p class="meta">공공기관, 구축 후 유지보수까지 인수. 2024.11 ~ 2025.02</p>
+  <p class="site"><a href="https://www.si.re.kr/" target="_blank" rel="noopener">사이트 열기 <span aria-hidden="true">↗</span></a></p>
   <div class="cols">
     <div>
       <dl>
@@ -646,6 +655,7 @@ URL 매핑 컨트롤러로 이관 검증을 기능화해 원본과 대조<br>
 <template id="c2">
   <h3>늘봄허브, 다중 권한 플랫폼과 만족도 통계 허브</h3>
   <p class="meta">교육, 학교와 교육청 단위 방과후 플랫폼. 2026.04 ~ 진행 중</p>
+  <p class="site"><a href="https://neulbomhub.kosac.re.kr/" target="_blank" rel="noopener">사이트 열기 <span aria-hidden="true">↗</span></a></p>
   <div class="cols">
     <div>
       <dl>
@@ -678,6 +688,7 @@ URL 매핑 컨트롤러로 이관 검증을 기능화해 원본과 대조<br>
 <template id="c3">
   <h3>교통비 정산 시스템, 안성과 제주</h3>
   <p class="meta">공공과 교통, 유지보수로 이어받은 지자체 교통비 지원금 정산 SaaS 2종. 2024.06 ~ 07, 2025.10 ~ 진행 중</p>
+  <p class="site"><a href="https://anseong.forcitizen.kr/" target="_blank" rel="noopener">안성 사이트 열기 <span aria-hidden="true">↗</span></a><a href="https://jeju.forcitizen.kr/" target="_blank" rel="noopener">제주 사이트 열기 <span aria-hidden="true">↗</span></a></p>
   <div class="cols">
     <div>
       <dl>
@@ -1116,10 +1127,10 @@ IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 �
     function play(){ var r=++run; spans.forEach(function(sp){ sp.classList.remove('show','blink'); }); if(reduce){ spans.forEach(function(sp){ sp.classList.add('show'); }); return; } var k=0; (function tick(){ if(r!==run) return; if(k<spans.length){ spans[k].classList.add('show'); k++; setTimeout(tick, 110); } else { spans[spans.length-1].classList.add('blink'); } })(); }
     if('IntersectionObserver' in window){ new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting) setTimeout(play,250); else { run++; } }); },{threshold:.5}).observe(document.getElementById('contact')); } else { play(); }
   })();
-  /* 마우스 효과. 기본은 작은 점, 비교용으로 주소 끝에 ?cur=1(지연 링), 2(점과 링, 기본 커서 숨김), 3(2에 라벨과 자석 효과) */
+  /* 마우스 효과. 기본은 화살표를 숨긴 작은 점과 상황 라벨. 비교용: ?cur=0(화살표 + 점), 1(지연 링), 2(점과 링), 3(2에 라벨과 자석 효과) */
   (function(){
     if(reduce||!window.matchMedia('(hover:hover) and (pointer:fine)').matches) return;
-    var mode=parseInt((new URLSearchParams(location.search)).get('cur')||'0',10)||0;
+    var q=(new URLSearchParams(location.search)).get('cur'); var mode=q===null?4:(parseInt(q,10)||0);
     var SEL='a,button,.gcard,[role="button"],summary';
     if(mode===0){
       var d=document.createElement('div'); d.className='cur-dot'; d.setAttribute('aria-hidden','true'); document.body.appendChild(d);
@@ -1127,6 +1138,18 @@ IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 �
       window.addEventListener('mousemove',function(e){ tx=e.clientX; ty=e.clientY; if(!on){ on=true; x=tx; y=ty; d.classList.add('show'); } var h=e.target.closest?e.target.closest(SEL):null; ts=h?3.6:1; },{passive:true});
       document.addEventListener('mouseleave',function(){ on=false; d.classList.remove('show'); });
       (function frame(){ x+=(tx-x)*0.2; y+=(ty-y)*0.2; s+=(ts-s)*0.18; d.style.transform='translate('+x+'px,'+y+'px) scale('+s+')'; requestAnimationFrame(frame); })();
+      return;
+    }
+    if(mode===4){
+      var p4=document.createElement('div'); p4.className='c-pt big'; p4.setAttribute('aria-hidden','true'); document.body.appendChild(p4);
+      var tag=document.createElement('div'); tag.className='c-tag'; tag.setAttribute('aria-hidden','true'); document.body.appendChild(tag);
+      document.documentElement.classList.add('cur-hide');
+      var px=0,py=0,gx=0,gy=0,qx=0,qy=0,ps=1,pts=1,vis=false,dn=1;
+      function label(t){ if(!t.closest) return ''; if(t.closest('.md .site a')) return '새 창'; if(t.closest('a.mail')) return '복사'; if(t.closest('.gcard')) return '보기'; if(t.closest('#gal')) return '끌기'; return ''; }
+      window.addEventListener('mousemove',function(e){ gx=e.clientX; gy=e.clientY; if(!vis){ vis=true; px=qx=gx; py=qy=gy; p4.classList.add('show'); } var lb=label(e.target), h=e.target.closest?e.target.closest(SEL):null; pts=h?2.6:1; if(lb){ tag.textContent=lb; tag.classList.add('show'); } else tag.classList.remove('show'); },{passive:true});
+      document.addEventListener('mouseleave',function(){ vis=false; p4.classList.remove('show'); tag.classList.remove('show'); });
+      window.addEventListener('mousedown',function(){ dn=0.7; tag.classList.remove('show'); }); window.addEventListener('mouseup',function(){ dn=1; });
+      (function frame(){ px+=(gx-px)*0.35; py+=(gy-py)*0.35; qx+=(gx-qx)*0.18; qy+=(gy-qy)*0.18; ps+=(pts*dn-ps)*0.2; p4.style.transform='translate('+px+'px,'+py+'px) scale('+ps+')'; tag.style.transform='translate('+(qx+16)+'px,'+(qy+18)+'px)'; requestAnimationFrame(frame); })();
       return;
     }
     var ring=document.createElement('div'); ring.className='c-ring'; ring.setAttribute('aria-hidden','true'); var tx=document.createElement('span'); ring.appendChild(tx); document.body.appendChild(ring);
