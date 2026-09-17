@@ -339,7 +339,7 @@ html.lenis,html.lenis body{height:auto}
 }
 
 /* 마우스를 따라다니는 점, 누를 수 있는 곳에서는 커짐 */
-.cur-dot{position:fixed;left:0;top:0;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:#fff;mix-blend-mode:difference;pointer-events:none;z-index:100;opacity:0;transition:opacity .2s;will-change:transform}
+.cur-dot{position:fixed;left:0;top:0;width:50px;height:50px;margin:-25px 0 0 -25px;border-radius:50%;background:#fff;mix-blend-mode:difference;pointer-events:none;z-index:100;opacity:0;transition:opacity .2s}
 .cur-dot.show{opacity:1}
 @media (hover:none),(pointer:coarse){.cur-dot,.c-ring,.c-pt{display:none}}
 /* 비교용 커서: 주소 끝에 ?cur=1, 2, 3 */
@@ -355,7 +355,7 @@ html.cur-hide,html.cur-hide *{cursor:none!important}
 .mag{transition:transform .25s cubic-bezier(.2,.7,.2,1)}
 .c-tag{position:fixed;left:0;top:0;pointer-events:none;z-index:100;opacity:0;background:#000;color:#fff;box-shadow:0 0 0 1px rgba(255,255,255,.4);font-size:12.5px;font-weight:700;line-height:1;padding:7px 11px;border-radius:20px;white-space:nowrap;transition:opacity .18s;will-change:transform}
 .c-tag.show{opacity:1}
-.c-pt.big{width:10px;height:10px;margin:-5px 0 0 -5px}
+.c-pt.big{width:28px;height:28px;margin:-14px 0 0 -14px;will-change:auto}
 @media (hover:none),(pointer:coarse){.c-tag{display:none}}
 @media (max-height:880px) and (min-width:901px){
   .hero{padding:48px 0 12px}
@@ -1134,8 +1134,8 @@ IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 �
     var SEL='a,button,.gcard,[role="button"],summary';
     if(mode===0){
       var d=document.createElement('div'); d.className='cur-dot'; d.setAttribute('aria-hidden','true'); document.body.appendChild(d);
-      var x=0,y=0,tx=0,ty=0,s=1,ts=1,on=false;
-      window.addEventListener('mousemove',function(e){ tx=e.clientX; ty=e.clientY; if(!on){ on=true; x=tx; y=ty; d.classList.add('show'); } var h=e.target.closest?e.target.closest(SEL):null; ts=h?3.6:1; },{passive:true});
+      var x=0,y=0,tx=0,ty=0,s=0.28,ts=0.28,on=false;
+      window.addEventListener('mousemove',function(e){ tx=e.clientX; ty=e.clientY; if(!on){ on=true; x=tx; y=ty; d.classList.add('show'); } var h=e.target.closest?e.target.closest(SEL):null; ts=h?1:0.28; },{passive:true});
       document.addEventListener('mouseleave',function(){ on=false; d.classList.remove('show'); });
       (function frame(){ x+=(tx-x)*0.2; y+=(ty-y)*0.2; s+=(ts-s)*0.18; d.style.transform='translate('+x+'px,'+y+'px) scale('+s+')'; requestAnimationFrame(frame); })();
       return;
@@ -1144,9 +1144,9 @@ IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 �
       var p4=document.createElement('div'); p4.className='c-pt big'; p4.setAttribute('aria-hidden','true'); document.body.appendChild(p4);
       var tag=document.createElement('div'); tag.className='c-tag'; tag.setAttribute('aria-hidden','true'); document.body.appendChild(tag);
       document.documentElement.classList.add('cur-hide');
-      var px=0,py=0,gx=0,gy=0,qx=0,qy=0,ps=1,pts=1,vis=false,dn=1;
+      var px=0,py=0,gx=0,gy=0,qx=0,qy=0,ps=0.36,pts=0.36,vis=false,dn=1;
       function label(t){ if(!t.closest) return ''; if(t.closest('.md .site a')) return '새 창'; if(t.closest('a.mail')) return '복사'; if(t.closest('.gcard')) return '보기'; if(t.closest('#gal')) return '끌기'; return ''; }
-      window.addEventListener('mousemove',function(e){ gx=e.clientX; gy=e.clientY; if(!vis){ vis=true; px=qx=gx; py=qy=gy; p4.classList.add('show'); } var lb=label(e.target), h=e.target.closest?e.target.closest(SEL):null; pts=h?2.6:1; if(lb){ tag.textContent=lb; tag.classList.add('show'); } else tag.classList.remove('show'); },{passive:true});
+      window.addEventListener('mousemove',function(e){ gx=e.clientX; gy=e.clientY; if(!vis){ vis=true; px=qx=gx; py=qy=gy; p4.classList.add('show'); } var lb=label(e.target), h=e.target.closest?e.target.closest(SEL):null; pts=h?1:0.36; if(lb){ tag.textContent=lb; tag.classList.add('show'); } else tag.classList.remove('show'); },{passive:true});
       document.addEventListener('mouseleave',function(){ vis=false; p4.classList.remove('show'); tag.classList.remove('show'); });
       window.addEventListener('mousedown',function(){ dn=0.7; tag.classList.remove('show'); }); window.addEventListener('mouseup',function(){ dn=1; });
       (function frame(){ px+=(gx-px)*0.35; py+=(gy-py)*0.35; qx+=(gx-qx)*0.18; qy+=(gy-qy)*0.18; ps+=(pts*dn-ps)*0.2; p4.style.transform='translate('+px+'px,'+py+'px) scale('+ps+')'; tag.style.transform='translate('+(qx+16)+'px,'+(qy+18)+'px)'; requestAnimationFrame(frame); })();
