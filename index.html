@@ -318,6 +318,10 @@ td.k .run{color:var(--ac);font-weight:600}
   .side a span{display:none}
   .side a::after{width:7px;height:7px}
 }
+/* 마우스를 따라다니는 점, 누를 수 있는 곳에서는 커짐 */
+.cur-dot{position:fixed;left:0;top:0;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:#fff;mix-blend-mode:difference;pointer-events:none;z-index:100;opacity:0;transition:opacity .2s;will-change:transform}
+.cur-dot.show{opacity:1}
+@media (hover:none),(pointer:coarse){.cur-dot{display:none}}
 @media (max-height:880px) and (min-width:901px){
   .hero{padding:48px 0 12px}
   .hero h1{font-size:clamp(28px,2.6vw,40px);margin-bottom:18px}
@@ -1104,6 +1108,16 @@ IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 �
     var run=0;
     function play(){ var r=++run; spans.forEach(function(sp){ sp.classList.remove('show','blink'); }); if(reduce){ spans.forEach(function(sp){ sp.classList.add('show'); }); return; } var k=0; (function tick(){ if(r!==run) return; if(k<spans.length){ spans[k].classList.add('show'); k++; setTimeout(tick, 110); } else { spans[spans.length-1].classList.add('blink'); } })(); }
     if('IntersectionObserver' in window){ new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting) setTimeout(play,250); else { run++; } }); },{threshold:.5}).observe(document.getElementById('contact')); } else { play(); }
+  })();
+  /* 마우스를 따라다니는 점 */
+  (function(){
+    if(reduce||!window.matchMedia('(hover:hover) and (pointer:fine)').matches) return;
+    var d=document.createElement('div'); d.className='cur-dot'; d.setAttribute('aria-hidden','true'); document.body.appendChild(d);
+    var x=0,y=0,tx=0,ty=0,s=1,ts=1,on=false;
+    window.addEventListener('mousemove',function(e){ tx=e.clientX; ty=e.clientY; if(!on){ on=true; x=tx; y=ty; d.classList.add('show'); } var h=e.target.closest?e.target.closest('a,button,.gcard,[role="button"],summary'):null; ts=h?3.6:1; },{passive:true});
+    document.addEventListener('mouseleave',function(){ on=false; d.classList.remove('show'); });
+    window.addEventListener('mousedown',function(){ ts=ts>1?2.8:0.7; }); window.addEventListener('mouseup',function(e){ var h=e.target.closest?e.target.closest('a,button,.gcard,[role="button"],summary'):null; ts=h?3.6:1; });
+    (function frame(){ x+=(tx-x)*0.2; y+=(ty-y)*0.2; s+=(ts-s)*0.18; d.style.transform='translate('+x+'px,'+y+'px) scale('+s+')'; requestAnimationFrame(frame); })();
   })();
   /* 메일 복사 */
   var toast=document.createElement('div'); toast.className='copied'; toast.textContent='메일 주소를 복사했습니다'; document.body.appendChild(toast); var toastTimer=null;
