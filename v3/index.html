@@ -75,7 +75,8 @@ html{scroll-snap-type:none}
 .two .pane.on::-webkit-scrollbar{width:5px}
 .two .pane.on::-webkit-scrollbar-thumb{background:rgba(0,0,0,.35);border-radius:3px}
 .two .pane.on .key{animation:keyin .6s cubic-bezier(.2,.7,.2,1) both}
-.two .pane.on>*:not(.key){animation:bodyin .5s ease both;animation-delay:.55s}
+.two .pane.on>.pin-in>*:not(.key){animation:bodyin .5s ease both;animation-delay:.55s}
+.two .pane.on>.pin-in{will-change:transform}
 @keyframes keyin{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
 @keyframes bodyin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 
@@ -306,10 +307,11 @@ td.k .run{color:var(--ac);font-weight:600}
   .steps{display:none}
   .two .right .pane,.two .right .pane.on,.how .right .pane.s.on,.how .right .pane:nth-child(n).on,.skills .right .pane.s.on,.proj .right .pane.mes.on{display:block;height:auto;overflow:visible;overscroll-behavior:auto;mask-image:none;-webkit-mask-image:none;padding-bottom:0;padding-top:0;margin-bottom:64px}
   .two .right .pane:last-child{margin-bottom:0}
-  .two .pane.on .key,.two .pane.on>*:not(.key){animation:none}
-  .js-rev .two .right .pane:not(.in)>*{opacity:0}
+  .two .pane.on .key,.two .pane.on>.pin-in>*:not(.key){animation:none}
+  .two .pane.on>.pin-in{will-change:auto}
+  .js-rev .two .right .pane:not(.in)>.pin-in>*{opacity:0}
   .two .right .pane.in .key{animation:keyin .6s cubic-bezier(.2,.7,.2,1) both}
-  .two .right .pane.in>*:not(.key){animation:bodyin .5s ease both;animation-delay:.45s}
+  .two .right .pane.in>.pin-in>*:not(.key){animation:bodyin .5s ease both;animation-delay:.45s}
   .two .pane .key{font-size:clamp(26px,7.4vw,40px);margin-bottom:22px}
   .proj .pane .key,.skills .pane .key,.skills .pane.s .key,.proj .pane.mes .key{font-size:21px;margin-bottom:18px}
   .how .pane.s p:not(.key){font-size:17px;line-height:1.8}
@@ -325,6 +327,12 @@ html.lenis,html.lenis body{height:auto}
 .lenis.lenis-stopped{overflow:hidden}
 .state .big .ln{display:block}
 .no-st .two .pane.on{overflow-y:auto}
+.gal.gal-pin{overflow:visible;will-change:transform}
+/* 패널 아래쪽 흐림은 마스크 대신 덮개로(마스크는 매 프레임 다시 그려 무겁다) */
+@media (min-width:901px){
+  .two .pane.on{mask-image:none;-webkit-mask-image:none}
+  .two .right::after{content:"";position:absolute;left:0;right:0;bottom:0;height:72px;background:linear-gradient(rgba(255,255,255,0),#fff);pointer-events:none}
+}
 @media (min-width:901px){
   .cases>.wrap{overflow:hidden;mask-image:none;-webkit-mask-image:none;padding-bottom:0}
   .cases .hd{margin-bottom:40px}
@@ -351,7 +359,7 @@ html.lenis,html.lenis body{height:auto}
   .state .big{font-size:clamp(30px,4.6vw,68px)}
 }
 @media (prefers-reduced-motion:reduce){
-  .two .pane.on .key,.two .pane.on>*:not(.key){animation:none}
+  .two .pane.on .key,.two .pane.on>.pin-in>*:not(.key){animation:none}
   .console .cur{animation:none}
   .how .item .body,.gcard .im img,.how .item button::after{transition:none}
 }
@@ -550,37 +558,37 @@ html.lenis,html.lenis body{height:auto}
     </div>
     <div class="gal" id="gal">
       <button type="button" class="gcard" data-case="c1">
-        <div class="im"><img src="img/seoul.jpg" alt="서울연구원 홈페이지 첫 화면" loading="lazy" width="1280" height="800"></div>
+        <div class="im"><img src="img/seoul.jpg" alt="서울연구원 홈페이지 첫 화면" decoding="async" width="1280" height="800"></div>
         <h3>서울연구원, 레거시 전환과 운영 인수</h3>
         <p class="meta">공공기관, 구축 후 유지보수까지 인수. 2024.11 ~ 2025.02</p>
         <p class="tags">#Java #Spring #MyBatis #MySQL #Oracle #레거시전환 #데이터이관</p>
       </button>
       <button type="button" class="gcard" data-case="c2">
-        <div class="im"><img src="img/neulbom.jpg" alt="늘봄허브 첫 화면" loading="lazy" width="1280" height="800"></div>
+        <div class="im"><img src="img/neulbom.jpg" alt="늘봄허브 첫 화면" decoding="async" width="1280" height="800"></div>
         <h3>늘봄허브, 다중 권한 플랫폼과 만족도 통계 허브</h3>
         <p class="meta">교육, 학교와 교육청 단위 방과후 플랫폼. 2026.04 ~ 진행 중</p>
         <p class="tags">#Java #Spring #MyBatis #권한제어 #AI기반개발</p>
       </button>
       <button type="button" class="gcard" data-case="c3">
-        <div class="im"><img src="img/anseong.jpg" alt="안성시 무상교통 누리집 첫 화면" loading="lazy" width="1280" height="800"></div>
+        <div class="im"><img src="img/anseong.jpg" alt="안성시 무상교통 누리집 첫 화면" decoding="async" width="1280" height="800"></div>
         <h3>교통비 정산 시스템, 안성과 제주</h3>
         <p class="meta">공공과 교통, 지자체 교통비 지원금 정산 SaaS 2종. 2024.06 ~ 07, 2025.10 ~ 진행 중</p>
         <p class="tags">#SpringBoot #Docker #NaverCloud #외부API #정합성검증</p>
       </button>
       <button type="button" class="gcard" data-case="c4">
-        <div class="im"><img src="img/artskorealab.jpg" alt="아트코리아랩 홈페이지 첫 화면" loading="lazy" width="1280" height="800"></div>
+        <div class="im"><img src="img/artskorealab.jpg" alt="아트코리아랩 홈페이지 첫 화면" decoding="async" width="1280" height="800"></div>
         <h3>멱등 DDL로 다중 환경 스키마 협업</h3>
         <p class="meta">다른 회사와 함께 개발하는 프로젝트의 다중 서버 환경. 2026.04부터 적용 중</p>
         <p class="tags">#MySQL #DDL #멱등성 #NaverCloud #협업</p>
       </button>
       <button type="button" class="gcard" data-case="c5">
-        <div class="im"><img src="img/chemitop.jpg" alt="케미탑 홈페이지 첫 화면" loading="lazy" width="1280" height="800"></div>
+        <div class="im"><img src="img/chemitop.jpg" alt="케미탑 홈페이지 첫 화면" decoding="async" width="1280" height="800"></div>
         <h3>스마트공장 MES, 7개 제조사 구축</h3>
         <p class="meta">제조, 설비 데이터 수집, 현장 화면, 바코드, 수발주. 2023.01 ~ 2024.01</p>
         <p class="tags">#PHP #CodeIgniter3 #MySQL #MariaDB #GoogleCharts #현장UX</p>
       </button>
       <button type="button" class="gcard" data-case="c6">
-        <div class="im"><img src="img/jeju.jpg" alt="제주 무상교통 누리집 첫 화면" loading="lazy" width="1280" height="800"></div>
+        <div class="im"><img src="img/jeju.jpg" alt="제주 무상교통 누리집 첫 화면" decoding="async" width="1280" height="800"></div>
         <h3>사내 CMS, 반복 구축 표준화</h3>
         <p class="meta">사내 솔루션, 공공과 문화 사이트 반복 구축용. 2026.03 ~ 2026.04</p>
         <p class="tags">#Laravel #PHP #Apache #캐시</p>
@@ -939,7 +947,10 @@ IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 �
   var secs=Array.prototype.map.call(sideLinks,function(a){ return document.querySelector(a.getAttribute('href')); });
   var darks=document.querySelectorAll('section.dark'), sideEl=document.getElementById('side');
   function rectOf(el){ var b=(el.parentNode&&el.parentNode.classList&&el.parentNode.classList.contains('pin-spacer'))?el.parentNode:el; var r=b.getBoundingClientRect(); return {top:r.top+window.scrollY, bottom:r.bottom+window.scrollY}; }
-  function markNav(){ var y=window.scrollY+window.innerHeight*0.4, cur=0; secs.forEach(function(s,i){ if(s&&rectOf(s).top<=y) cur=i; }); sideLinks.forEach(function(a,i){ a.classList.toggle('on', i===cur); }); var cy=window.scrollY+window.innerHeight/2, light=false; darks.forEach(function(d){ var b=rectOf(d); if(cy>=b.top&&cy<b.bottom) light=true; }); sideEl.classList.toggle('light', light); }
+  var navPos=null, navCur=-1, navLight=null;
+  function cachePos(){ navPos={secs:secs.map(function(s){ return s?rectOf(s).top:0; }), darks:Array.prototype.map.call(darks,function(d){ return rectOf(d); })}; }
+  function markNav(){ if(!navPos) cachePos(); var sy=window.scrollY, y=sy+window.innerHeight*0.4, cur=0; navPos.secs.forEach(function(top,i){ if(top<=y) cur=i; }); if(cur!==navCur){ navCur=cur; sideLinks.forEach(function(a,i){ a.classList.toggle('on', i===cur); }); } var cy=sy+window.innerHeight/2, light=false; navPos.darks.forEach(function(b){ if(cy>=b.top&&cy<b.bottom) light=true; }); if(light!==navLight){ navLight=light; sideEl.classList.toggle('light', light); } }
+  window.addEventListener('resize',function(){ navPos=null; });
   window.addEventListener('scroll',markNav,{passive:true}); markNav();
 
   /* 스크롤은 막지 않는다. 데스크톱은 Lenis로 부드럽게, 탭 섹션과 갤러리는 잠깐 고정해 스크롤한 만큼 넘어간다 */
@@ -952,7 +963,8 @@ IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 �
   /* 단계형 섹션: 왼쪽 목록과 오른쪽 패널 */
   document.querySelectorAll('.page .wrap.two').forEach(function(two){
     var lis=two.querySelectorAll('.steps li'), panes=two.querySelectorAll('.right .pane');
-    two._go=function(i){ i=Math.max(0,Math.min(panes.length-1,i)); lis.forEach(function(l,k){ l.classList.toggle('on',k===i); }); panes.forEach(function(p){ p.classList.remove('on'); }); void two.offsetWidth; panes[i].classList.add('on'); panes[i].scrollTop=0; two._idx=i; };
+    panes.forEach(function(p){ var w=document.createElement('div'); w.className='pin-in'; while(p.firstChild) w.appendChild(p.firstChild); p.appendChild(w); p._in=w; });
+    two._go=function(i){ i=Math.max(0,Math.min(panes.length-1,i)); lis.forEach(function(l,k){ l.classList.toggle('on',k===i); }); panes.forEach(function(p){ p.classList.remove('on'); }); void two.offsetWidth; panes[i].classList.add('on'); panes[i].scrollTop=0; panes[i]._in.style.transform=''; panes[i]._y=0; two._idx=i; };
     two._idx=0;
     lis.forEach(function(l,k){ l.querySelector('button').addEventListener('click',function(){ if(two._st&&two._seg){ goTo(two._st.start+two._seg[k].from+6); } else two._go(k); }); });
   });
@@ -966,26 +978,26 @@ IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 �
 
     mm.add('(min-width:901px)',function(){
       var tick=null;
-      if(!reduce&&window.Lenis){
-        lenis=new Lenis({lerp:0.12, prevent:function(node){ var c=(node&&node.closest)?node.closest('.console,.ov'):null; if(!c) return false; if(c.classList.contains('ov')) return true; var max=c.scrollHeight-c.clientHeight; return lastDy>0 ? c.scrollTop<max-1 : c.scrollTop>0; }});
+      if(!reduce&&window.Lenis&&!/[?&]lenis=0/.test(location.search)){
+        lenis=new Lenis({lerp:0.16, prevent:function(node){ var c=(node&&node.closest)?node.closest('.console,.ov'):null; if(!c) return false; if(c.classList.contains('ov')) return true; var max=c.scrollHeight-c.clientHeight; return lastDy>0 ? c.scrollTop<max-1 : c.scrollTop>0; }});
         window._lenis=lenis; lenis.on('scroll',ScrollTrigger.update);
         tick=function(t){ if(lenis) lenis.raf(t*1000); }; gsap.ticker.add(tick); gsap.ticker.lagSmoothing(0);
       }
       var DWELL=240;
       function pinTabs(two){
         var sec=two.closest('.page'), panes=two.querySelectorAll('.right .pane');
-        function measure(){ var keep=two._idx||0, from=0; two._seg=[]; panes.forEach(function(p){ panes.forEach(function(q){ q.classList.remove('on'); }); p.classList.add('on'); var over=Math.max(0,p.scrollHeight-p.clientHeight); if(over<8) over=0; two._seg.push({from:from, over:over}); from+=DWELL+over; }); two._len=from; panes.forEach(function(q){ q.classList.remove('on'); }); panes[keep].classList.add('on'); }
+        function measure(){ var keep=two._idx||0, from=0; two._seg=[]; panes.forEach(function(p){ p._in.style.transform=''; p._y=0; p.scrollTop=0; }); panes.forEach(function(p){ panes.forEach(function(q){ q.classList.remove('on'); }); p.classList.add('on'); var over=Math.max(0,p.scrollHeight-p.clientHeight); if(over<8) over=0; two._seg.push({from:from, over:over}); from+=DWELL+over; }); two._len=from; panes.forEach(function(q){ q.classList.remove('on'); }); panes[keep].classList.add('on'); }
         two._st=ScrollTrigger.create({trigger:sec, start:'top top', end:function(){ measure(); return '+='+two._len; }, pin:true, anticipatePin:1, invalidateOnRefresh:true,
-          onUpdate:function(self){ var y=self.progress*two._len, k=0; for(var i=0;i<two._seg.length;i++){ if(y>=two._seg[i].from) k=i; } if(k!==two._idx) two._go(k); var s=two._seg[k]; panes[k].scrollTop=Math.max(0,Math.min(s.over, y-s.from-DWELL*0.5)); }});
+          onUpdate:function(self){ var y=self.progress*two._len, k=0; for(var i=0;i<two._seg.length;i++){ if(y>=two._seg[i].from) k=i; } if(k!==two._idx) two._go(k); var s=two._seg[k], ty=Math.round(Math.max(0,Math.min(s.over, y-s.from-DWELL*0.5))); if(panes[k]._y!==ty){ panes[k]._y=ty; panes[k]._in.style.transform='translate3d(0,'+(-ty)+'px,0)'; } }});
       }
       var casesSec=document.getElementById('cases'), first=galEl.querySelector('.gcard'), EDGE=160, GR=0.6;
-      function gRange(){ return Math.max(0,(galEl.scrollWidth-galEl.clientWidth)-first.offsetLeft); }
-      function pinGallery(){ galST=ScrollTrigger.create({trigger:casesSec, start:'top top', end:function(){ return '+='+(gRange()*GR+EDGE*2); }, pin:true, anticipatePin:1, invalidateOnRefresh:true,
-        onUpdate:function(self){ var r=gRange(), y=self.progress*(r*GR+EDGE*2); galEl._gx=null; galEl.scrollLeft=first.offsetLeft+Math.max(0,Math.min(r, (y-EDGE)/GR)); }});
+      function gRange(){ return Math.max(0, galEl.scrollWidth-galEl.clientWidth); }
+      function pinGallery(){ galEl.scrollLeft=0; galEl.classList.add('gal-pin'); galST=ScrollTrigger.create({trigger:casesSec, start:'top top', end:function(){ return '+='+(gRange()*GR+EDGE*2); }, pin:true, anticipatePin:1, invalidateOnRefresh:true,
+        onUpdate:function(self){ var r=gRange(), y=self.progress*(r*GR+EDGE*2), x=Math.round(Math.max(0,Math.min(r, (y-EDGE)/GR))); if(x!==galEl._x){ galEl._x=x; galEl.style.transform='translate3d('+(-x)+'px,0,0)'; if(galEl._pos) galEl._pos(x); } }});
       galST._edge=EDGE; galST._gr=GR; }
       /* 고정 구간은 문서 순서대로 만들어야 뒤 섹션의 시작 위치가 맞는다 */
       document.querySelectorAll('section.page').forEach(function(sec){ var two=sec.querySelector('.wrap.two'); if(two) pinTabs(two); else if(sec===casesSec) pinGallery(); });
-      return function(){ if(tick) gsap.ticker.remove(tick); if(lenis){ lenis.destroy(); lenis=null; window._lenis=null; } galST=null; document.querySelectorAll('.page .wrap.two').forEach(function(two){ two._st=null; two._seg=null; }); };
+      return function(){ if(tick) gsap.ticker.remove(tick); if(lenis){ lenis.destroy(); lenis=null; window._lenis=null; } galST=null; galEl.classList.remove('gal-pin'); galEl.style.transform=''; galEl._x=0; document.querySelectorAll('.page .wrap.two').forEach(function(two){ two._st=null; two._seg=null; two.querySelectorAll('.pin-in').forEach(function(w){ w.style.transform=''; }); }); };
     });
 
     mm.add('(max-width:900px)',function(){
@@ -998,7 +1010,8 @@ IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 �
       if(big){ big.innerHTML=big.innerHTML.split(/<br\s*\/?>/i).map(function(s){ return '<span class="ln">'+s+'</span>'; }).join(''); gsap.from(big.querySelectorAll('.ln'),{yPercent:70, opacity:0, duration:.9, ease:'power3.out', stagger:.22, scrollTrigger:{trigger:big, start:'top 78%', toggleActions:'play none none reverse'}}); }
       var hd=document.querySelector('.cases .hd'); if(hd) gsap.from(hd.children,{y:36, opacity:0, duration:.8, ease:'power3.out', stagger:.15, scrollTrigger:{trigger:hd, start:'top 80%', toggleActions:'play none none reverse'}});
     }
-    function afterLayout(){ ScrollTrigger.refresh(); markNav(); }
+    ScrollTrigger.addEventListener('refresh',function(){ navPos=null; markNav(); });
+    function afterLayout(){ ScrollTrigger.refresh(); }
     window.addEventListener('load',function(){ afterLayout(); if(location.hash){ var h=null; try{ h=document.querySelector(location.hash); }catch(err){} if(h) goTo(rectOf(h).top+2,true); } });
     if(document.fonts&&document.fonts.ready) document.fonts.ready.then(afterLayout);
   } else {
@@ -1076,7 +1089,8 @@ IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 �
   function glideX(el,to){ var from=el.scrollLeft, dist=to-from; if(Math.abs(dist)<1) return; if(reduce){ el.scrollLeft=to; return; } var t0=performance.now(), dur=Math.min(700, 320+Math.abs(dist)*0.35); el._gx=t0; (function frame(now){ if(el._gx!==t0) return; var p=Math.min(1,(now-t0)/dur); el.scrollLeft=from+dist*easeInOut(p); if(p<1) requestAnimationFrame(frame); })(t0); }
   gal.addEventListener('click',function(e){ if(moved){ e.stopPropagation(); e.preventDefault(); moved=false; } }, true);
   function cardW(){ return cards[0].getBoundingClientRect().width+28; }
-  function updatePos(){ var i=Math.round(gal.scrollLeft/cardW()); gpos.textContent=Math.min(cards.length, i+1)+' / '+cards.length; }
+  function updatePos(x){ var i=Math.round((typeof x==='number'?x:gal.scrollLeft)/cardW()); var s=Math.min(cards.length, i+1)+' / '+cards.length; if(gpos.textContent!==s) gpos.textContent=s; }
+  gal._pos=updatePos;
   gal.addEventListener('scroll',updatePos); updatePos();
   function stepCard(dir){ if(pinned()){ var base=Math.max(window.scrollY, galST.start+galST._edge); if(dir<0) base=Math.min(window.scrollY, galST.end-galST._edge); goTo(clampS(base+dir*cardW()*galST._gr)); } else glideX(gal, gal.scrollLeft+dir*cardW()); }
   document.getElementById('gprev').addEventListener('click',function(){ stepCard(-1); });
