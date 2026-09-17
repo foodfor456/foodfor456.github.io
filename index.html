@@ -13,7 +13,6 @@
 @font-face{font-family:'Pretendard';src:url('fonts/PretendardVariable.woff2') format('woff2-variations');font-weight:100 900;font-display:swap}
 :root{--ink:#000;--mute:#666;--line:#ddd;--soft:#f5f5f5;--ac:#24457a;--gut:32px;--w:1440px}
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
 body{margin:0;background:#fff;color:var(--ink);font-family:'Pretendard',-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;font-size:18px;line-height:1.75;word-break:keep-all;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:var(--ac);text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px}
 a:hover{text-decoration-thickness:2px}
@@ -72,7 +71,7 @@ html{scroll-snap-type:none}
 .steps li.on button::before{content:'';position:absolute;left:0;top:50%;width:22px;height:3px;background:#000}
 .two .right{min-height:0;position:relative}
 .two .pane{display:none}
-.two .pane.on{display:block;height:100%;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:rgba(0,0,0,.35) transparent;mask-image:linear-gradient(#000 calc(100% - 72px),transparent);-webkit-mask-image:linear-gradient(#000 calc(100% - 72px),transparent);padding-bottom:72px}
+.two .pane.on{display:block;height:100%;overflow:hidden;scrollbar-width:thin;scrollbar-color:rgba(0,0,0,.35) transparent;mask-image:linear-gradient(#000 calc(100% - 72px),transparent);-webkit-mask-image:linear-gradient(#000 calc(100% - 72px),transparent);padding-bottom:72px}
 .two .pane.on::-webkit-scrollbar{width:5px}
 .two .pane.on::-webkit-scrollbar-thumb{background:rgba(0,0,0,.35);border-radius:3px}
 .two .pane.on .key{animation:keyin .6s cubic-bezier(.2,.7,.2,1) both}
@@ -293,22 +292,20 @@ td.k .run{color:var(--ac);font-weight:600}
   td.k+td:not(.n){display:block;padding-top:4px}
   .end .motto,.end .motto span{white-space:normal}  h2{font-size:26px;margin-bottom:24px}
 }
-/* 좁은 화면: 섹션 하나가 한 화면, 안에서 스크롤, 끝에서 한 번 더 밀면 다음 탭이나 다음 화면 */
+/* 좁은 화면: 일반 스크롤, 탭 내용은 차례로 펼쳐 두고 보이는 순간 나타남 */
 @media (max-width:900px){
-  html{overflow:hidden;scroll-behavior:auto}
-  .hero,.state,.end,.page.page{height:100vh;height:100svh;min-height:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:60px}
-  .snap::-webkit-scrollbar{display:none}
+  .page,.hero,.end,.state{height:auto;min-height:0}
+  .hero,.state,.end,.page.page{padding-bottom:72px}
+  .state{min-height:70vh}
   .state .big{font-size:min(6.3vw,34px)}
-  .snap>*{flex-shrink:0}
   .two .left,.how .left,.proj .left,.skills .left{padding-top:0}
-  .steps{display:flex;gap:18px;overflow-x:auto;white-space:nowrap;margin:0 calc(var(--gut) * -1) 26px;padding:0 var(--gut);scrollbar-width:none;border-bottom:1px solid #e2e2e2}
-  .steps::-webkit-scrollbar{display:none}
-  .steps li{margin:0;flex:none}
-  .steps li button,.steps li.on button{font-size:16px;padding:8px 0;font-weight:600}
-  .steps li.on button{padding-left:0;font-weight:800;box-shadow:inset 0 -2px 0 #000}
-  .steps li.on button::before{display:none}
-  .steps li button small{display:none}
-  .two .right .pane.on,.how .right .pane.s.on,.how .right .pane:nth-child(n).on,.skills .right .pane.s.on,.proj .right .pane.mes.on{height:auto;overflow:visible;overscroll-behavior:auto;mask-image:none;-webkit-mask-image:none;padding-bottom:0;padding-top:0}
+  .steps{display:none}
+  .two .right .pane,.two .right .pane.on,.how .right .pane.s.on,.how .right .pane:nth-child(n).on,.skills .right .pane.s.on,.proj .right .pane.mes.on{display:block;height:auto;overflow:visible;overscroll-behavior:auto;mask-image:none;-webkit-mask-image:none;padding-bottom:0;padding-top:0;margin-bottom:64px}
+  .two .right .pane:last-child{margin-bottom:0}
+  .two .pane.on .key,.two .pane.on>*:not(.key){animation:none}
+  .js-rev .two .right .pane:not(.in)>*{opacity:0}
+  .two .right .pane.in .key{animation:keyin .6s cubic-bezier(.2,.7,.2,1) both}
+  .two .right .pane.in>*:not(.key){animation:bodyin .5s ease both;animation-delay:.45s}
   .two .pane .key{font-size:clamp(26px,7.4vw,40px);margin-bottom:22px}
   .proj .pane .key,.skills .pane .key,.skills .pane.s .key,.proj .pane.mes .key{font-size:21px;margin-bottom:18px}
   .how .pane.s p:not(.key){font-size:17px;line-height:1.8}
@@ -318,6 +315,25 @@ td.k .run{color:var(--ac);font-weight:600}
   .side a span{display:none}
   .side a::after{width:7px;height:7px}
 }
+/* 부드러운 스크롤(Lenis)용 */
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+.lenis.lenis-stopped{overflow:hidden}
+.state .big .ln{display:block}
+.no-st .two .pane.on{overflow-y:auto}
+@media (min-width:901px){
+  .cases>.wrap{overflow:hidden;mask-image:none;-webkit-mask-image:none;padding-bottom:0}
+  .cases .hd{margin-bottom:40px}
+  .cases .gal{flex-shrink:0}
+  .gcard{flex-basis:min(560px,calc((100vh - 600px)*1.6))}
+}
+@media (max-height:880px) and (min-width:901px){
+  .cases.page{padding:48px 0 20px}
+  .cases .hd{margin-bottom:28px}
+  .cases .hd .big{font-size:30px}
+  .gcard{flex-basis:min(560px,calc((100vh - 440px)*1.6))}
+}
+
 /* 마우스를 따라다니는 점, 누를 수 있는 곳에서는 커짐 */
 .cur-dot{position:fixed;left:0;top:0;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:#fff;mix-blend-mode:difference;pointer-events:none;z-index:100;opacity:0;transition:opacity .2s;will-change:transform}
 .cur-dot.show{opacity:1}
@@ -331,7 +347,6 @@ td.k .run{color:var(--ac);font-weight:600}
   .state .big{font-size:clamp(30px,4.6vw,68px)}
 }
 @media (prefers-reduced-motion:reduce){
-  html{scroll-behavior:auto}
   .two .pane.on .key,.two .pane.on>*:not(.key){animation:none}
   .console .cur{animation:none}
   .how .item .body,.gcard .im img,.how .item button::after{transition:none}
@@ -897,6 +912,9 @@ IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 �
   </div>
 </section>
 
+<script src="js/gsap.min.js"></script>
+<script src="js/ScrollTrigger.min.js"></script>
+<script src="js/lenis.min.js"></script>
 <script>
 (function(){
   var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -909,105 +927,79 @@ IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 �
     document.querySelectorAll('.career-len').forEach(function(e){ e.textContent=txt; });
   })();
 
-  /* 오른쪽 내비: 현재 섹션 표시, 검정 면 위에서는 흰색 */
+  /* 내비: 현재 섹션 표시, 검정 면 위에서는 흰색. 고정되는 섹션은 감싼 상자 기준으로 위치를 잰다 */
   var sideLinks=document.querySelectorAll('.side a');
   var secs=Array.prototype.map.call(sideLinks,function(a){ return document.querySelector(a.getAttribute('href')); });
-  var darks=document.querySelectorAll('.dark'), sideEl=document.getElementById('side');
-  function markNav(){ var y=window.scrollY+window.innerHeight*0.4, cur=0; secs.forEach(function(s,i){ if(s&&s.offsetTop<=y) cur=i; }); sideLinks.forEach(function(a,i){ a.classList.toggle('on', i===cur); }); var cy=window.scrollY+window.innerHeight/2, light=false; darks.forEach(function(d){ if(cy>=d.offsetTop&&cy<d.offsetTop+d.offsetHeight) light=true; }); sideEl.classList.toggle('light', light); }
-  window.addEventListener('scroll',markNav); markNav();
+  var darks=document.querySelectorAll('section.dark'), sideEl=document.getElementById('side');
+  function rectOf(el){ var b=(el.parentNode&&el.parentNode.classList&&el.parentNode.classList.contains('pin-spacer'))?el.parentNode:el; var r=b.getBoundingClientRect(); return {top:r.top+window.scrollY, bottom:r.bottom+window.scrollY}; }
+  function markNav(){ var y=window.scrollY+window.innerHeight*0.4, cur=0; secs.forEach(function(s,i){ if(s&&rectOf(s).top<=y) cur=i; }); sideLinks.forEach(function(a,i){ a.classList.toggle('on', i===cur); }); var cy=window.scrollY+window.innerHeight/2, light=false; darks.forEach(function(d){ var b=rectOf(d); if(cy>=b.top&&cy<b.bottom) light=true; }); sideEl.classList.toggle('light', light); }
+  window.addEventListener('scroll',markNav,{passive:true}); markNav();
 
-  /* 갤러리 위에서 휠을 굴리면 카드가 옆으로 넘어감, 양 끝에서는 페이지 스크롤로 넘김 */
-  var galEl=document.getElementById('gal'), wheelLock=false;
-  galEl.addEventListener('wheel',function(e){
-    if(Math.abs(e.deltaY)<=Math.abs(e.deltaX)) return;
-    var first=galEl.querySelector('.gcard'); var minL=first.offsetLeft; var maxL=galEl.scrollWidth-galEl.clientWidth;
-    var atStart=galEl.scrollLeft<=minL+2, atEnd=galEl.scrollLeft>=maxL-2;
-    if((e.deltaY>0&&!atEnd)||(e.deltaY<0&&!atStart)){ e.preventDefault(); if(wheelLock) return; wheelLock=true; setTimeout(function(){ wheelLock=false; },450); glideX(galEl, galEl.scrollLeft+(e.deltaY>0?1:-1)*cardW()); }
-  },{passive:false});
-  /* 휠 한 번에 화면 하나씩, 직접 부드럽게 이동. 긴 섹션은 끝에 닿았을 때만 넘어감 */
-  var snaps=Array.prototype.slice.call(document.querySelectorAll('.snap')), pageLock=false, coolUntil=0, lastWheelAt=0, gestureCont=false;
+  /* 스크롤은 막지 않는다. 데스크톱은 Lenis로 부드럽게, 탭 섹션과 갤러리는 잠깐 고정해 스크롤한 만큼 넘어간다 */
+  var lenis=null, galST=null, galEl=document.getElementById('gal');
+  function isM(){ return window.innerWidth<=900; }
   function easeInOut(t){ return t<.5 ? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2; }
-  function glide(to, done){ var from=window.scrollY, dist=to-from; if(Math.abs(dist)<2){ if(done) done(); return; } pageLock=true; var t0=performance.now(), dur=Math.min(1100, 700+Math.abs(dist)*0.25); document.documentElement.style.scrollBehavior='auto';
-    (function frame(now){ var p=Math.min(1,(now-t0)/dur); window.scrollTo(0, from+dist*easeInOut(p)); if(p<1) requestAnimationFrame(frame); else { coolUntil=performance.now()+250; if(done) done(); setTimeout(function(){ pageLock=false; document.documentElement.style.scrollBehavior=''; },150); } })(t0); }
-  function currentSnap(){ var y=window.scrollY+2, cur=snaps[0]; snaps.forEach(function(s){ if(s.offsetTop<=y) cur=s; }); return cur; }
-  /* 안쪽 스크롤을 부드럽게 */
-  function smoothInner(el, dy){
-    var max=el.scrollHeight-el.clientHeight;
-    if(el._target==null||!el._anim) el._target=el.scrollTop;
-    var before=el._target; el._target=Math.max(0, Math.min(max, el._target+dy)); if((el._target===0||el._target===max)&&before!==el._target) el._edgeAt=performance.now();
-    if(el._anim) return; el._anim=true;
-    (function frame(){ var d=el._target-el.scrollTop; if(Math.abs(d)<0.5){ el.scrollTop=el._target; el._anim=false; return; } el.scrollTop+=d*0.22; requestAnimationFrame(frame); })();
-  }  /* 단계형 페이지: 왼쪽 목록과 오른쪽 패널, 휠로 한 항목씩 */
+  function goTo(y, now){ y=Math.max(0,Math.round(y)); if(lenis) lenis.scrollTo(y,{immediate:!!now}); else window.scrollTo({top:y,behavior:(now||reduce)?'auto':'smooth'}); }
+  sideLinks.forEach(function(a,i){ a.addEventListener('click',function(e){ var s=secs[i]; if(!s) return; e.preventDefault(); goTo(rectOf(s).top+(i?2:0)); }); });
+
+  /* 단계형 섹션: 왼쪽 목록과 오른쪽 패널 */
   document.querySelectorAll('.page .wrap.two').forEach(function(two){
     var lis=two.querySelectorAll('.steps li'), panes=two.querySelectorAll('.right .pane');
-    two._go=function(i){ i=Math.max(0,Math.min(panes.length-1,i)); lis.forEach(function(l,k){ l.classList.toggle('on',k===i); }); panes.forEach(function(p,k){ p.classList.remove('on'); }); void two.offsetWidth; panes.forEach(function(p,k){ if(k===i){ p.classList.add('on'); p.scrollTop=0; p._target=0; } }); two._idx=i; if(isM()){ var sc=two.closest('.snap'); if(sc){ sc.style.overflowY='hidden'; sc.scrollTop=0; setTimeout(function(){ sc.style.overflowY=''; sc.scrollTop=0; },80); } var st=two.querySelector('.steps'), li=lis[i]; if(st&&li) st.scrollLeft=Math.max(0, li.offsetLeft-st.offsetLeft-18); } };
+    two._go=function(i){ i=Math.max(0,Math.min(panes.length-1,i)); lis.forEach(function(l,k){ l.classList.toggle('on',k===i); }); panes.forEach(function(p){ p.classList.remove('on'); }); void two.offsetWidth; panes[i].classList.add('on'); panes[i].scrollTop=0; two._idx=i; };
     two._idx=0;
-    lis.forEach(function(l,k){ l.querySelector('button').addEventListener('click',function(){ two._go(k); }); });
+    lis.forEach(function(l,k){ l.querySelector('button').addEventListener('click',function(){ if(two._st&&two._seg){ goTo(two._st.start+two._seg[k].from+6); } else two._go(k); }); });
   });
-  /* 페이지에 들어갈 때 항목 위치: 아래로 오면 첫 항목, 위로 오면 마지막 항목 */
-  function enterPage(sec, fromBelow){
-    if(isM()){ var g0=sec.querySelector('#gal'); if(g0){ g0._gx=null; g0.scrollLeft=0; } var t2=sec.querySelector('.wrap.two'); if(t2){ t2._go(fromBelow? t2.querySelectorAll('.right .pane').length-1 : 0); } sec.scrollTop=0; return; }
-    var g=sec.querySelector('#gal'); if(g){ var f=g.querySelector('.gcard'); g._gx=null; g.scrollLeft=fromBelow? g.scrollWidth-g.clientWidth : f.offsetLeft; return; }
-    var two=sec.querySelector('.wrap.two');
-    if(two){ var n=two.querySelectorAll('.right .pane').length; two._go(fromBelow? n-1 : 0); var pane=two.querySelector('.right .pane.on'); if(pane){ pane.scrollTop=fromBelow? pane.scrollHeight : 0; pane._target=pane.scrollTop; } return; }
-    var inner=sec.querySelector('.page>.wrap'); if(inner&&!inner.classList.contains('two')){ inner.scrollTop=fromBelow? inner.scrollHeight : 0; inner._target=inner.scrollTop; }
-  }  var stepLock=false;
-  function stepWheel(sec,e){
-    var two=sec.querySelector('.wrap.two'); if(!two) return false;
-    var pane=two.querySelector('.right .pane.on'); var n=two.querySelectorAll('.right .pane').length;
-    if(pane){ var imax=pane.scrollHeight-pane.clientHeight; var cur=(pane._target!=null&&pane._anim)?pane._target:pane.scrollTop; if((e.deltaY>0&&imax>2&&cur<imax-2)||(e.deltaY<0&&cur>2)){ e.preventDefault(); smoothInner(pane,e.deltaY); return true; } if(pane._edgeAt&&performance.now()-pane._edgeAt<400){ e.preventDefault(); return true; } }
-    if(gestureCont){ e.preventDefault(); return true; }
-    if(e.deltaY>0&&two._idx<n-1){ e.preventDefault(); if(!stepLock){ stepLock=true; setTimeout(function(){ stepLock=false; },200); two._go(two._idx+1); coolUntil=performance.now()+200; } return true; }
-    if(e.deltaY<0&&two._idx>0){ e.preventDefault(); if(!stepLock){ stepLock=true; setTimeout(function(){ stepLock=false; },200); two._go(two._idx-1); coolUntil=performance.now()+200; } return true; }
-    return false;
+
+  var hasGsap=!!(window.gsap&&window.ScrollTrigger);
+  if(hasGsap){
+    gsap.registerPlugin(ScrollTrigger);
+    if(!reduce) document.documentElement.classList.add('js-rev');
+    var lastDy=0; window.addEventListener('wheel',function(e){ lastDy=e.deltaY; },{capture:true,passive:true});
+    var mm=gsap.matchMedia();
+
+    mm.add('(min-width:901px)',function(){
+      var tick=null;
+      if(!reduce&&window.Lenis){
+        lenis=new Lenis({lerp:0.12, prevent:function(node){ var c=(node&&node.closest)?node.closest('.console,.ov'):null; if(!c) return false; if(c.classList.contains('ov')) return true; var max=c.scrollHeight-c.clientHeight; return lastDy>0 ? c.scrollTop<max-1 : c.scrollTop>0; }});
+        window._lenis=lenis; lenis.on('scroll',ScrollTrigger.update);
+        tick=function(t){ if(lenis) lenis.raf(t*1000); }; gsap.ticker.add(tick); gsap.ticker.lagSmoothing(0);
+      }
+      var DWELL=240;
+      function pinTabs(two){
+        var sec=two.closest('.page'), panes=two.querySelectorAll('.right .pane');
+        function measure(){ var keep=two._idx||0, from=0; two._seg=[]; panes.forEach(function(p){ panes.forEach(function(q){ q.classList.remove('on'); }); p.classList.add('on'); var over=Math.max(0,p.scrollHeight-p.clientHeight); if(over<8) over=0; two._seg.push({from:from, over:over}); from+=DWELL+over; }); two._len=from; panes.forEach(function(q){ q.classList.remove('on'); }); panes[keep].classList.add('on'); }
+        two._st=ScrollTrigger.create({trigger:sec, start:'top top', end:function(){ measure(); return '+='+two._len; }, pin:true, anticipatePin:1, invalidateOnRefresh:true,
+          onUpdate:function(self){ var y=self.progress*two._len, k=0; for(var i=0;i<two._seg.length;i++){ if(y>=two._seg[i].from) k=i; } if(k!==two._idx) two._go(k); var s=two._seg[k]; panes[k].scrollTop=Math.max(0,Math.min(s.over, y-s.from-DWELL*0.5)); }});
+      }
+      var casesSec=document.getElementById('cases'), first=galEl.querySelector('.gcard'), EDGE=160, GR=0.6;
+      function gRange(){ return Math.max(0,(galEl.scrollWidth-galEl.clientWidth)-first.offsetLeft); }
+      function pinGallery(){ galST=ScrollTrigger.create({trigger:casesSec, start:'top top', end:function(){ return '+='+(gRange()*GR+EDGE*2); }, pin:true, anticipatePin:1, invalidateOnRefresh:true,
+        onUpdate:function(self){ var r=gRange(), y=self.progress*(r*GR+EDGE*2); galEl._gx=null; galEl.scrollLeft=first.offsetLeft+Math.max(0,Math.min(r, (y-EDGE)/GR)); }});
+      galST._edge=EDGE; galST._gr=GR; }
+      /* 고정 구간은 문서 순서대로 만들어야 뒤 섹션의 시작 위치가 맞는다 */
+      document.querySelectorAll('section.page').forEach(function(sec){ var two=sec.querySelector('.wrap.two'); if(two) pinTabs(two); else if(sec===casesSec) pinGallery(); });
+      return function(){ if(tick) gsap.ticker.remove(tick); if(lenis){ lenis.destroy(); lenis=null; window._lenis=null; } galST=null; document.querySelectorAll('.page .wrap.two').forEach(function(two){ two._st=null; two._seg=null; }); };
+    });
+
+    mm.add('(max-width:900px)',function(){
+      document.querySelectorAll('.two .right .pane').forEach(function(p){ ScrollTrigger.create({trigger:p, start:'top 82%', once:true, onEnter:function(){ p.classList.add('in'); }}); });
+    });
+
+    /* 큰 문장은 줄 단위로 올라오며 나타남 */
+    if(!reduce){
+      var big=document.querySelector('.state .big');
+      if(big){ big.innerHTML=big.innerHTML.split(/<br\s*\/?>/i).map(function(s){ return '<span class="ln">'+s+'</span>'; }).join(''); gsap.from(big.querySelectorAll('.ln'),{yPercent:70, opacity:0, duration:.9, ease:'power3.out', stagger:.22, scrollTrigger:{trigger:big, start:'top 78%', toggleActions:'play none none reverse'}}); }
+      var hd=document.querySelector('.cases .hd'); if(hd) gsap.from(hd.children,{y:36, opacity:0, duration:.8, ease:'power3.out', stagger:.15, scrollTrigger:{trigger:hd, start:'top 80%', toggleActions:'play none none reverse'}});
+    }
+    function afterLayout(){ ScrollTrigger.refresh(); markNav(); }
+    window.addEventListener('load',function(){ afterLayout(); if(location.hash){ var h=null; try{ h=document.querySelector(location.hash); }catch(err){} if(h) goTo(rectOf(h).top+2,true); } });
+    if(document.fonts&&document.fonts.ready) document.fonts.ready.then(afterLayout);
+  } else {
+    /* 라이브러리를 못 불러오면 탭은 눌러서 바꾸고 패널은 안에서 스크롤 */
+    document.documentElement.classList.add('no-st');
   }
-  window.addEventListener('wheel',function(e){
-    if(e.defaultPrevented) return; if(Math.abs(e.deltaY)<=Math.abs(e.deltaX)) return;
-    if(document.body.classList.contains('lock')) return;
-    if(isM()){ var nowM=performance.now(), contM=(nowM-lastWheelAt)<180; lastWheelAt=nowM; var sm=currentSnap(), ed=secEdge(sm); if((e.deltaY>0&&!ed.bottom)||(e.deltaY<0&&!ed.top)){ sm._edgeAt=nowM; return; } e.preventDefault(); if(contM||nowM-(sm._edgeAt||0)<400) return; advance(sm, e.deltaY>0?1:-1); return; }
-    if(reduce) return;
-    var nowT=performance.now(); gestureCont=(nowT-lastWheelAt)<180; lastWheelAt=nowT;
-    if(pageLock||nowT<coolUntil){ e.preventDefault(); return; }
-    var sec=currentSnap(), i=snaps.indexOf(sec);
-    if(stepWheel(sec,e)) return;
-    var inner=e.target.closest ? e.target.closest('.page>.wrap') : null;
-    if(inner){ var imax=inner.scrollHeight-inner.clientHeight; var cur=(inner._target!=null&&inner._anim)?inner._target:inner.scrollTop; var canDown=imax>2&&cur<imax-2, canUp=cur>2; if((e.deltaY>0&&canDown)||(e.deltaY<0&&canUp)){ e.preventDefault(); smoothInner(inner, e.deltaY); return; } if(inner._edgeAt&&performance.now()-inner._edgeAt<400){ e.preventDefault(); return; } }
-    e.preventDefault();
-    if(gestureCont) return;
-    if(e.deltaY>0){ if(i<snaps.length-1){ var nx=snaps[i+1]; glide(nx.offsetTop, function(){ enterPage(nx, false); }); } }
-    else { if(window.scrollY>sec.offsetTop+2) glide(sec.offsetTop); else if(i>0){ var pv=snaps[i-1]; glide(pv.offsetTop, function(){ enterPage(pv, true); }); } }
-  },{passive:false});
-  /* 좁은 화면: 섹션 안에서 스크롤, 끝에서 한 번 더 밀면 다음 탭이나 다음 화면 */
-  function isM(){ return window.innerWidth<=900; }
-  function secEdge(sec){ var max=sec.scrollHeight-sec.clientHeight; return {top:sec.scrollTop<=24, bottom:sec.scrollTop>=max-24}; }
-  function advance(sec, dir){
-    if(pageLock||performance.now()<coolUntil) return;
-    var two=sec.querySelector('.wrap.two');
-    if(two){ var k=two._idx+dir, n=two.querySelectorAll('.right .pane').length; if(k>=0&&k<n){ two._go(k); coolUntil=performance.now()+300; return; } }
-    var nx=snaps[snaps.indexOf(sec)+dir]; if(!nx) return;
-    mCur=nx;
-    if(reduce){ window.scrollTo(0,nx.offsetTop); enterPage(nx, dir<0); } else glide(nx.offsetTop, function(){ enterPage(nx, dir<0); });
-  }
-  var tS=null, mCur=snaps[0];
-  window.addEventListener('touchstart',function(e){
-    if(!isM()||document.body.classList.contains('lock')||e.touches.length!==1){ tS=null; return; }
-    var c=e.target.closest?e.target.closest('.console'):null; if(c&&c.scrollHeight>c.clientHeight+2){ tS=null; return; }
-    var sec=currentSnap(), ed=secEdge(sec), t=e.touches[0]; tS={x:t.clientX,y:t.clientY,sec:sec,top:ed.top,bottom:ed.bottom};
-  },{passive:true});
-  window.addEventListener('touchend',function(e){
-    if(!tS) return; var s=tS; tS=null; var t=e.changedTouches[0], dx=t.clientX-s.x, dy=t.clientY-s.y;
-    if(Math.abs(dy)<48||Math.abs(dy)<Math.abs(dx)*1.2) return;
-    var ed=secEdge(s.sec);
-    if(dy<0&&s.bottom&&ed.bottom) advance(s.sec,1); else if(dy>0&&s.top&&ed.top) advance(s.sec,-1);
-  },{passive:true});
-  function toHash(){ if(!isM()||!location.hash) return; var h=null; try{ h=document.querySelector(location.hash); }catch(err){} if(!h) return; var s=h.closest('.snap')||h; mCur=s; document.documentElement.style.scrollBehavior='auto'; window.scrollTo(0,s.offsetTop); document.documentElement.style.scrollBehavior=''; markNav(); }
-  window.addEventListener('load',toHash); window.addEventListener('hashchange',toHash); toHash();
-  var settleT=null;
-  function settle(){ if(!isM()||pageLock) return; var y=window.scrollY, best=snaps[0]; snaps.forEach(function(s){ if(Math.abs(s.offsetTop-y)<Math.abs(best.offsetTop-y)) best=s; }); mCur=best; if(Math.abs(best.offsetTop-y)>1){ document.documentElement.style.scrollBehavior='auto'; window.scrollTo(0,best.offsetTop); document.documentElement.style.scrollBehavior=''; } markNav(); }
-  window.addEventListener('scroll',function(){ if(pageLock) return; clearTimeout(settleT); settleT=setTimeout(settle,160); });
-  setTimeout(function(){ if(location.hash) toHash(); else settle(); },400);
-  window.addEventListener('resize',function(){ if(isM()&&!pageLock&&mCur) window.scrollTo(0,mCur.offsetTop); });
-  sideLinks.forEach(function(a,i){ a.addEventListener('click',function(e){ if(!isM()) return; e.preventDefault(); var sec=secs[i]; if(!sec||pageLock) return; mCur=sec; if(reduce){ window.scrollTo(0,sec.offsetTop); enterPage(sec,false); } else glide(sec.offsetTop, function(){ enterPage(sec,false); }); }); });
+
+
 /* 큰 글자를 화면 폭에 맞춤 */
   function fit(){
     document.querySelectorAll('[data-fit]').forEach(function(w){
@@ -1065,31 +1057,35 @@ IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 �
     b.addEventListener('click',function(){ var it=b.parentElement; var open=it.hasAttribute('open'); if(open){ it.removeAttribute('open'); } else { document.querySelectorAll('.how .item[open]').forEach(function(o){ o.removeAttribute('open'); o.querySelector('button').setAttribute('aria-expanded','false'); }); it.setAttribute('open',''); } b.setAttribute('aria-expanded', open?'false':'true'); if(!open){ var sc=it.closest('.page>.wrap'); if(sc){ var t0=performance.now(); (function follow(now){ var target=Math.max(0, Math.min(sc.scrollHeight-sc.clientHeight, it.offsetTop-sc.offsetTop-8)); sc.scrollTop+=(target-sc.scrollTop)*0.14; sc._target=sc.scrollTop; if(now-t0<650) requestAnimationFrame(follow); else sc.scrollTop=target; })(t0); } else { it.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'}); } } });
   });
 
-  /* 사례 갤러리: 끌어서 넘기기, 화살표, 위치 */
-  var gal=document.getElementById('gal'), cards=gal.querySelectorAll('.gcard'), gpos=document.getElementById('gpos');
-  var isDown=false, startX=0, startL=0, moved=false;
+  /* 사례 갤러리: 고정된 동안은 페이지 스크롤이 카드를 넘김. 끌기와 화살표도 같은 스크롤을 움직임 */
+  var gal=galEl, cards=gal.querySelectorAll('.gcard'), gpos=document.getElementById('gpos');
+  var isDown=false, startX=0, startL=0, startS=0, moved=false;
+  function pinned(){ return galST&&!isM(); }
+  function clampS(y){ return Math.max(galST.start+1, Math.min(galST.end-1, y)); }
   gal.addEventListener('dragstart',function(e){ e.preventDefault(); });
-  gal.addEventListener('pointerdown',function(e){ if(e.pointerType==='touch'||e.button!==0) return; gal._gx=null; isDown=true; moved=false; startX=e.clientX; startL=gal.scrollLeft; gal.classList.add('drag'); });
-  window.addEventListener('pointermove',function(e){ if(!isDown) return; var dx=e.clientX-startX; if(Math.abs(dx)>6) moved=true; gal.scrollLeft=startL-dx; });
-  window.addEventListener('pointerup',function(e){ if(!isDown) return; isDown=false; var dx=e.clientX-startX; var w=cardW(); var target=startL; if(dx<-60) target=startL+w*Math.max(1,Math.round(-dx/w)); else if(dx>60) target=startL-w*Math.max(1,Math.round(dx/w)); var first=gal.querySelector('.gcard').offsetLeft; target=Math.max(first, Math.min(gal.scrollWidth-gal.clientWidth, Math.round((target-first)/w)*w+first)); gal.classList.remove('drag'); glideX(gal,target); });
+  gal.addEventListener('pointerdown',function(e){ if(e.pointerType==='touch'||e.button!==0) return; gal._gx=null; isDown=true; moved=false; startX=e.clientX; startL=gal.scrollLeft; startS=window.scrollY; gal.classList.add('drag'); });
+  window.addEventListener('pointermove',function(e){ if(!isDown) return; var dx=e.clientX-startX; if(Math.abs(dx)>6) moved=true; if(pinned()) goTo(clampS(startS-dx*galST._gr),true); else gal.scrollLeft=startL-dx; });
+  window.addEventListener('pointerup',function(){ if(!isDown) return; isDown=false; gal.classList.remove('drag'); });
   function glideX(el,to){ var from=el.scrollLeft, dist=to-from; if(Math.abs(dist)<1) return; if(reduce){ el.scrollLeft=to; return; } var t0=performance.now(), dur=Math.min(700, 320+Math.abs(dist)*0.35); el._gx=t0; (function frame(now){ if(el._gx!==t0) return; var p=Math.min(1,(now-t0)/dur); el.scrollLeft=from+dist*easeInOut(p); if(p<1) requestAnimationFrame(frame); })(t0); }
   gal.addEventListener('click',function(e){ if(moved){ e.stopPropagation(); e.preventDefault(); moved=false; } }, true);
   function cardW(){ return cards[0].getBoundingClientRect().width+28; }
   function updatePos(){ var i=Math.round(gal.scrollLeft/cardW()); gpos.textContent=Math.min(cards.length, i+1)+' / '+cards.length; }
   gal.addEventListener('scroll',updatePos); updatePos();
-  document.getElementById('gprev').addEventListener('click',function(){ glideX(gal, gal.scrollLeft-cardW()); });
-  document.getElementById('gnext').addEventListener('click',function(){ glideX(gal, gal.scrollLeft+cardW()); });
+  function stepCard(dir){ if(pinned()){ var base=Math.max(window.scrollY, galST.start+galST._edge); if(dir<0) base=Math.min(window.scrollY, galST.end-galST._edge); goTo(clampS(base+dir*cardW()*galST._gr)); } else glideX(gal, gal.scrollLeft+dir*cardW()); }
+  document.getElementById('gprev').addEventListener('click',function(){ stepCard(-1); });
+  document.getElementById('gnext').addEventListener('click',function(){ stepCard(1); });
+
 
   /* 사례 상세 창 */
   var ov=document.getElementById('ov'), mbody=document.getElementById('mbody'), lastFocus=null;
   function openCase(id){
     var t=document.getElementById(id); if(!t) return;
     mbody.innerHTML=''; mbody.appendChild(t.content.cloneNode(true));
-    ov.classList.add('open'); ov.setAttribute('aria-hidden','false'); document.body.classList.add('lock'); ov.scrollTop=0;
+    ov.classList.add('open'); ov.setAttribute('aria-hidden','false'); document.body.classList.add('lock'); if(lenis) lenis.stop(); ov.scrollTop=0;
     lastFocus=document.activeElement; document.getElementById('mclose').focus();
     var box=mbody.querySelector('.console'); if(box) setTimeout(function(){ typeConsole(box); }, 250);
   }
-  function closeCase(){ ov.classList.remove('open'); ov.setAttribute('aria-hidden','true'); document.body.classList.remove('lock'); var box=mbody.querySelector('.console'); if(box) box._run=(box._run||0)+1; if(lastFocus) lastFocus.focus(); }
+  function closeCase(){ ov.classList.remove('open'); ov.setAttribute('aria-hidden','true'); document.body.classList.remove('lock'); if(lenis) lenis.start(); var box=mbody.querySelector('.console'); if(box) box._run=(box._run||0)+1; if(lastFocus) lastFocus.focus(); }
   cards.forEach(function(c){ c.addEventListener('click',function(){ if(moved) return; openCase(c.getAttribute('data-case')); }); });
   document.getElementById('mclose').addEventListener('click',closeCase);
   ov.addEventListener('click',function(e){ if(e.target===ov) closeCase(); });
