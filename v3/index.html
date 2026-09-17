@@ -363,6 +363,59 @@ html.lenis,html.lenis body{height:auto}
   .console .cur{animation:none}
   .how .item .body,.gcard .im img,.how .item button::after{transition:none}
 }
+
+/* ===== v3 시안: 강조색, 큰 사례 카드, 행 목록, 첫 화면 정리, 칩 ===== */
+:root{--ac:#1740e6}
+.dark{--ac:#8aa4ff}
+.md{--ac:#1740e6}
+.steps li.on button::before{background:var(--ac)}
+.side a.on::after{background:var(--ac);border-color:var(--ac)}
+.c-tag{background:#1740e6;box-shadow:none}
+#endWord .dot{color:var(--ac)}
+.md .site a:hover{background:var(--ac);border-color:var(--ac);color:#fff}
+.gnav button:hover{background:var(--ac);border-color:var(--ac);color:#000}
+.tags{word-spacing:0}
+.tags .chip{display:inline-block;border:1px solid #cfcfcf;border-radius:20px;padding:3px 11px;font-size:13px;line-height:1.5;margin:0 6px 6px 0}
+.dark .tags .chip{border-color:#4a4a4a;color:#cfcfcf}
+.gcard .cap{display:flex;justify-content:space-between;align-items:baseline;gap:24px;margin:16px 0 4px}
+.gcard .cap h3{margin:0}
+.gcard .when{font-size:15px;color:var(--mute);white-space:nowrap}
+.gcard .meta{margin-bottom:10px}
+.js-rev .gcard .im img{clip-path:inset(0 100% 0 0);transition:clip-path 1s cubic-bezier(.2,.7,.2,1),transform .35s}
+.js-rev .gcard.seen .im img{clip-path:inset(0 0 0 0)}
+.hero .strip{display:none}
+@media (max-width:900px){.gcard .cap{display:block}.gcard .when{display:block;margin-top:2px}}
+@media (min-width:901px){
+  .hero{padding-top:0}
+  .hero .strip{display:flex;justify-content:space-between;gap:24px;padding-top:26px;font-size:15px;color:var(--mute)}
+  .hero .strip b{color:var(--ink);font-weight:700}
+  .hero h1{font-size:clamp(38px,4.4vw,72px);line-height:1.18;letter-spacing:-.035em;margin:0}
+  .hero .who{display:none}
+  .hero .lead{margin-bottom:0}
+  .hero .bottom{margin-top:0}
+  .console{height:340px}
+  .cases.page{padding:56px 0 24px}
+  .cases .hd{grid-template-columns:auto 1fr;gap:48px;align-items:baseline;margin-bottom:28px}
+  .cases .hd .big{font-size:clamp(20px,1.9vw,30px);line-height:1.35;font-weight:700;justify-self:end;text-align:right}
+  .cases .gcard{flex-basis:min(82vw,calc((100vh - 400px)*1.6))}
+  .proj table,.proj tbody{display:block;width:100%}
+  .proj tr{display:grid;grid-template-columns:1fr auto;grid-template-areas:"n k" "d d";gap:4px 24px;padding:18px 0;border-top:1px solid var(--line);transition:opacity .2s}
+  .proj tr:first-child{display:none}
+  .proj tr:last-child{border-bottom:1px solid var(--line)}
+  .proj td{display:block;border:0;padding:0;width:auto}
+  .proj td.n{grid-area:n;font-size:21px;font-weight:700;letter-spacing:-.02em;line-height:1.3}
+  .proj td.n br{display:none}
+  .proj td.k{grid-area:k;font-size:14.5px;color:var(--mute);white-space:nowrap;align-self:center}
+  .proj td:not(.n):not(.k){grid-area:d;font-size:15px;color:#555;line-height:1.65;max-width:880px}
+  .proj tbody:hover tr{opacity:.35}
+  .proj tbody tr:hover{opacity:1}
+}
+@media (max-height:880px) and (min-width:901px){
+  .hero h1{font-size:clamp(32px,3.4vw,48px)}
+  .console{height:250px}
+  .cases.page{padding:40px 0 16px}
+  .cases .hd .big{font-size:20px}
+}
 </style>
 </head>
 <body>
@@ -377,9 +430,10 @@ html.lenis,html.lenis body{height:auto}
 </nav>
 
 <section class="hero snap" id="hero">
+  <div class="wrap strip"><span><b>신의</b></span><span>백엔드 &amp; 풀스택 개발자</span><span>백엔드 <span class="career-len">3년 7개월</span> 재직중</span><span>Java, Spring, 전자정부프레임워크, MySQL</span><span>충북 청주</span></div>
+  <div class="wrap"><h1>구축 15건, 동시 운영 11건.<br>같은 오류를 두 번 내지 않는 백엔드.</h1></div>
   <div class="wrap grid">
     <div>
-      <h1>구축 15건, 동시 운영 11건.<br>같은 오류를 두 번 내지 않는 백엔드.</h1>
       <p class="lead">공공, 교육, 문화, 제조 도메인의 웹 시스템을<br>요구 분석부터 구축과 운영까지 맡습니다.<br>숫자 하나가 어긋나면 신뢰가 무너지는 정산 기능의 데이터 정합성,<br>문서 없이 넘겨받은 레거시의 분석과 전환,<br>야간 반영과 폐쇄망 같은 제약 속의 안정화를 해 왔습니다.</p>
       <p class="who"><b>신의</b>, 백엔드 &amp; 풀스택 개발자<br>백엔드 <span class="career-len">3년 7개월</span> 재직중<br>Java, Spring, 전자정부프레임워크, MySQL<br>충북 청주</p>
     </div>
@@ -559,38 +613,38 @@ html.lenis,html.lenis body{height:auto}
     <div class="gal" id="gal">
       <button type="button" class="gcard" data-case="c1">
         <div class="im"><img src="img/seoul.jpg" alt="서울연구원 홈페이지 첫 화면" decoding="async" width="1280" height="800"></div>
-        <h3>서울연구원, 레거시 전환과 운영 인수</h3>
-        <p class="meta">공공기관, 구축 후 유지보수까지 인수. 2024.11 ~ 2025.02</p>
+        <div class="cap"><h3>서울연구원, 레거시 전환과 운영 인수</h3><span class="when">2024.11 ~ 2025.02</span></div>
+        <p class="meta">공공기관, 구축 후 유지보수까지 인수.</p>
         <p class="tags">#Java #Spring #MyBatis #MySQL #Oracle #레거시전환 #데이터이관</p>
       </button>
       <button type="button" class="gcard" data-case="c2">
         <div class="im"><img src="img/neulbom.jpg" alt="늘봄허브 첫 화면" decoding="async" width="1280" height="800"></div>
-        <h3>늘봄허브, 다중 권한 플랫폼과 만족도 통계 허브</h3>
-        <p class="meta">교육, 학교와 교육청 단위 방과후 플랫폼. 2026.04 ~ 진행 중</p>
+        <div class="cap"><h3>늘봄허브, 다중 권한 플랫폼과 만족도 통계 허브</h3><span class="when">2026.04 ~ 진행 중</span></div>
+        <p class="meta">교육, 학교와 교육청 단위 방과후 플랫폼.</p>
         <p class="tags">#Java #Spring #MyBatis #권한제어 #AI기반개발</p>
       </button>
       <button type="button" class="gcard" data-case="c3">
         <div class="im"><img src="img/anseong.jpg" alt="안성시 무상교통 누리집 첫 화면" decoding="async" width="1280" height="800"></div>
-        <h3>교통비 정산 시스템, 안성과 제주</h3>
-        <p class="meta">공공과 교통, 지자체 교통비 지원금 정산 SaaS 2종. 2024.06 ~ 07, 2025.10 ~ 진행 중</p>
+        <div class="cap"><h3>교통비 정산 시스템, 안성과 제주</h3><span class="when">2024.06 ~ 07, 2025.10 ~ 진행 중</span></div>
+        <p class="meta">공공과 교통, 지자체 교통비 지원금 정산 SaaS 2종.</p>
         <p class="tags">#SpringBoot #Docker #NaverCloud #외부API #정합성검증</p>
       </button>
       <button type="button" class="gcard" data-case="c4">
         <div class="im"><img src="img/artskorealab.jpg" alt="아트코리아랩 홈페이지 첫 화면" decoding="async" width="1280" height="800"></div>
-        <h3>멱등 DDL로 다중 환경 스키마 협업</h3>
-        <p class="meta">다른 회사와 함께 개발하는 프로젝트의 다중 서버 환경. 2026.04부터 적용 중</p>
+        <div class="cap"><h3>멱등 DDL로 다중 환경 스키마 협업</h3><span class="when">2026.04부터 적용 중</span></div>
+        <p class="meta">다른 회사와 함께 개발하는 프로젝트의 다중 서버 환경.</p>
         <p class="tags">#MySQL #DDL #멱등성 #NaverCloud #협업</p>
       </button>
       <button type="button" class="gcard" data-case="c5">
         <div class="im"><img src="img/chemitop.jpg" alt="케미탑 홈페이지 첫 화면" decoding="async" width="1280" height="800"></div>
-        <h3>스마트공장 MES, 7개 제조사 구축</h3>
-        <p class="meta">제조, 설비 데이터 수집, 현장 화면, 바코드, 수발주. 2023.01 ~ 2024.01</p>
+        <div class="cap"><h3>스마트공장 MES, 7개 제조사 구축</h3><span class="when">2023.01 ~ 2024.01</span></div>
+        <p class="meta">제조, 설비 데이터 수집, 현장 화면, 바코드, 수발주.</p>
         <p class="tags">#PHP #CodeIgniter3 #MySQL #MariaDB #GoogleCharts #현장UX</p>
       </button>
       <button type="button" class="gcard" data-case="c6">
         <div class="im"><img src="img/jeju.jpg" alt="제주 무상교통 누리집 첫 화면" decoding="async" width="1280" height="800"></div>
-        <h3>사내 CMS, 반복 구축 표준화</h3>
-        <p class="meta">사내 솔루션, 공공과 문화 사이트 반복 구축용. 2026.03 ~ 2026.04</p>
+        <div class="cap"><h3>사내 CMS, 반복 구축 표준화</h3><span class="when">2026.03 ~ 2026.04</span></div>
+        <p class="meta">사내 솔루션, 공공과 문화 사이트 반복 구축용.</p>
         <p class="tags">#Laravel #PHP #Apache #캐시</p>
       </button>
     </div>
@@ -1101,7 +1155,7 @@ IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 �
   var ov=document.getElementById('ov'), mbody=document.getElementById('mbody'), lastFocus=null;
   function openCase(id){
     var t=document.getElementById(id); if(!t) return;
-    mbody.innerHTML=''; mbody.appendChild(t.content.cloneNode(true));
+    mbody.innerHTML=''; mbody.appendChild(t.content.cloneNode(true)); chipify(mbody);
     ov.classList.add('open'); ov.setAttribute('aria-hidden','false'); document.body.classList.add('lock'); if(lenis) lenis.stop(); ov.scrollTop=0;
     lastFocus=document.activeElement; document.getElementById('mclose').focus();
     var box=mbody.querySelector('.console'); if(box) setTimeout(function(){ typeConsole(box); }, 250);
@@ -1137,6 +1191,10 @@ IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 �
     window.addEventListener('mousedown',function(){ tag.classList.remove('show'); });
     (function frame(){ qx+=(gx-qx)*0.2; qy+=(gy-qy)*0.2; tag.style.transform='translate('+(qx+18)+'px,'+(qy+20)+'px)'; requestAnimationFrame(frame); })();
   })();
+  /* 기술 표기를 칩으로, 사례 이미지는 보이는 순간 열림 */
+  function chipify(root){ root.querySelectorAll('.tags').forEach(function(p){ if(p._chip) return; p._chip=1; var parts=p.textContent.trim().split(/\s+/); p.textContent=''; parts.forEach(function(s){ var c=document.createElement('span'); c.className='chip'; c.textContent=s.replace(/^#/,''); p.appendChild(c); }); }); }
+  chipify(document);
+  if('IntersectionObserver' in window){ var cio=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('seen'); cio.unobserve(e.target); } }); },{threshold:.2}); cards.forEach(function(c){ cio.observe(c); }); } else { cards.forEach(function(c){ c.classList.add('seen'); }); }
   /* 메일 복사 */
   var toast=document.createElement('div'); toast.className='copied'; toast.textContent='메일 주소를 복사했습니다'; document.body.appendChild(toast); var toastTimer=null;
   document.querySelectorAll('a.mail').forEach(function(a){ a.addEventListener('click', function(){ var v=a.getAttribute('data-copy'); if(navigator.clipboard){ navigator.clipboard.writeText(v).then(function(){ toast.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(function(){ toast.classList.remove('show'); }, 1800); }); } }); });
