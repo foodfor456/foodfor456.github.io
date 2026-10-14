@@ -457,7 +457,7 @@ html.lenis,html.lenis body{height:auto}
 <span class="g">[WAS ]</span> Tomcat, JBoss, Apache<br>
 <span class="g">[OPS ]</span> Linux, Jenkins, GitLab CI/CD, GitLab Runner, Docker, Naver Cloud, NAS<br>
 <span class="g">[VIEW]</span> JSP, JSTL, Thymeleaf, JavaScript, jQuery, Ajax, Bootstrap<br>
-<span class="y">[AI  ]</span> Claude Code, 자체 제작 스킬, 작업 2 + 검증 1 + PM 1 세션<br>
+<span class="y">[AI  ]</span> Claude Code, 자체 제작 스킬, 작업 2 + 검증 1 세션<br>
 <span class="p">$</span> java -version<br>
 <span class="g">JDK 1.8 ~ 21</span> <span class="p">프로젝트별 환경 구성과 운영</span><br>
 <span class="p">$</span> git log --oneline -n 1 .gitlab-ci.yml<br>
@@ -916,6 +916,7 @@ IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 �
         <dt>이름</dt><dd>신의</dd>
         <dt>이메일</dt><dd><a class="mail" href="mailto:foodfor456@naver.com?subject=%EC%B1%84%EC%9A%A9%20%EB%AC%B8%EC%9D%98" data-copy="foodfor456@naver.com">foodfor456@naver.com</a></dd>
         <dt>거주</dt><dd>충북 청주시</dd>
+        <dt>깃허브</dt><dd><a href="https://github.com/foodfor456" target="_blank" rel="noopener">github.com/foodfor456</a></dd>
         <dt>경력</dt><dd>백엔드 <span class="career-len">3년 7개월</span> 재직중</dd>
       </dl>
     </div>
@@ -937,7 +938,7 @@ IP 허용을 받아 과거 전문 파일을 개발 서버가 읽어 운영과 �
   /* 경력 자동 계산 */
   (function(){
     var now=new Date();
-    var m=12+(now.getFullYear()-2024)*12+(now.getMonth()+1-2);
+    var m=12+(now.getFullYear()-2024)*12+(now.getMonth()-1);
     var txt=Math.floor(m/12)+'년 '+(m%12)+'개월';
     document.querySelectorAll('.career-len').forEach(function(e){ e.textContent=txt; });
   })();
