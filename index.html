@@ -41,14 +41,14 @@ section{padding:104px 0}
 .hero .grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:start}
 .hero .grid>div{min-width:0}
 .hero h1{font-size:44px;line-height:1.2;font-weight:800;letter-spacing:-0.025em}
-.hero .lead{margin-top:28px;font-size:19px;line-height:1.8;max-width:34em}
+.hero .lead{margin-top:28px;font-size:19px;line-height:1.8}
 .hero .who{margin-top:32px;color:var(--mute);font-size:17px;line-height:1.8}
 .hero .who b{color:var(--ink);font-size:20px}
 .word{font-weight:900;letter-spacing:-0.045em;line-height:.86;font-size:clamp(72px,17.4vw,250px);margin:72px 0 0;white-space:nowrap;overflow:hidden}
 .word span{display:inline-block;transform:translateY(0)}
 
 /* 콘솔 */
-.console{background:#000;color:#e6e6e6;border:1px solid #2a2a2a;padding:16px 22px 20px;font-family:'D2Coding','Consolas','Menlo',monospace;font-size:14px;line-height:1.75;height:460px;overflow:auto;scrollbar-width:thin;scrollbar-color:#333 transparent;word-break:break-all}
+.console{background:#000;color:#e6e6e6;border:1px solid #2a2a2a;padding:16px 22px 20px;font-family:'D2Coding','Consolas','Menlo',monospace;font-size:14px;line-height:1.75;height:460px;overflow:auto;scrollbar-width:thin;scrollbar-color:#333 transparent;word-break:keep-all;overflow-wrap:anywhere}
 .console .files{position:sticky;top:-16px;margin:-16px -22px 14px;padding:14px 22px 10px;background:#000;border-bottom:1px solid #2a2a2a;display:flex;gap:18px;flex-wrap:wrap;font-family:'Pretendard',sans-serif;font-size:14px;font-weight:600;color:#777}
 .console .files button{color:#777;padding:2px 0;border-bottom:2px solid transparent}
 .console .files button:hover{color:#fff}
@@ -67,20 +67,30 @@ section{padding:104px 0}
 @keyframes blink{50%{opacity:0}}
 
 /* 일하는 방식 */
-.how .list{display:grid;grid-template-columns:1fr 1fr;gap:56px 64px}
-.how article h3{font-size:22px;font-weight:800;letter-spacing:-0.01em}
-.how article .key{font-size:24px;line-height:1.4;font-weight:700;margin:10px 0 16px;letter-spacing:-0.01em}
+.how .how-t{font-weight:900;letter-spacing:-0.045em;line-height:1.05;font-size:clamp(40px,7.4vw,120px);margin-bottom:64px;word-break:keep-all}
+.how .list{max-width:980px}
+.how article{padding:40px 0;border-top:1px solid var(--line)}
+.how article:first-child{border-top:0;padding-top:0}
+.how article .key{font-size:24px;line-height:1.4;font-weight:700;margin:0 0 16px;letter-spacing:-0.01em}
 .how article p{color:#222}
-.how .six{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px 20px;margin-top:20px;border-top:1px solid var(--line);padding-top:16px}
-.how .six div{font-size:15px;line-height:1.5}
-.how .six b{display:block;font-weight:700}
-.how .six span{color:var(--mute)}
 
 /* 주요 사례 */
-.cases .cards{display:grid;grid-template-columns:1fr 1fr;gap:40px 36px}
+.cases .cards{display:grid;grid-template-columns:1fr;gap:56px}
+.case{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);column-gap:40px;align-items:start}
+.case>*{grid-column:2}
+.case>.im{grid-column:1;grid-row:1 / span 4}
+.case>details{grid-column:1 / -1}
+.case dl{max-width:1080px}
 .case{border-top:1px solid var(--line);padding-top:20px}
 .case .im{aspect-ratio:16/10;overflow:hidden;background:#111}
 .case .im img{width:100%;height:100%;object-fit:cover;object-position:top}
+.case .im.mig{display:flex;align-items:center;padding:16px 22px;border:1px solid #2a2a2a;aspect-ratio:auto;min-height:0;overflow:visible}
+.case .mig table{font-size:15px;line-height:1.45;color:#e6e6e6}
+.case .mig th,.case .mig td{padding:8px 10px 8px 0;border-bottom:1px solid #2a2a2a;text-align:left;font-weight:400;white-space:nowrap}
+.case .mig th{color:#888;font-size:13px}
+.case .mig td:first-child{color:#aaa}
+.case .mig td:last-child{color:#fff;font-weight:600}
+@media (max-width:1200px){.case .im.mig{padding:12px 14px}.case .mig table{font-size:14px}}
 .case h3{font-size:24px;font-weight:800;letter-spacing:-0.01em;margin-top:18px}
 .case .meta{color:var(--mute);margin-top:6px;font-size:16px}
 .case .stack{margin-top:8px;font-size:16px}
@@ -96,7 +106,7 @@ section{padding:104px 0}
 .case .site a{color:var(--ac);text-decoration:none;border-bottom:1px solid currentColor}
 .ways{margin-top:72px;border-top:1px solid var(--line);padding-top:36px}
 .ways h3{font-size:20px;font-weight:800;margin-bottom:20px}
-.ways .two{display:grid;grid-template-columns:1fr 1fr;gap:36px}
+.ways .two{display:grid;grid-template-columns:1fr;gap:36px;max-width:1080px}
 .ways h4{font-size:19px;font-weight:700;margin-bottom:8px}
 .ways p{color:#cfcfcf;font-size:17px}
 
@@ -148,14 +158,19 @@ td.n{font-weight:700;width:210px}
   .hero{padding-top:48px}
   .hero .grid{grid-template-columns:1fr;gap:36px}
   .hero h1{font-size:30px}
+  .how .how-t{margin-bottom:36px}
   .hero .lead{font-size:17px;line-height:1.75}
   .hero .who{font-size:16px}
   .hero .who b{font-size:18px}
   .word{margin-top:40px}
   .console{height:380px;font-size:13px}
-  .how .list{grid-template-columns:1fr;gap:40px}
+  .how article{padding:28px 0}
+  .how article:first-child{padding-top:0}
+  .how article,.case{display:block}
+  .case .im.mig{padding:10px 14px}
+  .case .mig table{font-size:12.5px}
+  .case .mig th,.case .mig td{padding:6px 6px 6px 0}
   .how article .key{font-size:21px}
-  .how .six{grid-template-columns:1fr 1fr}
   .cases .cards{grid-template-columns:1fr;gap:40px}
   .case h3{font-size:21px}
   .ways .two{grid-template-columns:1fr}
@@ -170,6 +185,8 @@ td.n{font-weight:700;width:210px}
   td.k{width:auto;white-space:normal;font-size:14px;margin-bottom:2px}
   td.n{width:auto;margin-bottom:4px}
   .skills .tw td.k{font-weight:700;color:var(--ink)}
+  .skills .tw table:has(th) td:nth-child(2)::before{content:"주력";color:var(--mute);font-size:13px;margin-right:10px}
+  .skills .tw table:has(th) td:nth-child(3)::before{content:"활용";color:var(--mute);font-size:13px;margin-right:10px}
   .end{padding:80px 0 40px}
   .end .grid{grid-template-columns:1fr;gap:40px}
   .end h2{font-size:32px}
@@ -203,12 +220,12 @@ td.n{font-weight:700;width:210px}
 <section class="hero" id="hero">
   <div class="wrap grid">
     <div>
-      <h1>구축 15건, 동시 운영 11건.<br>같은 오류를 두 번 내지 않는 백엔드.</h1>
-      <p class="lead">공공, 교육, 문화, 제조 도메인의 웹 시스템을 요구 분석부터 구축과 운영까지 맡습니다. 숫자 하나가 어긋나면 신뢰가 무너지는 정산 기능의 데이터 정합성, 문서 없이 넘겨받은 레거시의 분석과 전환, 야간 반영과 폐쇄망 같은 제약 속의 안정화를 해 왔습니다.</p>
-      <p class="who"><b>신의</b>, 백엔드 &amp; 풀스택 개발자<br>백엔드 <span class="career-len">3년 9개월</span> 재직중<br>Java, Spring, 전자정부프레임워크, MySQL<br>충북 청주</p>
+      <h1>구축 17건, 동시 운영 11건.<br>공공 웹 시스템 백엔드 개발자.</h1>
+      <p class="lead">공공, 교육, 문화, 제조 도메인의 웹 시스템을 요구 분석부터 구축과 운영까지<br>정산 기능의 데이터 정합성 검증<br>문서 없이 넘겨받은 레거시의 분석과 전환<br>서비스 중단 없는 반영과 폐쇄망 환경의 운영</p>
+      <p class="who"><b>신의</b>, 백엔드 &amp; 풀스택 개발자<br>백엔드 <span class="career-len">3년 9개월</span>, 재직 중<br>Java, Spring, 전자정부프레임워크, MySQL</p>
     </div>
     <div>
-      <div class="console" id="con" aria-label="운영 로그 콘솔">
+      <div class="console" id="con" role="region" aria-label="운영 로그 콘솔">
         <div class="files">
           <button type="button" data-file="about" class="on">projects.log</button>
           <button type="button" data-file="maint">ops.log</button>
@@ -218,49 +235,51 @@ td.n{font-weight:700;width:210px}
         </div>
         <div data-con="about" class="act">
 <span class="bar">shin@backend: projects.log</span>
-<span class="ln"><span class="p">$</span> tail -f projects.log<br></span>
+<span class="ln"><span class="p">$</span> cat projects.log<br></span>
 <span class="ln"><span class="p">2023.01</span> 스마트공장 솔루션 회사, MES 7개 제조사 <span class="y">[DONE]</span><br></span>
 <span class="ln"><span class="p">2024.02</span> 공공 SI 회사 합류, 공공 웹 시스템<br></span>
 <span class="ln"><span class="p">2024.04</span> 아트코리아랩 <span class="y">[DONE]</span><br></span>
-<span class="ln"><span class="p">2024.11</span> 서울연구원 <span class="y">[DONE]</span><br></span>
-<span class="ln"><span class="p">2025.03</span> 제천시립도서관 <span class="y">[DONE]</span><br></span>
-<span class="ln"><span class="p">2025.05</span> 세종 한글문화도시센터 <span class="y">[DONE]</span><br></span>
+<span class="ln"><span class="p">2024.04</span> 충남개발공사 계약정보공개시스템 <span class="y">[DONE]</span><br></span>
+<span class="ln"><span class="p">2024.10</span> 서울연구원 <span class="y">[DONE]</span><br></span>
+<span class="ln"><span class="p">2025.01</span> 제천시립도서관 <span class="y">[DONE]</span><br></span>
+<span class="ln"><span class="p">2025.03</span> 세종 한글문화도시센터 <span class="y">[DONE]</span><br></span>
 <span class="ln"><span class="p">2025.06</span> KMF <span class="y">[DONE]</span><br></span>
 <span class="ln"><span class="p">2025.06</span> 충북 늘봄학교 기능개선 <span class="y">[DONE]</span><br></span>
 <span class="ln"><span class="p">2025.07</span> 경기도 장애인체육회 <span class="y">[DONE]</span><br></span>
 <span class="ln"><span class="p">2025.09</span> 음성 화훼 통합정보 <span class="y">[DONE]</span><br></span>
-<span class="ln"><span class="p">2025.09</span> 중소기업창업진흥원 <span class="y">[DONE]</span><br></span>
+<span class="ln"><span class="p">2025.09</span> 창업기업 확인시스템 <span class="y">[DONE]</span><br></span>
 <span class="ln"><span class="p">2025.12</span> 바이오코리아 <span class="y">[DONE]</span><br></span>
-<span class="ln"><span class="p">2026.03</span> 사내 Laravel CMS <span class="y">[DONE]</span><br></span>
-<span class="ln"><span class="p">2026.04</span> 늘봄허브 <span class="g">[RUN ]</span> <span class="p">개발 완료 후 하자 대응 중</span><br></span>
-<span class="ln"><span class="p">2026.07</span> 기획예산처 고도화 <span class="g">[RUN ]</span> <span class="p">단독 개발, 전자정부프레임워크 5.0, JDK 21, JBoss, CUBRID</span><br></span>
-<span class="ln"><span class="p">2026.07</span> 세종 관광문화재단, 세종미식과 세종한글 <span class="g">[RUN ]</span> <span class="p">Java, Spring 백엔드 전담</span><br></span>
-<span class="ln"><span class="p">2026.08</span> 충북테크노파크 재구축 <span class="g">[RUN ]</span> <span class="p">PHP 사이트를 자사 Java CMS로, JDK 21, JBoss, MariaDB</span><br></span>
-<span class="ln"><span class="p">$</span> wc -l projects.log ops.log<br></span>
-<span class="ln"><span class="g">15</span> 구축 <span class="p">|</span> <span class="g">11</span> 유지보수 <span class="p">|</span> <span class="g">7</span> 제조사 MES<br></span>
-<span class="ln"><span class="p">$</span> <span class="b">SELECT</span> integrity <span class="b">FROM</span> settlement;<br></span>
-<span class="ln"><span class="g">0 rows mismatched</span><br></span>
+<span class="ln"><span class="p">2026.04</span> 사내 Laravel CMS <span class="y">[DONE]</span><br></span>
+<span class="ln"><span class="p">2026.05</span> 늘봄허브 <span class="g">[RUN ]</span> <span class="p">2026.07 오픈, 운영 대응 중</span><br></span>
+<span class="ln"><span class="p">2026.06</span> 세종미식, 한글 비엔날레 <span class="g">[RUN ]</span> <span class="p">백엔드 전담</span><br></span>
+<span class="ln"><span class="p">2026.07</span> 기획예산처 고도화 <span class="g">[RUN ]</span> <span class="p">단독 개발</span><br></span>
+<span class="ln"><span class="p">2026.08</span> 충북테크노파크 재구축 <span class="g">[RUN ]</span> <span class="p">Java CMS로 전환</span><br></span>
+<span class="ln"><span class="p">2026.10</span> 창업진흥원 원스톱 <span class="g">[RUN ]</span> <span class="p">단독 개발</span><br></span>
+<span class="ln"><span class="p">$</span> cat summary.txt<br></span>
+<span class="ln"><span class="g">17</span> 구축 <span class="p">|</span> <span class="g">11</span> 유지보수 <span class="p">|</span> <span class="g">7</span> 제조사 MES<br></span>
+<span class="ln"><span class="p">$</span> <span class="b">SELECT</span> table_cnt, row_cnt <span class="b">FROM</span> migration_check;<br></span>
+<span class="ln"><span class="g">51 tables, 412,463 rows matched</span><br></span>
 <span class="ln"><span class="p">$</span> uptime<br></span>
-<span class="ln"><span class="g">백엔드 <span class="career-len">3년 9개월</span> 재직중</span> <span class="cur"></span></span>
+<span class="ln"><span class="g">백엔드 <span class="career-len">3년 9개월</span>, 재직 중</span> <span class="cur"></span></span>
         </div>
         <div data-con="maint">
 <span class="bar">shin@backend: ops.log</span>
-<span class="p">$</span> tail -f ops.log<br>
+<span class="p">$</span> cat ops.log<br>
 <span class="p">2024.02</span> 청남대 <span class="y">[DONE]</span><br>
-<span class="p">2024.02</span> 시흥형 기본교통비 <span class="y">[DONE]</span> <span class="p">2026.07 마감</span><br>
+<span class="p">2024.02</span> 시흥형 기본교통비 <span class="y">[DONE]</span> <span class="p">2025.07 종료</span><br>
 <span class="p">2024.02</span> 음성군청 새싹체험관 <span class="y">[DONE]</span><br>
 <span class="p">2024.02</span> 한국교육개발원, 세종시 문화재단 <span class="y">[DONE]</span><br>
 <span class="p">2024.02</span> 지하도상가 홍보 <span class="y">[DONE]</span><br>
 <span class="p">2024.05</span> 국립부여박물관 <span class="y">[DONE]</span><br>
 <span class="p">2024.06</span> 교통비 정산 시스템, 안성 <span class="y">[DONE]</span><br>
-<span class="p">2025.02</span> 서울연구원, 서울아카이브 <span class="g">[RUN ]</span><br>
-<span class="p">2025.06</span> 충북 늘봄학교 <span class="g">[RUN ]</span><br>
-<span class="p">2025.07</span> 서울예술의전당 <span class="g">[RUN ]</span><br>
-<span class="p">2025.10</span> 교통비 정산 시스템, 안성과 제주 재투입 <span class="g">[RUN ]</span> <span class="cur"></span>
+<span class="p">2025.02</span> 서울연구원, 서울정책아카이브 <span class="y">[DONE]</span> <span class="p">2026.09까지</span><br>
+<span class="p">2025.06</span> 충북 늘봄학교 <span class="y">[DONE]</span> <span class="p">2025.07 종료</span><br>
+<span class="p">2025.07</span> 예술의전당 <span class="y">[DONE]</span> <span class="p">2026.09까지</span><br>
+<span class="p">2025.10</span> 교통비 정산 시스템, 안성과 제주 재투입 <span class="y">[DONE]</span> <span class="p">2026.09까지</span> <span class="cur"></span>
         </div>
         <div data-con="mes">
 <span class="bar">shin@backend: mes.log</span>
-<span class="p">$</span> tail -f mes.log<br>
+<span class="p">$</span> cat mes.log<br>
 <span class="p">2023.01</span> 스마트공장 솔루션 회사 합류, MES<br>
 <span class="p">plant</span> 케미탑 <span class="y">[DONE]</span><br>
 <span class="p">plant</span> 신화아이티 <span class="y">[DONE]</span><br>
@@ -274,40 +293,58 @@ td.n{font-weight:700;width:210px}
         <div data-con="skills">
 <span class="bar">shin@backend: stack.txt</span>
 <span class="p">$</span> cat stack.txt<br>
-<span class="g">[BACK]</span> Java, Spring Framework, Spring Boot, 전자정부프레임워크 3.8 ~ 5.0, MyBatis<br>
+<span class="g">[BACK]</span> Java, Spring Framework, Spring Boot, MyBatis<br>
+<span class="g">[BACK]</span> 전자정부프레임워크 3.8 ~ 5.0<br>
 <span class="g">[BACK]</span> PHP, Laravel, CodeIgniter3<br>
 <span class="g">[DB  ]</span> MySQL, MariaDB, SQL 튜닝, 데이터 마이그레이션<br>
 <span class="g">[DB  ]</span> CUBRID, PostgreSQL, OracleDB<br>
-<span class="g">[WAS ]</span> Tomcat, JBoss, Apache<br>
-<span class="g">[OPS ]</span> Linux, Jenkins, GitLab CI/CD, GitLab Runner, Docker, Naver Cloud, NAS<br>
+<span class="g">[WAS ]</span> Tomcat, JBoss<br>
+<span class="g">[OPS ]</span> Linux, Apache, Jenkins, GitLab CI/CD, GitLab Runner<br>
+<span class="g">[OPS ]</span> Docker, Naver Cloud, NAS<br>
 <span class="g">[VIEW]</span> JSP, JSTL, Thymeleaf, JavaScript, jQuery, Ajax, Bootstrap<br>
-<span class="y">[AI  ]</span> Claude Code, 자체 제작 스킬, 작업 2 + 검증 1 세션<br>
+<span class="y">[AI  ]</span> Claude Code, 자체 제작 스킬, 작업 2 + 검증 1 + PM 1 세션<br>
 <span class="p">$</span> java -version<br>
 <span class="g">JDK 1.8 ~ 21</span> <span class="p">프로젝트별 환경 구성과 운영</span><br>
-<span class="p">$</span> git log --oneline -n 1 .gitlab-ci.yml<br>
-<span class="g">deploy</span> <span class="p">master push 시 Docker 자동 배포, 회사 표준으로 채택</span> <span class="cur"></span>
+<span class="p">$</span> cat deploy.txt<br>
+<span class="g">deploy</span> <span class="p">master push 시 Docker 자동 배포</span> <span class="cur"></span>
         </div>
         <div data-con="method">
 <span class="bar">shin@backend: method.java</span>
-<span class="code">String name = Optional.ofNullable(user).map(User::getName).orElse(<span class="y">""</span>); <span class="p">// user.getName()부터 부르면 user가 null일 때 NPE</span></span><br>
+<span class="code"><span class="p">// user가 null이어도 NPE 없이 처리한다</span></span><br>
+<span class="code">String name = Optional.ofNullable(user)</span><br>
+<span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.map(User::getName).orElse(<span class="y">""</span>);</span><br>
 <span class="code"></span><br>
-<span class="code"><span class="b">catch</span> (SettlementException e) { <span class="p">// Exception으로 받으면 취약점, 원인이 묻힌다</span></span><br>
-<span class="code">&nbsp;&nbsp;&nbsp;&nbsp;log.error(<span class="y">"정산 실패 month={} code={}"</span>, month, e.getCode()); <span class="p">// e를 그대로 넘기면 내부 정보가 로그에 남는다</span></span><br>
+<span class="code"><span class="p">// 예외를 종류별로 받아 원인을 구분한다</span></span><br>
+<span class="code"><span class="b">try</span> {</span><br>
+<span class="code">&nbsp;&nbsp;&nbsp;&nbsp;settlements.calculate(month);</span><br>
+<span class="code">} <span class="b">catch</span> (SettlementException e) {</span><br>
+<span class="code">&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">// 로그에는 정산 월과 오류 코드만 남긴다</span></span><br>
+<span class="code">&nbsp;&nbsp;&nbsp;&nbsp;log.error(<span class="y">"정산 실패 month={} code={}"</span>, month, e.getCode());</span><br>
+<span class="code">&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">// 로그는 여기서 남기고, 처리는 상위에서 한다</span></span><br>
+<span class="code">&nbsp;&nbsp;&nbsp;&nbsp;<span class="b">throw</span> e;</span><br>
+<span class="code">} <span class="b">catch</span> (ExternalApiException e) {</span><br>
+<span class="code">&nbsp;&nbsp;&nbsp;&nbsp;log.warn(<span class="y">"연계 실패 month={} code={}"</span>, month, e.getCode());</span><br>
 <span class="code">&nbsp;&nbsp;&nbsp;&nbsp;<span class="b">throw</span> e;</span><br>
 <span class="code">}</span><br>
 <span class="code"></span><br>
-<span class="code"><span class="b">if</span> (!ALLOWED_EXT.contains(ext(file)) || !ALLOWED_MIME.contains(detectMime(file)) || file.getSize() &gt; MAX_SIZE)</span><br>
-<span class="code">&nbsp;&nbsp;&nbsp;&nbsp;<span class="b">throw new</span> BadRequestException(<span class="y">"허용되지 않은 파일"</span>); <span class="p">// 확장자만 보면 우회된다. 실제 형식과 크기까지</span></span><br>
-<span class="code">String stored = UUID.randomUUID() + <span class="y">"."</span> + ext(file); <span class="p">// 원본 파일명을 경로에 쓰면 경로 조작</span></span><br>
+<span class="code"><span class="p">// 확장자와 함께 실제 파일 형식과 크기를 검사한다</span></span><br>
+<span class="code"><span class="b">if</span> (!ALLOWED_EXT.contains(ext(file))</span><br>
+<span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|| !ALLOWED_MIME.contains(detectMime(file))</span><br>
+<span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|| file.getSize() &gt; MAX_SIZE)</span><br>
+<span class="code">&nbsp;&nbsp;&nbsp;&nbsp;<span class="b">throw new</span> BadRequestException(<span class="y">"허용되지 않은 파일"</span>);</span><br>
+<span class="code"><span class="p">// 저장 파일명은 새로 만들어 경로 조작을 막는다</span></span><br>
+<span class="code">String stored = UUID.randomUUID() + <span class="y">"."</span> + ext(file);</span><br>
 <span class="code"></span><br>
-<span class="code"><span class="b">int</span> limit = config.getInt(<span class="y">"settlement.limit"</span>); <span class="p">// 코드에 박으면 바꿀 때마다 배포</span></span><br>
+<span class="code"><span class="p">// 코드에 고정하면 값이 바뀔 때마다 코드를 수정해야 한다</span></span><br>
+<span class="code"><span class="b">int</span> limit = config.getInt(<span class="y">"settlement.limit"</span>);</span><br>
 <span class="code"></span><br>
-<span class="code">Snapshot snap = snapshots.save(); <span class="p">// 되돌릴 지점 없이 반영하면 복구 불가</span></span><br>
+<span class="code"><span class="p">// 반영 전에 원복 지점을 만든다</span></span><br>
+<span class="code">Snapshot snap = snapshots.save();</span><br>
 <span class="code"><span class="b">try</span> {</span><br>
 <span class="code">&nbsp;&nbsp;&nbsp;&nbsp;settlements.apply(result);</span><br>
 <span class="code">} <span class="b">catch</span> (DataAccessException e) {</span><br>
 <span class="code">&nbsp;&nbsp;&nbsp;&nbsp;snapshots.restore(snap); <span class="p">// 원복 먼저, 수정은 그다음</span></span><br>
-<span class="code">&nbsp;&nbsp;&nbsp;&nbsp;<span class="b">throw</span> e; <span class="p">// 원복했다고 삼키지 않는다</span></span><br>
+<span class="code">&nbsp;&nbsp;&nbsp;&nbsp;<span class="b">throw</span> e; <span class="p">// 원복 후에도 예외는 상위로 전달한다</span></span><br>
 <span class="code">}</span> <span class="cur"></span>
         </div>
       </div>
@@ -320,51 +357,31 @@ td.n{font-weight:700;width:210px}
 
 <section class="how" id="how">
   <div class="wrap">
-    <div class="sec-h">
-      <h2>일하는 방식</h2>
-      <div>
-        <p class="big">시작은 누구나 할 수 있습니다. 끝을 매듭지어야 시스템입니다.</p>
-        <p class="sub">여섯 가지 기준으로 일합니다. 전부 운영 중인 시스템에서 몸으로 배운 것입니다.</p>
-      </div>
-    </div>
+    <h2 class="how-t">마무리가 중요합니다.</h2>
     <div class="list">
       <article>
-        <h3>끝까지</h3>
-        <p class="key">프로젝트의 마무리를 일의 기준으로 삼습니다.</p>
-        <p>요구사항 분석부터 설계, 구현, 배포, 운영까지 맡아 왔고, 전임자와 문서가 없는 시스템도 소스 분석부터 시작해 안정화했습니다.</p>
+        <h3 class="key">맡은 프로젝트는 오픈과 안정화까지 마칩니다.</h3>
+        <p>요구사항 분석부터 설계, 구현, 배포, 운영까지 맡아 왔습니다.<br>전임자와 문서가 없는 시스템도 소스 분석부터 시작해 안정화했습니다.</p>
       </article>
       <article>
-        <h3>오류와 원복</h3>
-        <p class="key">오류는 고치고 끝내지 않고 기록해 둡니다.</p>
-        <p>같은 문제가 다시 나오지 않도록 개발 단계에서 미리 막는 쪽을 택하고, 프로젝트마다 검출된 취약점을 조치하며 쌓인 지식으로 다음 프로젝트에서는 같은 취약점을 미리 대비합니다. 운영에서만 확인되는 기능은 운영과 최대한 같은 개발 환경을 만들어 미리 테스트합니다. 반영 전에는 되돌릴 길부터 확보하고, 문제가 생기면 먼저 원복해 서비스를 정상으로 돌려놓은 다음 원인을 고쳐 다시 반영합니다.</p>
-        <div class="six">
-          <div><b>기록</b><span>오류는 기록하고, 같은 문제는 개발 단계에서 차단</span></div>
-          <div><b>대비</b><span>검출된 취약점 조치로 쌓인 지식으로 다음 프로젝트 미리 대비</span></div>
-          <div><b>같은 환경</b><span>개발 환경을 운영과 최대한 같게 구성</span></div>
-          <div><b>미리 테스트</b><span>운영에서만 드러나는 경우의 수 최소화</span></div>
-          <div><b>되돌릴 길</b><span>반영 전에 되돌릴 길부터 확보</span></div>
-          <div><b>원복 먼저</b><span>문제가 생기면 원복 먼저, 수정은 그다음</span></div>
-        </div>
+        <h3 class="key">오류는 고친 뒤 원인과 조치를 기록합니다.</h3>
+        <p>기록한 오류가 다시 나지 않게 개발 단계에서 막고, 프로젝트마다 조치한 취약점은 다음 프로젝트에서 미리 점검합니다.<br>운영에서만 확인되는 기능은 운영과 최대한 같은 개발 환경을 만들어 미리 테스트합니다.<br>반영 전에는 원복 방법을 먼저 준비하고, 문제가 생기면 원복해 서비스를 정상화한 뒤 원인을 고쳐 다시 반영합니다.</p>
       </article>
       <article>
-        <h3>고객의 말</h3>
-        <p class="key">고객은 개발자가 아니니 같은 요구도 사람마다 다르게 표현합니다.</p>
-        <p>"이 화면이 느리다", "숫자가 이상하다", "이것도 되게 해 달라"는 말을 들으면 되묻기 전에 먼저 해석합니다. 그 뒤에 있는 실제 필요를 짚어 화면과 데이터 구조, 처리 순서로 옮겨 정리한 다음, 그 결과를 들고 한 번에 확인받습니다. 같은 것을 여러 번 캐물으면 고객이 지치기 때문입니다. 확인받을 때는 개발 용어를 섞지 않고 고객이 쓰는 말로 바꿔 설명합니다. 요청한 말을 그대로 만드는 것보다 고객이 원하는 결과가 나오게 만드는 쪽을 택합니다.</p>
+        <h3 class="key">고객의 요청을 화면과 데이터 구조로 정리해 한 번에 확인받습니다.</h3>
+        <p>"이 화면이 느리다", "숫자가 이상하다" 같은 요청을 받으면 실제로 필요한 것이 무엇인지 먼저 정리합니다.<br>화면과 데이터 구조, 처리 순서로 정리한 결과를 보여 드리고 확인받습니다.<br>같은 내용을 여러 번 묻지 않기 위해서입니다.<br>설명할 때는 개발 용어 대신 고객이 쓰는 말을 쓰고, 요청 문구보다 고객이 원하는 결과에 맞춰 만듭니다.</p>
       </article>
       <article>
-        <h3>바뀌는 값</h3>
-        <p class="key">바뀔 수 있는 값은 코드에 박아 두지 않습니다.</p>
-        <p>메뉴, 권한, 정산 기준처럼 운영 중에 달라지는 것은 설정과 데이터로 빼서 코드를 고치지 않고도 바꿀 수 있게 만듭니다. 기능은 모듈 단위로 나누고 서로 직접 붙지 않게 해서, 한 곳을 고칠 때 다른 곳이 같이 깨지지 않도록 결합도를 낮춥니다. 사내 CMS에서 메뉴, 게시판, 팝업, 배너를 그렇게 떼어 낸 것이 한 예입니다.</p>
+        <h3 class="key">운영 중 바뀌는 값은 설정과 데이터로 관리합니다.</h3>
+        <p>메뉴, 권한, 정산 기준처럼 운영 중에 바뀌는 값은 설정과 데이터로 분리해, 코드를 수정하지 않고 바꿀 수 있게 합니다.<br>기능은 모듈 단위로 나눠 한 곳을 고쳐도 다른 기능에 영향이 없게 합니다.<br>사내 CMS의 메뉴, 게시판, 팝업, 배너도 이런 모듈 단위로 나눴습니다.</p>
       </article>
       <article>
-        <h3>화면</h3>
-        <p class="key">화면은 안의 로직이 아무리 복잡해도 처음 본 사람이 설명 없이 쓸 수 있어야 합니다.</p>
-        <p>제조 현장에서는 컴퓨터가 익숙하지 않은 작업자가 두 번 안에 원하는 정보에 닿도록 버튼과 글자를 키우고 포커스 순서를 작업 순서에 맞췄습니다. 복잡함은 코드 안에서 개발자가 감당하고 사용자 앞에는 쉬움만 남기려 합니다.</p>
+        <h3 class="key">처음 쓰는 사람도 설명 없이 쓸 수 있게 만듭니다.</h3>
+        <p>제조 현장에서는 컴퓨터에 익숙하지 않은 작업자를 위해 버튼과 글자를 키웠습니다.<br>두 번의 조작으로 원하는 정보를 볼 수 있게 하고, 입력 순서를 실제 작업 순서에 맞췄습니다.</p>
       </article>
       <article>
-        <h3>AI</h3>
-        <p class="key">생성형 AI는 개발에 적극적으로 씁니다.</p>
-        <p>다만 AI 코드는 100% 정답이 아니고 책임은 제게 있으니, 어떤 작업을 AI에 맡길지 실측으로 기준을 세우고, 결과물은 여러 AI가 서로 검증한 뒤에야 통과시키는 절차를 만들어 사내에 정착시켰습니다. 지금은 작업 세션 2개와 검증 세션 1개, 이를 지휘하는 PM 세션 1개로 나눠 진행합니다. 그렇게 확보한 시간으로 GitLab CI/CD와 Docker 기반 자동 배포 개발 서버를 만들었고, 회사 표준이 되어 다음 프로젝트의 개발 환경 세팅을 맡았습니다.</p>
+        <h3 class="key">생성형 AI를 개발에 쓰고, 결과는 검증을 거쳐 반영합니다.</h3>
+        <p>다만 AI 코드는 100% 정답이 아니고 책임은 제게 있습니다.<br>그래서 AI가 바꾼 코드는 diff로 직접 확인한 뒤 반영합니다.<br>어떤 작업을 AI에 맡길지 실측으로 기준을 세웠습니다.<br>결과물을 여러 AI가 서로 검증한 뒤에야 통과시키는 절차를 만들어 사내에 정착시켰습니다.<br>지금은 작업 세션 2개와 검증 세션 1개, 이를 관리하는 PM 세션 1개로 나눠 진행합니다.<br>반복 구현을 AI에 맡겨 확보한 시간으로 GitLab CI/CD와 Docker 기반 자동 배포 개발 서버를 만들었습니다.<br>다음 프로젝트의 개발 환경 구성도 맡았습니다.</p>
       </article>
     </div>
   </div>
@@ -375,24 +392,24 @@ td.n{font-weight:700;width:210px}
     <div class="sec-h">
       <h2>주요 사례</h2>
       <div>
-        <p class="big">숫자 하나가 어긋나면 신뢰가 무너집니다. 그래서 운영과 같은 환경을 먼저 만들고 검증합니다.</p>
-        <p class="sub">직접 구축하거나 운영한 공개 사이트 네 곳입니다. 펼치면 문제와 접근과 결과를 볼 수 있습니다.</p>
+        <p class="big">운영과 같은 환경에서 검증한 뒤 반영한 사례입니다.</p>
+        <p class="sub">직접 구축하거나 운영한 사례 다섯 건입니다.<br>펼치면 문제, 접근, 해결, 성과를 볼 수 있습니다.</p>
       </div>
     </div>
     <div class="cards">
 
       <article class="case">
         <div class="im"><img src="img/seoul.jpg" alt="서울연구원 홈페이지 첫 화면" loading="lazy" width="1280" height="800"></div>
-        <h3>서울연구원, 레거시 전환과 운영 인수</h3>
-        <p class="meta">공공기관, 구축 후 유지보수까지 인수. 2024.11 ~ 2025.02</p>
+        <h3>서울연구원, 레거시 전환과 운영</h3>
+        <p class="meta">공공기관, 구축 후 유지보수까지 맡음.<br>2024.10 ~ 2025.01</p>
         <p class="stack">Java, Spring, MyBatis, MySQL, Oracle, 데이터 이관</p>
         <details>
-          <summary>문제와 접근</summary>
+          <summary>문제, 접근, 해결, 성과</summary>
           <dl>
-            <dt>문제</dt><dd>연구보고서, 기사, 채용, 파일과 미디어가 중심인 사이트가 PHP 드루팔 레거시 구조에 묶여 있었습니다. 문서가 없어 구조 파악부터 해야 했고 유지보수와 조회 성능 모두 제약이 컸습니다.</dd>
-            <dt>접근</dt><dd>맞춤형 DB 구조를 직접 분석해 Java와 Spring으로 재설계했습니다. 텍스트 데이터는 SQL로 1차 이관하고, 파일 데이터는 Java 이관 기능을 따로 구현했으며, URL 매핑 컨트롤러로 이관 검증 자체를 기능으로 만들어 원본과 대조했습니다.</dd>
-            <dt>해결</dt><dd>외부 기관에 제공하는 API 송수신을 협의하고 검증했으며, 인사팀 DB와 연동해 수기로 갱신하던 조직도를 자동화했습니다. 구축 후 유지보수까지 인수해 SSL 인증서 교체와 외부 API 이슈에 대응했습니다.</dd>
-            <dt>성과</dt><dd>레거시 구조를 현대화하고 조직도 갱신을 자동화했습니다. 파일과 미디어 중심 사이트의 DB 조회 구조와 성능을 개선해 운영을 안정화했습니다.</dd>
+            <dt>문제</dt><dd>연구보고서, 기사, 채용, 파일과 미디어가 중심인 사이트가 PHP 드루팔 레거시 구조에 묶여 있었습니다.<br>문서가 없어 구조 파악부터 해야 했고 유지보수와 조회 성능 모두 제약이 컸습니다.</dd>
+            <dt>접근</dt><dd>기존 드루팔 사이트의 DB 구조를 직접 분석해 Java와 Spring으로 재설계했습니다.<br>텍스트 데이터는 SQL로 1차 이관하고, 파일 데이터는 따로 구현한 Java 이관 기능으로 옮겼습니다.<br>URL 매핑 컨트롤러로 이관 검증 자체를 기능으로 만들어 원본과 대조했습니다.</dd>
+            <dt>해결</dt><dd>외부 기관에 제공하는 API 송수신을 협의하고 검증했으며, 인사팀 DB와 연동해 수기로 갱신하던 조직도를 자동화했습니다.<br>구축 후 유지보수까지 맡아 SSL 인증서 교체와 외부 API 이슈에 대응했습니다.</dd>
+            <dt>성과</dt><dd>레거시 구조를 현대화했습니다.<br>파일과 미디어 중심 사이트의 DB 조회 구조와 성능을 개선해 운영을 안정화했습니다.</dd>
           </dl>
           <p class="site"><a href="https://www.si.re.kr/" target="_blank" rel="noopener">사이트 열기</a></p>
         </details>
@@ -400,33 +417,58 @@ td.n{font-weight:700;width:210px}
 
       <article class="case">
         <div class="im"><img src="img/neulbom.jpg" alt="늘봄허브 첫 화면" loading="lazy" width="1280" height="800"></div>
-        <h3>늘봄허브, 다중 권한 플랫폼과 만족도 통계 허브</h3>
-        <p class="meta">교육, 학교와 교육청 단위 방과후 플랫폼. 2026.04 ~ 진행 중</p>
-        <p class="stack">Java, Spring, MyBatis, 권한 제어, AI 기반 개발</p>
+        <h3>늘봄허브, 역할별 만족도 조사와 통계 허브</h3>
+        <p class="meta">교육, 학교와 교육청 단위 방과후 플랫폼.<br>2026.05 ~ 진행 중</p>
+        <p class="stack">Java, Spring, MyBatis, 역할별 화면, AI 기반 개발</p>
         <details>
-          <summary>문제와 접근</summary>
+          <summary>문제, 접근, 해결, 성과</summary>
           <dl>
-            <dt>문제</dt><dd>개인강사, 기관회원, 학교회원, 관리자마다 보아야 할 메뉴와 데이터가 달랐고, 학교와 교육청 단위로 흩어져 있던 만족도 조사와 현황 통계를 한곳에서 다뤄야 했습니다.</dd>
-            <dt>접근</dt><dd>역할별 접근 제어를 설계해 메뉴 권한과 데이터 권한을 분리하고, 만족도 조사와 통계 요청 기능을 표준화했습니다. 메뉴 단위로 기준이 되는 기능을 먼저 완성한 뒤 같은 패턴으로 확장했습니다. 이 프로젝트부터 AI 기반 개발을 전면 적용했고, 그 전까지는 디버깅에 도움을 받는 정도였습니다.</dd>
+            <dt>문제</dt><dd>개인강사, 기관회원, 학교회원, 관리자마다 보아야 할 메뉴와 데이터가 달랐습니다.<br>학교와 교육청 단위로 흩어져 있던 만족도 조사와 현황 통계도 한곳에서 다뤄야 했습니다.</dd>
+            <dt>접근</dt><dd>맡은 만족도 조사 화면에서 역할별로 볼 수 있는 메뉴와 데이터를 나누고, 만족도 조사와 통계 요청 기능을 표준화했습니다.<br>메뉴 단위로 기준이 되는 기능을 먼저 완성한 뒤 같은 패턴으로 확장했습니다.<br>이 프로젝트부터 AI 기반 개발을 전면 적용했습니다.</dd>
             <dt>해결</dt><dd>학교, 교육청, 프로그램별 만족도 통계 페이지를 제작해 배포하고 하나의 허브로 묶었습니다.</dd>
-            <dt>성과</dt><dd>역할이 늘어나도 같은 구조로 확장할 수 있게 됐고, 흩어져 있던 통계를 권한에 맞게 한 화면에서 조회하고 추출하게 됐습니다. 개발을 마치고 하자 대응을 이어가고 있습니다.</dd>
+            <dt>성과</dt><dd>역할이 늘어나도 같은 구조로 확장할 수 있게 됐고, 흩어져 있던 통계를 사용자가 권한에 맞게 한 화면에서 조회하고 내려받을 수 있게 됐습니다.<br>개발을 마치고 운영 중 수정 요청에 대응하고 있습니다.</dd>
           </dl>
           <p class="site"><a href="https://neulbomhub.kosac.re.kr/" target="_blank" rel="noopener">사이트 열기</a></p>
         </details>
       </article>
 
       <article class="case">
+        <div class="im mig">
+          <table>
+            <tr><th>항목</th><th>작업 전</th><th>작업 후</th></tr>
+            <tr><td>톰캣</td><td>4개</td><td>6개로 분리</td></tr>
+            <tr><td>첨부 저장소</td><td>WAS 추가 디스크</td><td>NAS 1,000GB</td></tr>
+            <tr><td>자동 기동</td><td>없음</td><td>아파치, 톰캣 6개</td></tr>
+            <tr><td>로그 정리</td><td>일부, 최대 72GB</td><td>전체 순환</td></tr>
+            <tr><td>DB 백업</td><td>DB 한 개</td><td>DB 두 개</td></tr>
+          </table>
+        </div>
+        <h3>세종시문화관광재단 누리집, 운영 서버 이관</h3>
+        <p class="meta">문화와 관광, 재단 누리집 4개 사이트와 관리자.<br>2026.10, 단독 수행</p>
+        <p class="stack">Naver Cloud VPC, Rocky Linux, Tomcat 9, Apache, mod_jk, MariaDB, NAS</p>
+        <details>
+          <summary>문제, 접근, 해결, 성과</summary>
+          <dl>
+            <dt>문제</dt><dd>대상은 문화관광, 미식여행, 관광사진 아카이브, 한글문화도시 4개 사이트입니다.<br>이 가운데 앞의 세 곳이 한 톰캣에서 함께 실행되고 있었습니다.<br>서버를 다시 켜면 서비스를 직접 실행해야 했습니다.<br>로그 정리도 일부만 돼 있어 한 사이트의 로그가 72GB까지 쌓여 있었습니다.</dd>
+            <dt>접근</dt><dd>사이트마다 앱과 소스 저장소 구조를 나눴습니다.<br>새 서버에는 톰캣 6개를 나눠 구성했습니다.<br>서버가 켜질 때 아파치와 톰캣이 자동으로 실행되게 하고, 전체 로그가 순환되게 설정했습니다.<br>DB 두 개를 모두 백업하게 하고, 첨부 저장소는 NAS로 옮겼습니다.</dd>
+            <dt>해결</dt><dd>첨부 증분 이관, DB 이관, 행 수 대조 스크립트를 만들어 시험 이관을 반복했습니다.<br>시험 중 70분 동안 요청이 없다가 들어온 첫 요청은 응답까지 20~40초가 걸렸습니다.<br>연결 유지 설정을 넣어 응답 시간을 0.1초대로 줄였습니다.</dd>
+            <dt>성과</dt><dd>시험 이관에서 첨부 전송 76개 작업이 모두 성공했습니다.<br>한글문화도시 사이트 DB는 테이블 51개, 행 412,463건이 기존 서버와 새 서버에서 같았습니다.<br>완료보고서, 백업과 복구, 운영 인수인계 등 서류 5종을 작성했습니다.</dd>
+          </dl>
+        </details>
+      </article>
+
+      <article class="case">
         <div class="im"><img src="img/anseong.jpg" alt="안성시 무상교통 누리집 첫 화면" loading="lazy" width="1280" height="800"></div>
         <h3>교통비 정산 시스템, 안성과 제주</h3>
-        <p class="meta">공공과 교통, 유지보수로 이어받은 지자체 교통비 지원금 정산 SaaS 2종. 2024.06 ~ 07, 2025.10 ~ 진행 중</p>
-        <p class="stack">Spring Boot, Docker, Naver Cloud, 외부 API 연계, 정합성 검증</p>
+        <p class="meta">공공과 교통, 유지보수로 이어받은 안성과 제주 두 지자체의 교통비 지원금 정산 SaaS.<br>2024.06 ~ 07, 2025.10 ~ 2026.09</p>
+        <p class="stack">Spring Boot, Docker, Naver Cloud Kubernetes, 외부 API 연계, 정합성 검증</p>
         <details>
-          <summary>문제와 접근</summary>
+          <summary>문제, 접근, 해결, 성과</summary>
           <dl>
-            <dt>문제</dt><dd>지자체 교통비 지원금처럼 금액과 직결되는 기능은 정산 숫자가 한 건만 어긋나도, 알림이 한 번만 빗나가도 사용자 신뢰에 바로 영향을 줍니다. 안성과 제주 두 시스템 모두 코레일에서 교통 데이터를 받는 구조라, 이어받았을 때는 개발 환경에서 검증이 안 되고 운영에 반영해야만 결과를 볼 수 있는 상태였습니다.</dd>
-            <dt>접근</dt><dd>정산 오류를 실제 케이스로 재현하고 검증한 뒤 반영했습니다. 운영에서만 확인되던 기능을 개발 환경에서 확인하려고 외부 기관에 우리 개발 서버의 접속 허용을 요청했습니다. 기관 쪽이 보안을 이유로 난색을 보여, 검증 없이 반영해 정산이 틀리면 그쪽 기관도 함께 곤란해진다는 점을 사례로 정리해 설명하고 보안 요구는 우리가 맞추겠다고 제안했습니다. 접속 전용 PC를 따로 두고 그 용도 외 프로그램은 모두 지우며 CCTV에 보이는 자리에 두는 조건으로 IP 허용을 받았고, 과거 전문 파일을 개발 서버가 읽어 운영과 같은 흐름으로 태우는 환경을 만들었습니다.</dd>
-            <dt>해결</dt><dd>정산 로직과 알림을 분석해 수정하고 테스트한 뒤 운영에 반영했습니다. 이 제안은 처음에 시간 대비 필요성을 이유로 반려됐으나, 같은 누락이 반복되면서 대응에 쓰는 시간이 만드는 시간보다 커졌다는 근거로 다시 제안해 진행됐습니다.</dd>
-            <dt>성과</dt><dd>정산 숫자와 알림의 정확성이 개선되고 운영 오류가 줄었습니다. 검증 환경과 절차는 문서로 남겨 지금은 후임자도 같은 환경에서 검증합니다. 재투입 뒤 제주도 사업까지 확대 운영 중입니다.</dd>
+            <dt>문제</dt><dd>지자체 교통비 지원금 정산은 금액과 직결되는 기능이라 정산과 알림에 오류가 없어야 합니다.<br>안성과 제주 두 시스템 모두 코레일에서 교통 데이터를 받는 구조입니다.<br>이어받았을 때는 개발 환경에서 검증이 안 되고, 운영에 반영해야만 결과를 볼 수 있었습니다.</dd>
+            <dt>접근</dt><dd>운영과 같은 검증 환경을 만들자고 사내에 제안했을 때는 처음에 받아들여지지 않았습니다.<br>정산과 알림 문의에 대응하는 시간이 환경을 만드는 시간보다 많아진 것을 근거로 다시 제안했습니다.<br>운영에서만 확인되던 기능을 개발 환경에서 검증하려고 외부 기관에 시스템 접속 허용을 요청했습니다.<br>기관 쪽은 보안을 이유로 어렵다고 했습니다.<br>검증 없이 반영하면 정산 오류가 기관 쪽 운영에도 영향을 준다는 점을 사례로 설명했습니다.<br>보안 요구는 저희 쪽에서 맞추겠다고 제안했습니다.<br>기관 시스템에 접속하는 전용 PC를 따로 두고 그 용도 외 프로그램은 모두 지웠습니다.<br>이 PC 한 대를 CCTV에 보이는 자리에 두는 조건으로 IP 허용을 받았습니다.<br>이 PC로 받은 교통 데이터 파일을 개발 서버로 옮겨 운영과 같은 흐름으로 처리하는 환경을 만들었습니다.</dd>
+            <dt>해결</dt><dd>정산 오류를 실제 케이스로 재현했습니다.<br>정산 로직과 알림을 분석해 수정하고, 이 환경에서 테스트한 뒤 운영에 반영했습니다.</dd>
+            <dt>성과</dt><dd>정산 숫자와 알림의 정확성이 개선되고 운영 오류가 줄었습니다.<br>재투입 뒤 제주도 사업까지 맡았습니다.<br>검증 환경과 절차는 문서로 남겨 후임자도 같은 환경에서 검증할 수 있게 했습니다.</dd>
           </dl>
           <p class="site"><a href="https://anseong.forcitizen.kr/" target="_blank" rel="noopener">안성 사이트 열기</a><a href="https://jeju.forcitizen.kr/" target="_blank" rel="noopener">제주 사이트 열기</a></p>
         </details>
@@ -435,15 +477,15 @@ td.n{font-weight:700;width:210px}
       <article class="case">
         <div class="im"><img src="img/chemitop.jpg" alt="케미탑 홈페이지 첫 화면" loading="lazy" width="1280" height="800"></div>
         <h3>스마트공장 MES, 7개 제조사 구축</h3>
-        <p class="meta">제조, 설비 데이터 수집, 현장 화면, 바코드, 수발주. 2023.01 ~ 2024.01</p>
+        <p class="meta">제조, 설비 데이터 수집, 현장 화면, 바코드, 수발주.<br>2023.01 ~ 2024.01, 이미지는 MES를 적용한 고객사 홈페이지</p>
         <p class="stack">PHP, CodeIgniter3, MySQL, MariaDB, Google Charts, 현장 UX</p>
         <details>
-          <summary>문제와 접근</summary>
+          <summary>문제, 접근, 해결, 성과</summary>
           <dl>
-            <dt>문제</dt><dd>설비에서 올라오는 데이터를 현장에서 바로 읽을 수 있어야 했고, 기획자가 없어 업무 흐름을 정리하는 일부터 개발자가 해야 하는 환경이었습니다. 공장마다 공정이 달라 같은 화면을 그대로 쓸 수도 없었습니다.</dd>
-            <dt>접근</dt><dd>설비 IO 데이터 수집과 실시간 설비 모니터링, 수발주와 MRP, 바코드 관리, 전자결재 폼 빌더, 사용자별 메뉴 권한까지 제조 실행계층 전체를 맡았습니다. 데이터가 없는 설비는 로딩 후 조회하도록 쿼리를 나눠 서버 부하를 줄였습니다.</dd>
-            <dt>해결</dt><dd>매번 현장에 가서 작업 흐름을 묻고 시스템에 옮겼습니다. 공장 PC와 바코드 기기 환경에 맞춰 버튼과 글자 크기, 포커스와 탭 이동 순서를 실제 작업 순서대로 다시 짰습니다.</dd>
-            <dt>성과</dt><dd>케미탑, 신화아이티, APCM, 휴코, 프레쉬아워, KCG, 한국기계 7개 제조사에 구축하고 적용했습니다. 컴퓨터가 익숙하지 않은 작업자가 두 번 안에 원하는 정보에 닿도록 화면을 구성했습니다.</dd>
+            <dt>문제</dt><dd>설비에서 올라오는 데이터를 현장에서 바로 읽을 수 있어야 했습니다.<br>기획자가 없어 업무 흐름을 정리하는 일부터 개발자가 해야 하는 환경이었습니다.<br>공장마다 공정이 달라 같은 화면을 그대로 쓸 수도 없었습니다.</dd>
+            <dt>접근</dt><dd>설비 IO 데이터 수집, 실시간 설비 모니터링, 수발주와 MRP, 바코드 관리를 맡았습니다.<br>전자결재 폼 빌더와 사용자별 메뉴 권한까지 맡았습니다.<br>데이터가 없는 설비는 로딩 후 조회하도록 쿼리를 나눠 서버 부하를 줄였습니다.</dd>
+            <dt>해결</dt><dd>매번 현장에 가서 작업 흐름을 묻고 시스템에 옮겼습니다.<br>공장 PC와 바코드 기기 환경에 맞춰 버튼과 글자를 키우고, 포커스와 탭 이동 순서를 실제 작업 순서에 맞췄습니다.</dd>
+            <dt>성과</dt><dd>케미탑, 신화아이티, APCM, 휴코, 프레쉬아워, KCG, 한국기계 7개 제조사에 구축하고 적용했습니다.<br>컴퓨터에 익숙하지 않은 작업자도 두 번의 조작으로 원하는 정보를 볼 수 있게 화면을 구성했습니다.</dd>
           </dl>
         </details>
       </article>
@@ -451,15 +493,15 @@ td.n{font-weight:700;width:210px}
     </div>
 
     <div class="ways">
-      <h3>사례 밖에서 쓰는 방식 두 가지</h3>
+      <h3>사례 밖에서도 쓰는 방식</h3>
       <div class="two">
         <div>
-          <h4>멱등 DDL로 여러 환경의 스키마를 맞춥니다</h4>
-          <p>다른 회사와 함께 개발하면 상대 회사 개발서버, 발주 기관 개발서버, 운영서버에 관리자와 사용자 DB 분리까지 겹쳐 반영 지점이 대여섯 곳이 됩니다. 수정하는 모든 DDL을 컬럼이 있어도 없어도 몇 번을 실행해도 같은 결과가 되게 작성해서, 하나의 DDL 세트를 어느 환경에 어떤 순서로 실행해도 무결성이 유지되게 했습니다. 반영 지점이 6곳이던 프로젝트를 스키마 불일치 없이 마쳤고 이후 협업 프로젝트에도 같은 방식을 씁니다.</p>
+          <h4>몇 번 실행해도 같은 결과가 되는 DDL로 여러 환경의 스키마를 맞춥니다</h4>
+          <p>다른 회사와 함께 개발하면 반영 지점이 대여섯 곳이 됩니다.<br>상대 회사 개발 서버, 발주 기관 개발 서버, 운영 서버에 관리자와 사용자 DB 분리까지 겹치기 때문입니다.<br>수정하는 모든 DDL은 컬럼이 있든 없든 몇 번을 실행해도 같은 결과가 되게 작성했습니다.<br>그래서 같은 DDL 세트를 어느 환경에 먼저 실행하든, 몇 번 실행하든 같은 스키마가 됩니다.<br>반영 지점이 6곳이던 프로젝트를 스키마 불일치 없이 마쳤고 이후 협업 프로젝트에도 같은 방식을 씁니다.</p>
         </div>
         <div>
-          <h4>반복되는 구축은 사내 솔루션으로 묶습니다</h4>
-          <p>공공과 문화 사이트를 만들 때마다 메뉴, 게시판, 팝업, 배너를 다시 만드는 비효율이 있었습니다. 반복 기능을 Laravel 기반 CMS로 구조화하고, 데이터가 바뀌는 시점에만 캐시를 자동으로 최신화하게 설계해 관리자가 쓰기 쉬운 재사용 솔루션으로 정리했습니다. 2026년 3월에서 4월 사이에 만들어 이후 구축에 쓰고 있습니다.</p>
+          <h4>반복 기능은 사내 CMS로 표준화합니다</h4>
+          <p>공공과 문화 사이트를 만들 때마다 메뉴, 게시판, 팝업, 배너를 다시 만드는 비효율이 있었습니다.<br>반복 기능을 Laravel 기반 CMS로 구조화했습니다.<br>데이터가 바뀔 때만 캐시를 자동으로 최신화하게 설계했습니다.<br>관리자가 쓰기 쉬운 재사용 솔루션으로 정리했습니다.<br>2026년 4월에서 5월 사이에 만들었습니다.</p>
         </div>
       </div>
     </div>
@@ -471,63 +513,65 @@ td.n{font-weight:700;width:210px}
     <div class="sec-h">
       <h2>프로젝트</h2>
       <div>
-        <p class="big">구축 15건, 동시 운영 11건, 스마트공장 MES 7개 제조사.</p>
-        <p class="sub">2023년 1월부터 지금까지 맡은 전부입니다. 최근 것이 위에 있습니다.</p>
+        <p class="big">구축 17건, 동시 운영 11건, 스마트공장 MES 7개 제조사.</p>
+        <p class="sub">2023년 1월부터 맡은 프로젝트입니다.<br>최근 것이 위에 있습니다.</p>
       </div>
     </div>
 
     <div class="block">
-      <h3>구축과 개발 15건</h3>
-      <p class="key">공공, 교육, 문화 사이트. 요구 분석부터 오픈까지.</p>
+      <h3>구축과 개발 17건</h3>
+      <p class="key">공공, 교육, 문화 사이트의 구축과 개발.</p>
       <div class="tw"><table>
         <tr><th>기간</th><th>프로젝트</th><th>내용</th></tr>
-        <tr><td class="k">2026.08 ~ <span class="run">진행 중</span></td><td class="n">충북테크노파크 재구축</td><td>PHP로 만들어진 기존 사이트를 기획예산처와 같은 자사 Java CMS 기반으로 재구축. Java 21, JBoss, MariaDB. 기획예산처 고도화와 병행</td></tr>
-        <tr><td class="k">2026.07 ~ <span class="run">진행 중</span></td><td class="n">기획예산처 고도화</td><td>재정경제부에서 분리 신설되는 부처 사이트 고도화를 단독 개발 중. Java 21, Spring Boot, 전자정부프레임워크 5.0, JBoss, CUBRID. GitLab CI/CD, Runner, Docker 기반 자동 배포 개발 서버를 구축해 회사 표준으로 채택됨</td></tr>
-        <tr><td class="k">2026.07 ~ <span class="run">진행 중</span></td><td class="n">세종 관광문화재단 (세종미식, 세종한글)</td><td>재단 산하 사이트 2종을 Java와 Spring으로 구축, 백엔드 전담</td></tr>
-        <tr><td class="k">2026.04 ~ <span class="run">진행 중</span></td><td class="n">늘봄허브</td><td>역할별 권한 분리와 학교, 교육청 단위 만족도 조사와 통계 허브 구축. 이 프로젝트부터 AI 기반 개발을 전면 적용. 개발 완료 후 하자 대응 중</td></tr>
-        <tr><td class="k">2026.03 ~ 04</td><td class="n">사내 Laravel CMS</td><td>메뉴, 게시판, 팝업, 배너 등 반복 구축 기능을 표준화한 사내 솔루션. 데이터 변경 시점에만 캐시를 자동 최신화</td></tr>
-        <tr><td class="k">2025.12 ~ 2026.03</td><td class="n">바이오코리아</td><td>오픈 직전에 투입돼 화면에 노출돼 있던 결제 등 핵심 로직을 안정화하고 일정 내 마무리</td></tr>
-        <tr><td class="k">2025.09 ~ 2026.02</td><td class="n">음성 화훼 통합정보</td><td>앱, 관리자, 사용자 3개 사이트로 구성된 통합정보시스템 신규 구축. 사이트 분석부터 오픈까지 수행. 농가별 통계와 엑셀 업로드, 제약조건 기반 무결성 데이터 적재</td></tr>
-        <tr><td class="k">음성 화훼와 병행</td><td class="n">중소기업창업진흥원</td><td>사내 개발자가 진행하던 건이 일정 내 완수가 어렵다고 판단돼 지원 투입. 두 프로젝트를 동시에 수행했고 요구사항 변동이 많은 사업이었으나 감리를 무사 통과</td></tr>
-        <tr><td class="k">2025.07 ~ 08</td><td class="n">경기도 장애인체육회</td><td>관리자 교부금 기능 담당. 사이트관리자, 기관관리자, 회계사 3개 권한별 역할 배정 기능 설계와 개발. 1개월 미만의 일정과 설계 담당 PM 교체 상황에서 후임자와 소통해 일정 내 완수</td></tr>
-        <tr><td class="k">2025.06 ~ 08</td><td class="n">충북 늘봄학교 기능개선</td><td>사용자, 관리자, 강사 페이지로 구성된 방과후 시스템 기능개선. 금액 관련 수치 불일치 문제를 중점 분석하고 수정해 정산 데이터 정합성 확보</td></tr>
-        <tr><td class="k">2025.06 ~ 07</td><td class="n">KMF (WordPress)</td><td>건강기능식품 홍보 사이트. 카페24 환경의 트래픽 이슈 대응, PDF 구글 드라이브 연동 뷰어와 QR코드 생성 기능</td></tr>
-        <tr><td class="k">2025.05 ~ 06</td><td class="n">세종 한글문화도시센터</td><td>사용자와 관리자 사이트 전반 개발 주도, 신입 개발자의 기능 이관 작업 가이드. 타 프로젝트 배정으로 중도 인계</td></tr>
-        <tr><td class="k">2025.03 ~ 05</td><td class="n">제천시립도서관</td><td>사용자, 관리자, 통합검색 3개 컨테이너 중 사용자와 관리자 페이지 담당. 예약 기능 중심. 통합검색 담당 신입 기술 멘토링을 병행하며 일정 내 오픈</td></tr>
-        <tr><td class="k">2024.11 ~ 2025.02</td><td class="n">서울연구원</td><td>PHP 드루팔 사이트를 Java Spring Framework로 전환 구축. 맞춤형 DB 마이그레이션, 외부 제공 API 개발, DB 최적화, 인사팀 DB 연동 조직도 자동화</td></tr>
-        <tr><td class="k">2024.04 ~ 05</td><td class="n">아트코리아랩</td><td>예술가 대상 공간과 장비 대여 사이트. 개발자 퇴사로 중단된 프로젝트를 인수해 예약 기능, SNS 로그인 등 미구현 요구사항 개발. 디자인팀과 협업해 퍼블리싱 다수</td></tr>
+        <tr><td class="k">2026.10 ~ <span class="run">진행 중</span></td><td class="n">창업진흥원 원스톱(K스타트업)</td><td>상담플랫폼 기능개선을 단독 개발 중.<br>기획예산처와 같은 Java CMS 코어로 소스를 구성하고 MariaDB로 전환.<br>업무 테이블 40개 설계, 관리자 상담관리 개발.<br>Java 21, Spring Boot</td></tr>
+        <tr><td class="k">2026.08 ~ <span class="run">진행 중</span></td><td class="n">충북테크노파크 재구축</td><td>PHP 기반 기존 사이트를 기획예산처와 같은 Java CMS 기반으로 재구축.<br>Java 21, Spring Boot, MariaDB, UTF-8.<br>조달청 입찰과 계약, 그룹웨어 회의실 예약 연계.<br>기획예산처 고도화와 병행</td></tr>
+        <tr><td class="k">2026.07 ~ <span class="run">진행 중</span></td><td class="n">기획예산처 고도화</td><td>기획재정부에서 분리 신설된 부처의 사이트 고도화를 단독 개발 중.<br>Java 21, Spring Boot 3.5, 전자정부프레임워크 5.0, WildFly, CUBRID.<br>GitLab CI/CD, Runner, Docker 기반 자동 배포 개발 서버 구축.<br>회사의 인정을 받아 다음 프로젝트 개발 환경 구성 전담</td></tr>
+        <tr><td class="k">2026.06 ~ <span class="run">진행 중</span></td><td class="n">세종시문화관광재단 (세종미식, 한글 비엔날레)</td><td>세종미식 누리집 개편과 이어진 기능개선, 2026 한글 비엔날레 사이트 개발, 백엔드 전담.<br>미식 사이트 소스 취약점 점검 지적 사항 전부 조치.<br>2026.10 재단 4개 사이트 운영 서버 이관 작업을 단독 수행해 톰캣 분리, 자동 기동, 로그 순환, DB 백업 구성</td></tr>
+        <tr><td class="k">2026.05 ~ <span class="run">진행 중</span></td><td class="n">늘봄허브</td><td>학교 만족도 조사 21개 화면 단독 개발, 역할별 메뉴와 데이터 분리, 계약 입력 개편.<br>2026.07 운영 오픈.<br>이 프로젝트부터 AI 기반 개발을 전면 적용.<br>운영 중 수정 요청 대응</td></tr>
+        <tr><td class="k">2026.04 ~ 05</td><td class="n">사내 Laravel CMS</td><td>메뉴, 게시판, 팝업, 배너 등 반복 구축 기능을 표준화한 사내 솔루션.<br>Laravel 12.<br>데이터 변경 시점에만 캐시를 자동 최신화</td></tr>
+        <tr><td class="k">2025.12 ~ 2026.04</td><td class="n">바이오코리아</td><td>오픈 직전에 투입돼 결제 기능의 보안 조치와 안정화.<br>일정 내 마무리</td></tr>
+        <tr><td class="k">2025.09 ~ 2026.03</td><td class="n">음성 화훼 통합정보</td><td>앱, 관리자, 사용자 3개 사이트로 구성된 통합정보시스템 신규 구축.<br>사이트 분석부터 오픈까지 수행.<br>농가별 통계와 엑셀 업로드, 제약조건 기반 무결성 데이터 적재</td></tr>
+        <tr><td class="k">음성 화훼와 병행</td><td class="n">창업진흥원 창업기업 확인시스템</td><td>진행 중이던 기능개선 사업에 지원으로 투입.<br>두 프로젝트를 동시에 수행.<br>요구사항 변동이 많은 사업에서 감리 통과</td></tr>
+        <tr><td class="k">2025.07 ~ 08</td><td class="n">경기도 장애인체육회</td><td>관리자 교부금 기능 담당.<br>사이트관리자, 기관관리자, 회계사 3개 권한별 역할 배정 기능 설계와 개발.<br>1개월 미만의 일정과 설계 담당 PM 교체 상황에서 후임자와 소통해 일정 내 완수</td></tr>
+        <tr><td class="k">2025.06 ~ 07</td><td class="n">충북 늘봄학교 기능개선</td><td>사용자, 관리자, 강사 페이지로 구성된 방과후 시스템 기능개선.<br>금액 관련 수치 불일치 문제를 중점 분석하고 수정해 정산 데이터 정합성 확보</td></tr>
+        <tr><td class="k">2025.06 ~ 07</td><td class="n">KMF (WordPress)</td><td>건강기능식품 홍보 사이트.<br>카페24 환경의 트래픽 이슈 대응, PDF 구글 드라이브 연동 뷰어와 QR코드 생성 기능</td></tr>
+        <tr><td class="k">2025.03 ~ 06</td><td class="n">세종 한글문화도시센터</td><td>사용자와 관리자 사이트 전반 개발 주도, 신입 개발자의 기능 이관 작업 가이드</td></tr>
+        <tr><td class="k">2025.01 ~ 08</td><td class="n">제천시립도서관</td><td>사용자, 관리자, 통합검색 3개 컨테이너 중 사용자와 관리자 페이지 담당.<br>예약 기능 중심.<br>통합검색 담당 신입 기술 멘토링을 병행하며 일정 내 오픈</td></tr>
+        <tr><td class="k">2024.10 ~ 2025.01</td><td class="n">서울연구원</td><td>PHP 드루팔 사이트를 Java Spring Framework로 전환 구축.<br>기존 DB 마이그레이션, 외부 제공 API 개발, DB 최적화, 인사팀 DB 연동 조직도 자동화</td></tr>
+        <tr><td class="k">2024.04 ~ 07</td><td class="n">충남개발공사 계약정보공개시스템</td><td>계약정보공개시스템 신규 구축과 최초 배포.<br>전자정부프레임워크, MySQL과 Oracle 다중 DB 연동</td></tr>
+        <tr><td class="k">2024.04 ~ 05</td><td class="n">아트코리아랩</td><td>예술가 대상 공간과 장비 대여 사이트.<br>퇴사한 개발자가 맡던 프로젝트를 이어받아 예약 기능, SNS 로그인 등 남은 요구사항을 마무리까지 개발.<br>디자인팀과 협업해 퍼블리싱 다수</td></tr>
       </table></div>
     </div>
 
     <div class="block">
       <h3>유지보수와 운영 11건</h3>
-      <p class="key">이어받은 시스템의 분석부터 안정화까지.</p>
+      <p class="key">맡은 시스템의 분석부터 안정화까지.</p>
       <div class="tw"><table>
         <tr><th>기간</th><th>시스템</th><th>내용</th></tr>
-        <tr><td class="k">2025.10 ~ <span class="run">진행 중</span></td><td class="n">교통비 정산 시스템 (안성, 제주)</td><td>Spring Boot 기반 무상교통 정산 SaaS 유지보수에 재투입, 제주도 사업까지 확대 운영. 외부 기관 IP 허용을 받아 운영 재현 검증 환경 구축. Docker 이미지 패키징, Git CI와 Naver Cloud CD 운영</td></tr>
-        <tr><td class="k">2025.07 ~ <span class="run">진행 중</span></td><td class="n">서울예술의전당</td><td>타사 이관 사업을 인수해 소스 분석 후 운영. 예약, 이벤트, 회원등급 등 다기능 사이트, PostgreSQL. 야간 반영 등 무중단 운영 요구 대응</td></tr>
-        <tr><td class="k">2025.06 ~ <span class="run">진행 중</span></td><td class="n">충북 늘봄학교</td><td>알림톡과 앱 푸시 관련 이슈 대응과 운영</td></tr>
-        <tr><td class="k">2025.02 ~ <span class="run">진행 중</span></td><td class="n">서울연구원, 서울아카이브</td><td>직접 구축한 사이트의 유지보수 연장. SSL 인증서 교체, 외부 수신 API 이슈 대응</td></tr>
-        <tr><td class="k">2024.06 ~ 07</td><td class="n">교통비 정산 시스템 (안성)</td><td>Spring Boot와 Docker 기반, Naver Cloud 연동 Git CI/CD 환경에서 배포와 운영. 미완성 상태로 이어받은 시스템의 이슈 대응</td></tr>
+        <tr><td class="k">2025.10 ~ 2026.09</td><td class="n">교통비 정산 시스템 (안성, 제주)</td><td>Spring Boot 기반 무상교통 정산 SaaS 유지보수에 재투입, 제주도 사업까지 확대 운영.<br>외부 기관 IP 허용을 받아 운영 재현 검증 환경 구축.<br>Docker 이미지 패키징, Git CI와 Naver Cloud CD 운영</td></tr>
+        <tr><td class="k">2025.07 ~ 2026.09</td><td class="n">예술의전당</td><td>타사 이관 사업을 인수해 소스 분석 후 운영.<br>예약, 이벤트, 회원등급 등 다기능 사이트, PostgreSQL.<br>무중단 운영 요구에 맞춰 서비스 중단 없이 반영</td></tr>
+        <tr><td class="k">2025.06 ~ 07</td><td class="n">충북 늘봄학교</td><td>알림톡과 앱 푸시 관련 이슈 대응과 운영</td></tr>
+        <tr><td class="k">2025.02 ~ 2026.09</td><td class="n">서울연구원, 서울정책아카이브</td><td>직접 구축한 사이트의 유지보수 연장.<br>SSL 인증서 교체, 외부 수신 API 이슈 대응</td></tr>
+        <tr><td class="k">2024.06 ~ 07</td><td class="n">교통비 정산 시스템 (안성)</td><td>Spring Boot와 Docker 기반, Naver Cloud 연동 Git CI/CD 환경에서 배포와 운영.<br>운영 중 이슈 대응</td></tr>
         <tr><td class="k">2024.05 ~ 07</td><td class="n">국립부여박물관</td><td>노후 시스템 제약 안에서 요구사항 대응, 게시판 태그 검색 이슈 해결, 웹 접근성 개선 사업</td></tr>
-        <tr><td class="k">2024.02 ~ 07</td><td class="n">청남대</td><td>형상관리 미비 사이트를 인수해 도청 방문으로 운영 서버 직접 반영. 파일 비교와 검증 절차를 세워 안정화</td></tr>
-        <tr><td class="k">2024.02 ~ 2026.07</td><td class="n">시흥형 기본교통비</td><td>코레일 데이터 가공과 DB 적재, 고객 매칭 정산. 스케줄러(배치) 이슈 대응, SQL 쿼리 개선, 현금 정산 요구사항 다수</td></tr>
-        <tr><td class="k">2024.02 ~ 07</td><td class="n">음성군청 새싹체험관</td><td>전임자 부재로 소스 전체 분석 후 운영. 개인과 단체회원 예약, JSP 화면 연산 과다로 인한 속도 저하 개선</td></tr>
-        <tr><td class="k">2024.02 ~ 07</td><td class="n">한국교육개발원, 세종시 문화재단</td><td>교육자 매칭 시스템은 4개 컨테이너로 나눠 운영하며 반영 기록 절차를 만들어 레거시 제약 속 기능 추가. 문화재단은 사전 승인을 받아 별도 환경에서 소스를 분석해 예약, 콘텐츠, 팝업 수정</td></tr>
-        <tr><td class="k">2024.02 ~ 07</td><td class="n">지하도상가 홍보</td><td>반영하려면 직접 방문하거나 현장 직원의 협조가 필요한 시스템. 변경분을 모아 일괄 반영하는 방식으로 운영</td></tr>
+        <tr><td class="k">2024.02 ~ 07</td><td class="n">청남대</td><td>형상관리가 안 된 사이트를 인수.<br>도청을 방문해 운영 서버에 직접 반영.<br>파일 비교와 검증 절차를 세워 안정화</td></tr>
+        <tr><td class="k">2024.02 ~ 2025.07</td><td class="n">시흥형 기본교통비</td><td>코레일 데이터 가공과 DB 적재, 고객 매칭 정산.<br>스케줄러(배치) 이슈 대응, SQL 쿼리 개선, 현금 정산 요구사항 다수</td></tr>
+        <tr><td class="k">2024.02 ~ 07</td><td class="n">음성군청 새싹체험관</td><td>전임자 부재로 소스 전체 분석 후 운영.<br>개인과 단체회원 예약, JSP 화면 연산 과다로 인한 속도 저하 개선</td></tr>
+        <tr><td class="k">2024.02 ~ 07</td><td class="n">한국교육개발원, 세종시 문화재단</td><td>4개 컨테이너로 나뉘어 운영되는 교육자 매칭 시스템에 반영 기록 절차를 만들고, 레거시 제약 속 기능 추가.<br>문화재단은 사전 승인을 받아 별도 환경에서 소스를 분석해 예약, 콘텐츠, 팝업 수정</td></tr>
+        <tr><td class="k">2024.02 ~ 07</td><td class="n">지하도상가 홍보</td><td>반영하려면 직접 방문하거나 현장 직원의 협조가 필요한 시스템.<br>변경분을 모아 일괄 반영하는 방식으로 운영</td></tr>
       </table></div>
     </div>
 
     <div class="block mes">
       <h3>스마트공장 MES, 7개 제조사</h3>
-      <p class="key">스마트공장 솔루션 회사, 2023.01 ~ 2024.01. 케미탑, 신화아이티, APCM, 휴코, 프레쉬아워, KCG, 한국기계. PHP8, CodeIgniter3, MySQL, MariaDB, Apache, Bootstrap4, jQuery, Google Charts, Ajax.</p>
+      <p class="key">스마트공장 솔루션 회사, 2023.01 ~ 2024.01.<br>케미탑, 신화아이티, APCM, 휴코, 프레쉬아워, KCG, 한국기계.<br>PHP8, CodeIgniter3, MySQL, MariaDB, Apache, Bootstrap4, jQuery, Google Charts, Ajax.</p>
       <ul>
-        <li><b>설비별 실시간 모니터링</b>: IO 통신 수집 데이터를 가공해 기기 온도, 동작 여부, 생산량, 가동시간을 Ajax 기반 실시간 차트로 시각화. 데이터 없는 설비는 로딩 처리 후 조회하도록 쿼리를 구성해 서버 부하 절감</li>
+        <li><b>설비별 실시간 모니터링</b>: IO 통신 수집 데이터를 가공해 기기 온도, 동작 여부, 생산량, 가동시간을 Ajax 기반 실시간 차트로 시각화.<br>데이터 없는 설비는 로딩 처리 후 조회하도록 쿼리를 구성해 서버 부하 절감</li>
         <li><b>수익 분석</b>: 매출 대비 매입 비율 차트, 연관 테이블 구조 설계로 데이터 정합성 확보</li>
-        <li><b>전자결재 폼 빌더</b>: 고객이 휴가, 지출결의서 등 결재 양식을 직접 생성. 사전 정의 class 기반으로 입력 필드, 서브테이블, datepicker가 자동 구성되는 구조</li>
+        <li><b>전자결재 폼 빌더</b>: 고객이 휴가, 지출결의서 등 결재 양식을 직접 생성.<br>사전 정의 class 기반으로 입력 필드, 서브테이블, datepicker가 자동 구성되는 구조</li>
         <li>입고 현황 캘린더, MRP 현재고 조회, 사용자별 메뉴 권한 관리(fancyTree), 나의 메뉴 즐겨찾기</li>
         <li><b>기획자 부재 환경에서 현장 작업자 중심 UX 직접 설계</b>: 텍스트와 버튼 확대, 주 사용 영역 자동 포커싱, 탭 동작 개선 등 바코드 기기와 현장 PC 최적화</li>
-        <li>중도 합류 후 잦은 고객 미팅으로 도메인을 빠르게 습득, "공장 상황을 한눈에"라는 핵심 요구에 맞춰 기능 간소화 주도</li>
+        <li>중도 합류 후 잦은 고객 미팅으로 현장 업무를 익히고, "공장 상황을 한눈에"라는 핵심 요구에 맞춰 기능 간소화 주도</li>
       </ul>
     </div>
   </div>
@@ -538,7 +582,7 @@ td.n{font-weight:700;width:210px}
     <div class="sec-h">
       <h2>기술</h2>
       <div>
-        <p class="big">Java와 Spring, 전자정부프레임워크 3.8부터 5.0까지. 서버 설정부터 자동 배포까지 직접 구성합니다.</p>
+        <p class="big">Java와 Spring, 전자정부프레임워크 3.8부터 5.0까지.<br>서버 설정부터 자동 배포까지 직접 구성합니다.</p>
       </div>
     </div>
     <div class="block">
@@ -555,9 +599,9 @@ td.n{font-weight:700;width:210px}
       <h3>인프라와 운영 경험</h3>
       <div class="tw"><table>
         <tr><td class="k">서버</td><td>Linux 서버 설정, JDK 1.8~21 환경 구성, Apache, Tomcat, JBoss 운영</td></tr>
-        <tr><td class="k">빌드와 배포</td><td>Jenkins와 Git 연동 빌드, 배포 구성. 기획예산처 프로젝트에서 GitLab CI/CD, GitLab Runner, Docker 기반 자동 배포 개발 서버를 구축해 회사 표준으로 채택됨(디자인 담당 dev 브랜치, master 확인 후 push 시 자동 반영)</td></tr>
-        <tr><td class="k">클라우드</td><td>Naver Cloud 기반 SaaS 프로젝트 CI/CD 구축과 운영</td></tr>
-        <tr><td class="k">보안과 운영</td><td>서버 취약점 조치, NAS 구성, 운영 환경 점검, 무중단이 요구되는 사이트의 야간 반영, 폐쇄망 사이트 방문 반영</td></tr>
+        <tr><td class="k">빌드와 배포</td><td>Jenkins와 Git을 연동한 빌드와 배포 구성.<br>기획예산처 프로젝트에서 GitLab CI/CD, GitLab Runner, Docker 기반 자동 배포 개발 서버 구축.<br>디자인 담당은 dev 브랜치에서 작업하고, master에 push하면 개발 서버에 자동으로 반영되게 구성</td></tr>
+        <tr><td class="k">클라우드</td><td>Naver Cloud 기반 SaaS 프로젝트의 CI/CD 환경에서 배포와 운영.<br>Naver Cloud Classic에서 VPC 환경으로 운영 서버 이관</td></tr>
+        <tr><td class="k">보안과 운영</td><td>서버 취약점 조치, NAS 구성, 운영 환경 점검, 무중단 운영이 필요한 사이트의 반영, 폐쇄망 사이트 방문 반영</td></tr>
       </table></div>
     </div>
   </div>
@@ -568,18 +612,16 @@ td.n{font-weight:700;width:210px}
     <div class="sec-h">
       <h2>이력</h2>
       <div>
-        <p class="big">2022년 과정, 2023년 제조 MES, 2024년부터 공공 웹.</p>
-        <p class="sub">회사명은 블라인드 채용 기준에 맞춰 적지 않았습니다. 이력서에 있습니다.</p>
+        <p class="big">2023년 제조 MES, 2024년부터 공공 웹.</p>
+        <p class="sub">회사명은 블라인드 채용 기준에 맞춰 적지 않았습니다.<br>이력서에 있습니다.</p>
       </div>
     </div>
     <div class="block">
       <div class="tw"><table>
-        <tr><td class="k">2027.08 예정</td><td>컴퓨터공학 학사, 학점은행제. 실무와 병행</td></tr>
+        <tr><td class="k">2026.10 ~ 재직 중</td><td><b>공공 SI 회사 개발팀 대리</b><br>2026년 10월 법인 소속이 바뀌었고 업무와 프로젝트는 그대로 이어집니다</td></tr>
         <tr><td class="k">2026.09</td><td>정보처리기사</td></tr>
-        <tr><td class="k">2026.10 ~ 재직중</td><td><b>공공 SI 회사 개발팀 대리</b><br>2026년 10월 같은 대표의 법인으로 소속이 옮겨졌고 업무와 프로젝트는 그대로 이어집니다</td></tr>
         <tr><td class="k">2024.02 ~ 2026.09</td><td><b>공공 SI 회사 개발팀 대리</b><br>공공, 교육, 문화 정보화 시스템 구축과 운영, 레거시 전환, 유지보수</td></tr>
-        <tr><td class="k">2023.01 ~ 2024.01</td><td><b>스마트공장 솔루션 회사 개발부서 사원</b><br>스마트공장 MES 개발, 7개 제조사 적용</td></tr>
-        <tr><td class="k">2022.04 ~ 10</td><td>자바와 스프링 프레임워크 백엔드 웹 개발자 과정, 900시간 무결석 수료, 출석률 우수 표창</td></tr>
+        <tr><td class="k">2023.01 ~ 2024.01</td><td><b>스마트공장 솔루션 회사 개발팀 사원</b><br>스마트공장 MES 개발, 7개 제조사 적용</td></tr>
       </table></div>
     </div>
   </div>
@@ -594,7 +636,7 @@ td.n{font-weight:700;width:210px}
         <dt>이메일</dt><dd><a class="mail" href="mailto:foodfor456@naver.com?subject=%EC%B1%84%EC%9A%A9%20%EB%AC%B8%EC%9D%98" data-copy="foodfor456@naver.com">foodfor456@naver.com</a></dd>
         <dt>거주</dt><dd>충북 청주시</dd>
         <dt>깃허브</dt><dd><a href="https://github.com/foodfor456" target="_blank" rel="noopener">github.com/foodfor456</a></dd>
-        <dt>경력</dt><dd>백엔드 <span class="career-len">3년 9개월</span> 재직중</dd>
+        <dt>경력</dt><dd>백엔드 <span class="career-len">3년 9개월</span>, 재직 중</dd>
       </dl>
     </div>
     <p class="motto"><span class="l1">정답은 고객이 정합니다.</span><span class="l2">고객이 원하고, 고객이 만족하면 이미 좋은 시스템입니다.</span><span class="l2">그러기에 고객은 믿고 맡깁니다.</span><span class="l4">보이지 않는 보안으로 답합니다.</span></p>
@@ -610,10 +652,11 @@ td.n{font-weight:700;width:210px}
 
 <script>
 (function(){
-  // 경력 기간: 2023년 1월부터 이번 달까지(한 달 초과분은 올림 없이 개월 수)
-  var start=new Date(2023,0,1), now=new Date();
+  // 경력 기간: 제조 회사 12개월(2023.01.25 ~ 2024.01.26) + 2024년 2월 1일부터 오늘까지 채운 개월 수
+  var start=new Date(2024,1,1), now=new Date();
   var m=(now.getFullYear()-start.getFullYear())*12+(now.getMonth()-start.getMonth());
   if(now.getDate()<start.getDate()) m-=1;
+  m+=12;
   var txt=Math.floor(m/12)+'년 '+(m%12)+'개월';
   document.querySelectorAll('.career-len').forEach(function(e){ e.textContent=txt; });
 
